@@ -10,11 +10,13 @@ import NotFound from "./components/NotFound";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WriteBoard from "./components/WriteBoard";
+import Main from "./components/Main";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <Main />
+      {/* <BrowserRouter>
         <NaviBar></NaviBar>
         <div style={{ width: "85vw", height: "70vh" }}>
           <Routes>
@@ -36,7 +38,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
-      </BrowserRouter>
+      </BrowserRouter> */}
     </>
   );
 }
