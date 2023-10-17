@@ -1,11 +1,11 @@
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
 
-const Model = (sequelize) => {
+const User = (sequelize) => {
   return sequelize.define("gardenUsers", {
-    //컬럼 정의
+    // Column Definitions
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false, //NOT NULL
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -24,4 +24,4 @@ const Model = (sequelize) => {
   });
 };
 
-module.exports = Model;
+export { User };

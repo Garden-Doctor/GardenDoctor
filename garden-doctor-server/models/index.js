@@ -1,9 +1,12 @@
 "use strict";
 
-const Sequelize = require("sequelize");
+import Sequelize from "sequelize";
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+import configenv from "../config/config.json" assert { type: "json" };
+import * as User from "./User.js";
 const db = {};
+const config = configenv[env];
+console.log("config", config);
 const sequelize = new Sequelize(
   config.database,
   config.username,
@@ -11,10 +14,10 @@ const sequelize = new Sequelize(
   config
 );
 
-//모델
-db.User = require("./User")(sequelize);
+// Models
+db.User = sequelize;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;
