@@ -1,18 +1,15 @@
-const { User } = require("../models");
-const bcrypt = require("bcrypt");
+import { User } from "../models/User.js";
+import bcrypt from "bcrypt";
 const saltNumber = 10;
 const SECRET = "secretKey";
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-const bcryptPassword = (password) => {
-  return bcrypt.hashSync(password, saltNumber);
-};
+const bcryptPassword = (password) => bcrypt.hashSync(password, saltNumber);
 
-const comparePassword = (password, dbPassword) => {
-  return bcrypt.compareSync(password, dbPassword);
-};
+const comparePassword = (password, dbPassword) =>
+  bcrypt.compareSync(password, dbPassword);
 
-const get_todo = async (req, res) => {
+const getTodo = async (req, res) => {
   try {
     const todo = await Todos.findAll({
       attributes: ["id", "title", "done"],
@@ -47,7 +44,7 @@ const login = async (req, res) => {
       where: { userid: id },
     }).then((result) => {
       console.log(result);
-      if (result != null) {
+      if (result !== null) {
         const compare = comparePassword(pw, result.dataValues.pw);
         const { id } = req.body;
         const token = jwt.sign({ id }, SECRET);
@@ -72,14 +69,14 @@ const verify = (req, res) => {
   });
 };
 
-const patch_todo = (req, res) => {
+const patchTodo = (req, res) => {
   const { id, title, done } = req.body;
   Todos.update({ title, done }, { where: { id } }).then(() => {
     res.json({ result: true });
   });
 };
 
-const delete_todo = (req, res) => {
+const deleteTodo = (req, res) => {
   const { id } = req.body;
   Todos.destroy({
     where: { id },
@@ -88,4 +85,4 @@ const delete_todo = (req, res) => {
   });
 };
 
-module.exports = { get_todo, signup, login, verify, patch_todo, delete_todo };
+export { getTodo, signup, login, verify, patchTodo, deleteTodo };
