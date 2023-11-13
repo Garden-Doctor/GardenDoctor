@@ -17,7 +17,7 @@ function App() {
 
       <BrowserRouter>
         <NaviBar></NaviBar>
-        <div style={{ width: "85vw", height: "70vh" }}>
+        <div style={{ width: "85vw", height: "77vh", overflowY: "scroll" }}>
           <Routes>
             <Route path="/" element={<Home></Home>}></Route>
             <Route path="/Board" element={<Board></Board>}></Route>
