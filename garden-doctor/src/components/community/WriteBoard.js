@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
+  const username = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   const uploadButton = async (e) => {
@@ -22,9 +24,22 @@ const WriteBoard = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+      }).then((result) => {
+        console.log(result.data);
+        const res2 = axios({
+          method: "POST",
+          url: "http://localhost:8000/board/uploadBoard",
+          data: {
+            userId: username,
+            text: boardText,
+            img: result.data,
+          },
+        });
+        console.log(res2);
       });
       console.log("res", res);
-      navigate("/"); // 요청 성공 후 페이지를 이동할 경우
+      alert("게시글 생성 완료!");
+      navigate("/board"); // 요청 성공 후 페이지를 이동할 경우
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +48,8 @@ const WriteBoard = () => {
   return (
     <div>
       <form encType="multipart/form-data">
-        게시할 사진을 업로드 해주세요: <input type="file" name="image" /> <br />
+        게시할 사진을 업로드 해주세요:{" "}
+        <input type="file" name="image" multiple /> <br />
         게시글 설명: <br />
         <textarea
           name="boardText"
@@ -46,6 +62,7 @@ const WriteBoard = () => {
         <br />
         <button onClick={uploadButton}>게시</button>
       </form>
+      <img id="img1" src="" alt="" />
     </div>
   );
 };

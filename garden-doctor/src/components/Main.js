@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import Spinner from "./Spinner";
 import "../sytles/main.scss";
 
 import AI_SRC from "../imgs/ai.svg";
