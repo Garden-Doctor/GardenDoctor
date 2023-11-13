@@ -101,7 +101,7 @@ const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
   returnSourceDocuments: true,
 });
 const response = await chain.call({
-  query: "고추는 언제 수확해서 고춧가루로 갈 수 있을까?",
+  query: "배추 재배 시기가 궁금해",
 });
 console.log(response);
 /*
