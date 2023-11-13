@@ -101,7 +101,7 @@ const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
   returnSourceDocuments: true,
 });
 const response = await chain.call({
-  query: "갓의 기상재해에 대해 알려줘",
+  query: "고추는 언제 수확해서 고춧가루로 갈 수 있을까?",
 });
 console.log(response);
 /*
