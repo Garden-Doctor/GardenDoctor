@@ -24,4 +24,4 @@ const User = (sequelize) => {
   });
 };
 
-export { User };
+export {User};

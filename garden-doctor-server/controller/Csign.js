@@ -25,7 +25,7 @@ const signup = async (req, res) => {
     console.log(req.body);
     const { name, id, pw } = req.body;
     const newPw = bcryptPassword(pw);
-    const signup = await User.create({
+    const signup = await db.User.create({
       name,
       userid: id,
       pw: newPw,
