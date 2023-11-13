@@ -1,18 +1,11 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import {
-  getTodo,
-  signup,
-  login,
-  verify,
-  patchTodo,
-  deleteTodo,
-} from "../controller/Csign.js";
+const controller = require("../controller/Csign");
 
-router.post("/signup", signup);
+router.post("/signup", controller.signup);
 
-router.post("/login", login);
+router.post("/login", controller.login);
 
-router.post("/verify", verify);
+router.post("/verify", controller.verify);
 
-export default router;
+module.exports = router;
