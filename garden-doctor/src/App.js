@@ -10,7 +10,7 @@ import NotFound from "./components/NotFound";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import WriteBoard from "./components/WriteBoard";
-import Main from "./components/Main";
+import Main from "./components/main/Main";
 
 function App() {
   return (

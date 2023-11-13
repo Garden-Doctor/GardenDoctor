@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
-import Spinner from "./Spinner";
+import React, { useEffect, useState, useMemo } from "react";
+import useCurrentLocation from "../hooks/useCurrentLocation";
+
 import "../sytles/main.scss";
 
 import AI_SRC from "../imgs/ai.svg";
@@ -7,9 +8,21 @@ import COMMUNITY_SRC from "../imgs/community.svg";
 import SIMULATION_SRC from "../imgs/simulation.svg";
 import DIGNOSE_SRC from "../imgs/dignose.svg";
 
+// const geolocationOptions = {
+//   enableHighAccuracy: true,
+//   timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+//   maximumAge: 1000 * 3600 * 24, // 24 hour
+// };
+
 const Main = () => {
+  // const { location, error } = useCurrentLocation();
+
   return (
     <div className="main-container">
+      <div className="weather">
+        {/* {(location.latitude, location.longitude)} */}
+        <div className="weather-content">weather</div>
+      </div>
       <div className="content01">
         <div className="content01-simulation">
           <img src={SIMULATION_SRC} />
@@ -19,9 +32,6 @@ const Main = () => {
           <img src={DIGNOSE_SRC} />
           <a href="/analysis">병충해 진단 서비스</a>
         </div>
-      </div>
-      <div className="weather">
-        <div className="weather-content">weather</div>
       </div>
       <div className="ai">
         <div className="ai-content">
