@@ -1,12 +1,13 @@
 @import "./utils.scss";
 
-$main-content-width: 90vw;
+$main-content-width: 90%;
 $main-content-color: white;
 $box-shadow: 0 0 10px rgb(213, 213, 213);
 
 body {
   margin: 0;
   background-color: $bg-color;
+  padding-top: 7vh;
 }
 // body에 margin 8px가 들어있는데 어디있는 지 모르겠음
 
