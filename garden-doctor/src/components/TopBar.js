@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGOUT } from "../store/isLogin";
 
-import "../sytles/topbar.scss";
+import "../styles/topbar.scss";
 
 const TopBar = () => {
   const isLogin = useSelector((state) => state.isLogIn);
