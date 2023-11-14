@@ -3,8 +3,9 @@ import React from "react";
 import "../../sytles/main.scss";
 import Weather from "./Weather";
 import TodayBoard from "./TodayBoard";
-import Dignore from "./Dignore";
+
 import ChatAI from "./ChatAI";
+import BottomContent from "./BottomContent";
 
 const Main = () => {
   return (
@@ -12,7 +13,7 @@ const Main = () => {
       <div className="main-container">
         <Weather></Weather>
         <TodayBoard></TodayBoard>
-        <Dignore></Dignore>
+        <BottomContent />
       </div>
     </>
   );
