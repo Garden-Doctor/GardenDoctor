@@ -1,7 +1,3 @@
-import Board from "./components/community/Board";
-
-import Footer from "./components/Footer";
-import NaviBar from "./components/NaviBar";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 import Home from "./components/Home";
@@ -11,14 +7,25 @@ import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
+
 import Dignose from "./components/imageAI/Dignose";
+
+import BottomBar from "./components/BottomBar";
+import Board from "./components/community/Board";
+import Footer from "./components/Footer";
+import NaviBar from "./components/NaviBar";
+
+import "../src/styles/app.scss";
+import SideBar from "./components/SideBar";
+
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <TopBar />
-        <div>
+        <div className="app-container">
+          {/* Max Min 값 정해두기 */}
           <Routes>
             <Route path="/" element={<Main></Main>}></Route>
 
@@ -34,7 +41,7 @@ function App() {
             <Route path="/imageAI" element={<Dignose></Dignose>}></Route>
           </Routes>
         </div>
-        <Footer />
+        <BottomBar />
       </BrowserRouter>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../sytles/main.scss";
+import "../../styles/main.scss";
 import Weather from "./Weather";
 import TodayBoard from "./TodayBoard";
 
