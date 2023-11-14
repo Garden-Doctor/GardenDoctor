@@ -13,5 +13,21 @@ $color: rgb(229, 243, 223);
 }
 
 .introduceDetails {
-  width: 90%;
+  width: 60%;
+  margin-top: 5%;
+  text-align: center;
+}
+
+.introduce img {
+  max-width: 100%;
+  height: auto;
+}
+
+.introduce {
+  margin-top: 5%;
+  text-align: -webkit-center;
+}
+
+.title {
+  font-weight: bold;
 }
