@@ -37,4 +37,4 @@ const ChatAI = () => {
   );
 };
 
-export default BottomContentx;
+export default BottomContent;
