@@ -7,6 +7,9 @@ import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
+
+import Dignose from "./components/imageAI/Dignose";
+
 import BottomBar from "./components/BottomBar";
 import Board from "./components/community/Board";
 import Footer from "./components/Footer";
@@ -14,6 +17,7 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
+
 
 function App() {
   return (
@@ -25,8 +29,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Main></Main>}></Route>
 
+            <Route path="/" element={<Home></Home>}></Route>
             <Route path="/Board" element={<Board></Board>}></Route>
-
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/signup" element={<Signup></Signup>}></Route>
             <Route
@@ -34,6 +38,7 @@ function App() {
               element={<WriteBoard></WriteBoard>}
             ></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
+            <Route path="/imageAI" element={<Dignose></Dignose>}></Route>
           </Routes>
         </div>
         <BottomBar />
