@@ -10,6 +10,8 @@ $color: rgb(229, 243, 223);
   background-color: $color;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .introduceDetails {
@@ -30,4 +32,97 @@ $color: rgb(229, 243, 223);
 
 .title {
   font-weight: bold;
+}
+
+.selectPlant {
+  width: 50%;
+  border: 1px solid #d2d2d2;
+  background-color: #d2d2d2;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 12px 13px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 5%;
+  text-align: center;
+  text-align-last: center;
+
+  @media screen and (min-width: 1024px) {
+    width: 511px;
+  }
+}
+
+.selectPlant:focus {
+  border: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  border-radius: 20px;
+  outline: 3px solid #d2d2d2;
+  border-radius: 20px;
+}
+
+.fileUpload {
+  background-color: #ffffff;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+
+  /* 360px 이상 1024px 미만일 때 */
+  @media screen and (min-width: 360px) and (max-width: 1024px) {
+    width: calc(200px + 2 * ((100vw - 360px) / 14));
+    height: calc(200px + 2 * ((100vw - 360px) / 14));
+  }
+
+  /* 1024px 이상일 때 */
+  @media screen and (min-width: 1024px) {
+    width: 300px;
+    height: 300px;
+  }
+  margin-top: 5%;
+  text-align: center;
+  position: relative;
+  outline: rgb(77, 77, 77) solid 2px;
+}
+
+.fileUploadInput {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.fileUploadContent {
+  text-align: center;
+}
+
+.imageUploadWrap,
+.imageUploadWrap:hover {
+  padding-bottom: 40%;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.fileUploadImage {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  object-fit: cover;
+}
+
+.diagnosticButton {
+  background-color: #3cb362;
+  border-radius: 15px;
+  width: 30%;
+  color: white;
+  border: none;
+  margin-top: 5%;
+  height: 5vh;
 }

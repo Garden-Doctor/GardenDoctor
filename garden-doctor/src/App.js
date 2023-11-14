@@ -12,13 +12,10 @@ import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
 import Dignose from "./components/imageAI/Dignose";
-import Main from "./components/Main";
 
 function App() {
   return (
     <>
-      <Main />
-
       <BrowserRouter>
         <TopBar />
         <div>
