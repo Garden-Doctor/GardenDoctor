@@ -11,6 +11,7 @@ import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
+import BoardDetail from "./components/community/BoardDetail";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
             <Route
               path="/writeBoard"
               element={<WriteBoard></WriteBoard>}
+            ></Route>
+            <Route
+              path="/BoardDetail"
+              element={<BoardDetail></BoardDetail>}
             ></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>

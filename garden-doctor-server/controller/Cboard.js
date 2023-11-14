@@ -3,7 +3,7 @@ const { User, Board, Comment, Like } = require("../models");
 const getBoards = async (req, res) => {
   try {
     const getBoards = await Board.findAll({
-      attributes: ["boardId", "userId", "text", "img"],
+      attributes: ["boardId", "userId", "text", "img", "createdAt"],
     });
     res.send(getBoards);
   } catch (error) {

@@ -46,7 +46,7 @@ const WriteBoard = () => {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <form encType="multipart/form-data">
         게시할 사진을 업로드 해주세요:{" "}
         <input type="file" name="image" multiple /> <br />
