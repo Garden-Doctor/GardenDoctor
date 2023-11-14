@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
+
+import "../sytles/topbar.scss";
 import axios from "axios";
 
-const NaviBar = () => {
+const TopBar = () => {
   const isLogin = useSelector((state) => state.isLogIn);
   const dispatch = useDispatch();
 
@@ -73,4 +75,4 @@ const NaviBar = () => {
   );
 };
 
-export default NaviBar;
+export default TopBar;
