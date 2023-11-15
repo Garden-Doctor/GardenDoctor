@@ -7,6 +7,9 @@ import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
+
+import Dignose from "./components/imageAI/Dignose";
+
 import BottomBar from "./components/BottomBar";
 import Board from "./components/community/Board";
 import Footer from "./components/Footer";
