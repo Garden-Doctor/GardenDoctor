@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../../sytles/dignose.scss";
+import "../../styles/dignose.scss";
 import Dignose2 from "../../imgs/dignose2.svg";
 import plantOptions from "./PlantOptions";
 import camera from "../../imgs/camera.svg";

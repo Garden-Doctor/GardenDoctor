@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
 
-import "../sytles/topbar.scss";
+import "../styles/topbar.scss";
 import axios from "axios";
 
 const TopBar = () => {
