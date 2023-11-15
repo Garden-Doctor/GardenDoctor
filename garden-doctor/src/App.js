@@ -14,6 +14,7 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
+import { useState } from "react";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>
         </div>
-        <BottomBar />
+        <BottomBar />s
       </BrowserRouter>
     </>
   );
