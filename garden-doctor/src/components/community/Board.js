@@ -137,6 +137,7 @@ const Board = () => {
               day={item.createdAt}
               commentInput={commentInputs[index]}
               onPostComment={(e) => postCommentButton(e, index)}
+              navigate={navigate}
             />
           ))}
         </div>

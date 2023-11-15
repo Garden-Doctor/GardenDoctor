@@ -12,6 +12,7 @@ import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
 import BoardDetail from "./components/community/BoardDetail";
+import EditBoard from "./components/community/EditBoard";
 
 function App() {
   return (
@@ -31,8 +32,12 @@ function App() {
               element={<WriteBoard></WriteBoard>}
             ></Route>
             <Route
-              path="/BoardDetail"
+              path="/boardDetail/:userId/:boardId"
               element={<BoardDetail></BoardDetail>}
+            ></Route>
+            <Route
+              path="/editBoard/:userId/:boardId"
+              element={<EditBoard></EditBoard>}
             ></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>

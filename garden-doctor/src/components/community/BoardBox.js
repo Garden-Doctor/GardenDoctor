@@ -9,6 +9,7 @@ const BoardBox = ({
   likeData,
   commentData,
   day,
+  navigate,
 }) => {
   const formatDate = (dateString) => {
     const currentDate = new Date();
@@ -27,8 +28,12 @@ const BoardBox = ({
 
   const formattedDate = formatDate(day);
 
+  const clickedBoard = (e) => {
+    navigate(`/boardDetail/${userId}/${boardId}`);
+  };
+
   return (
-    <div className="board-container">
+    <div className="board-container" onClick={(e) => clickedBoard(e)}>
       <img
         className="boardBox-userImg"
         alt="userImg"

@@ -11,6 +11,18 @@ const getBoards = async (req, res) => {
   }
 };
 
+const getBoard = async (req, res) => {
+  try {
+    const getBoard = await Board.findOne({
+      where: { boardId: req.params.boardId }, // 수정된 부분
+    });
+    res.json(getBoard);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 const uploadBoard = async (req, res) => {
   try {
     console.log(req.body);
@@ -49,6 +61,17 @@ const getComments = async (req, res) => {
       attributes: ["boardId", "userId", "commentText", "commentId"],
     });
     res.send(getComments);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getComment = async (req, res) => {
+  try {
+    const getComment = await Comment.findAll({
+      where: { boardId: req.params.boardId },
+    });
+    res.send(getComment);
   } catch (error) {
     console.log(error);
   }
@@ -96,13 +119,62 @@ const getLikes = async (req, res) => {
   }
 };
 
-const delete_todo = (req, res) => {
-  const { id } = req.body;
-  Todos.destroy({
-    where: { id },
-  }).then(() => {
-    res.json({ result: true });
-  });
+const getLike = async (req, res) => {
+  try {
+    const getLike = await Like.findAll({
+      where: { boardId: req.params.boardId },
+    });
+    res.send(getLike);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteBoard = async (req, res) => {
+  const { boardId } = req.params;
+
+  try {
+    // 1. 게시글(Board) 삭제
+    await Board.destroy({
+      where: { boardId },
+    });
+
+    // 2. 관련된 좋아요(Like) 데이터 삭제
+    await Like.destroy({
+      where: { boardId },
+    });
+
+    // 삭제 성공 응답
+    res.status(200).send({ message: "게시글이 성공적으로 삭제되었습니다." });
+  } catch (error) {
+    console.error("Error deleting board:", error);
+    res.status(500).send({ message: "게시글 삭제 중 오류가 발생했습니다." });
+  }
+};
+
+const updateBoard = async (req, res) => {
+  const { boardId } = req.params;
+  const { text, img } = req.body;
+
+  try {
+    // 1. 게시글(Board) 업데이트
+    await Board.update(
+      { text, img },
+      {
+        where: { boardId },
+      }
+    );
+
+    // 업데이트 성공 응답
+    res
+      .status(200)
+      .send({ message: "게시글이 성공적으로 업데이트되었습니다." });
+  } catch (error) {
+    console.error("Error updating board:", error);
+    res
+      .status(500)
+      .send({ message: "게시글 업데이트 중 오류가 발생했습니다." });
+  }
 };
 
 module.exports = {
@@ -110,9 +182,13 @@ module.exports = {
   uploadBoard,
   postComment,
   getComments,
+  getComment,
   postLike,
   postUnlike,
   getLikes,
+  getLike,
   patch_todo,
-  delete_todo,
+  deleteBoard,
+  getBoard,
+  updateBoard,
 };
