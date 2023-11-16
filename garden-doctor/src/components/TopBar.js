@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
+import SideBar from "./SideBar";
 
 import "../styles/topbar.scss";
 import axios from "axios";
