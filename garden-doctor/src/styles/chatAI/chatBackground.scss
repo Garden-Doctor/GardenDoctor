@@ -1,0 +1,72 @@
+$max-screen-width: 1024px;
+$background-color: #e5f3df;
+$myChat-color: #94ff8b;
+$aiChat-color: white;
+
+@mixin border-radius-and-shadow() {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10px;
+}
+
+@mixin chat-box() {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+@mixin chat-msg($color) {
+  display: block;
+  background-color: $color;
+  @include border-radius-and-shadow();
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.chat-background {
+  max-width: 1024px;
+  height: 100vh;
+  background-color: #e5f3df;
+  position: relative;
+  margin: auto;
+  .myChat-box {
+    @include chat-box();
+    align-items: flex-end;
+    .myChat-msg {
+      @include chat-msg($myChat-color);
+    }
+  }
+  .aiChat-box {
+    @include chat-box();
+    align-items: flex-start;
+    .aiChat-msg {
+      @include chat-msg($aiChat-color);
+    }
+  }
+}
+
+.chat-send-box {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  height: 30px;
+  bottom: 1%;
+  .chat-input {
+    position: absolute;
+    width: calc(100% - 50px);
+    height: 100%;
+    @include border-radius-and-shadow();
+  }
+  .chat-input:focus {
+    outline: none;
+  }
+  .chat-send {
+    position: absolute;
+    height: 100%;
+    width: 30px;
+    right: 0px;
+    bottom: 1%;
+    border: none;
+    background: none;
+  }
+}

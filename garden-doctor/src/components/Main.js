@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-
-import "../sytles/main.scss";
+import "../styles/main.scss";
 
 import AI_SRC from "../imgs/ai.svg";
 import COMMUNITY_SRC from "../imgs/community.svg";

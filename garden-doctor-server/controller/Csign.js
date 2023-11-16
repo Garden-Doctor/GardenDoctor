@@ -1,23 +1,15 @@
-import { User } from "../models/User.js";
-import bcrypt from "bcrypt";
+const { User } = require("../models");
+const bcrypt = require("bcrypt");
 const saltNumber = 10;
 const SECRET = "secretKey";
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-const bcryptPassword = (password) => bcrypt.hashSync(password, saltNumber);
+const bcryptPassword = (password) => {
+  return bcrypt.hashSync(password, saltNumber);
+};
 
-const comparePassword = (password, dbPassword) =>
-  bcrypt.compareSync(password, dbPassword);
-
-const getTodo = async (req, res) => {
-  try {
-    const todo = await Todos.findAll({
-      attributes: ["id", "title", "done"],
-    });
-    res.send(todo);
-  } catch (error) {
-    console.log(error);
-  }
+const comparePassword = (password, dbPassword) => {
+  return bcrypt.compareSync(password, dbPassword);
 };
 
 const signup = async (req, res) => {
@@ -27,7 +19,7 @@ const signup = async (req, res) => {
     const newPw = bcryptPassword(pw);
     const signup = await db.User.create({
       name,
-      userid: id,
+      userId: id,
       pw: newPw,
     });
     console.log(signup);
@@ -41,10 +33,10 @@ const login = async (req, res) => {
   try {
     const { id, pw } = req.body;
     User.findOne({
-      where: { userid: id },
+      where: { userId: id },
     }).then((result) => {
       console.log(result);
-      if (result !== null) {
+      if (result != null) {
         const compare = comparePassword(pw, result.dataValues.pw);
         const { id } = req.body;
         const token = jwt.sign({ id }, SECRET);
@@ -69,14 +61,14 @@ const verify = (req, res) => {
   });
 };
 
-const patchTodo = (req, res) => {
+const patch_todo = (req, res) => {
   const { id, title, done } = req.body;
   Todos.update({ title, done }, { where: { id } }).then(() => {
     res.json({ result: true });
   });
 };
 
-const deleteTodo = (req, res) => {
+const delete_todo = (req, res) => {
   const { id } = req.body;
   Todos.destroy({
     where: { id },
@@ -85,4 +77,4 @@ const deleteTodo = (req, res) => {
   });
 };
 
-export { getTodo, signup, login, verify, patchTodo, deleteTodo };
+module.exports = { signup, login, verify, patch_todo, delete_todo };
