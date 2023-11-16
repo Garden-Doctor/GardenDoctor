@@ -11,8 +11,10 @@ const BoardDetail = () => {
   const [boardData, setBoardData] = useState(null);
   const [likeData, setLikeData] = useState(null);
   const [commentData, setCommentData] = useState(null);
+  const [loading, setLoading] = useState(true); // 추가: 로딩 상태 관리
   const navigate = useNavigate();
   const reduxUserId = useSelector((state) => state.user);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,16 +36,18 @@ const BoardDetail = () => {
         setBoardData(boardResponse.data);
         setLikeData(likeResponse.data);
         setCommentData(commentResponse.data);
+        setLoading(false); // 추가: 데이터 로딩 완료 후 로딩 상태 변경
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false); // 추가: 에러 발생 시에도 로딩 상태 변경
       }
     };
 
     fetchData();
   }, [boardId]);
 
-  if (!boardData || !likeData || !commentData) {
-    // Data is still loading, you might want to show a loading indicator
+  if (loading) {
+    // 추가: 로딩 중일 때 로딩 화면을 보여줍니다.
     return <div>Loading...</div>;
   }
 
