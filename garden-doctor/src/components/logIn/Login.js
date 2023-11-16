@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import "../../styles/login.scss";
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -37,23 +39,30 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      아이디:{" "}
-      <input
-        type="text"
-        placeholder="아이디"
-        onChange={(e) => setId(e.target.value)}
-      />{" "}
-      <br />
-      비밀번호:{" "}
-      <input
-        type="text"
-        placeholder="비밀번호"
-        onChange={(e) => setPw(e.target.value)}
-      />{" "}
-      <br />
-      <button onClick={loginButton}>로그인</button>
+    <div className="login-container">
+      <img src="imgs/login_logo.png" alt="logo" />
+      <p className="idBox">
+        <img src="imgs/id.svg" />
+        <input
+          type="text"
+          placeholder="아이디"
+          onChange={(e) => setId(e.target.value)}
+        />
+      </p>
+      <p className="pwBox">
+        <img src="imgs/pw.svg" />
+        <input
+          type="text"
+          placeholder="비밀번호"
+          onChange={(e) => setPw(e.target.value)}
+        />
+      </p>
+      <span className="login-button-container">
+        <button onClick={loginButton} className="loginbutton">
+          로그인
+        </button>
+        <button className="loginbutton kakao">카카오톡으로 로그인</button>
+      </span>
     </div>
   );
 };
