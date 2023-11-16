@@ -9,6 +9,7 @@ import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
 
 import Dignose from "./components/imageAI/Dignose";
+import DignoseResult from "./components/imageAI/DignosisResult";
 
 import BottomBar from "./components/BottomBar";
 import Board from "./components/community/Board";
@@ -17,7 +18,6 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
-import Dignose from "./components/imageAI/Dignose";
 
 function App() {
   return (
@@ -39,6 +39,10 @@ function App() {
             ></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
             <Route path="/imageAI" element={<Dignose></Dignose>}></Route>
+            <Route
+              path="/diagnosisResult"
+              element={<DignoseResult></DignoseResult>}
+            ></Route>
           </Routes>
         </div>
         <BottomBar />
