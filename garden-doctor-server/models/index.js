@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
   config
 );
 
-//모델
+//모델12
 db.User = require("./User")(sequelize);
 
 //모델
