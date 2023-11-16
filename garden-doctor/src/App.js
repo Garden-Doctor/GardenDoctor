@@ -7,6 +7,8 @@ import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
+import BoardDetail from "./components/community/BoardDetail";
+import EditBoard from "./components/community/EditBoard";
 
 import Dignose from "./components/imageAI/Dignose";
 import DignoseResult from "./components/imageAI/DignosisResult";
@@ -36,6 +38,14 @@ function App() {
             <Route
               path="/writeBoard"
               element={<WriteBoard></WriteBoard>}
+            ></Route>
+            <Route
+              path="/boardDetail/:userId/:boardId"
+              element={<BoardDetail></BoardDetail>}
+            ></Route>
+            <Route
+              path="/editBoard/:userId/:boardId"
+              element={<EditBoard></EditBoard>}
             ></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>
             <Route path="/imageAI" element={<Dignose></Dignose>}></Route>
