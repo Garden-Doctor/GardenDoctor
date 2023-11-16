@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
 
-import "../sytles/topbar.scss";
+import "../styles/topbar.scss";
 import axios from "axios";
 
 const TopBar = () => {
+  const closeSidebar = () => {
+    setIsSidebarVisible(false);
+  };
+
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const sidebarRef = useRef(null);
+
   const isLogin = useSelector((state) => state.isLogIn);
   const dispatch = useDispatch();
 
@@ -52,13 +60,19 @@ const TopBar = () => {
     navigate("/signup");
   };
 
-  console.log(isLogin);
+  const menuButton = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
   return (
     <div>
-      <div style={{ width: "100%", height: "10vh", backgroundColor: "beige" }}>
-        <span onClick={logoButton} style={{ border: "solid 1px black" }}>
-          로고
-        </span>
+      <div className="topbar-container">
+        <div className="sidbar-container" onClick={menuButton}>
+          <img src="imgs/menu.svg" id="menu" />
+        </div>
+        <div className="logo" onClick={logoButton}>
+          <img src="imgs/logo.svg" id="logo-img" />
+        </div>
 
         {loading ? (
           <div>loading...</div>
@@ -71,6 +85,7 @@ const TopBar = () => {
           </>
         )}
       </div>
+      {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />}
     </div>
   );
 };

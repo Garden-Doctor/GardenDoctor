@@ -5,7 +5,16 @@
   justify-content: space-between;
   align-items: center;
   background-color: rgb(255, 254, 249);
-  img {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  #menu {
+    width: 20px;
+    margin-left: 20px;
+  }
+
+  #logo-img {
     height: 5vh;
     margin-left: 0.5em;
   }
