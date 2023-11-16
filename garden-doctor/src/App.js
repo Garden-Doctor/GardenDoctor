@@ -2,9 +2,14 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
-import Login from "./components/logIn/Login";
+
 import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
+
+
+import Login from "./components/logIn/Login";
+import Chat from "./components/chatAI/chatBackground";
+
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
 import BoardDetail from "./components/community/BoardDetail";
@@ -22,10 +27,12 @@ import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
 
+
 function App() {
   return (
     <>
       <BrowserRouter>
+
         <TopBar />
         <div className="app-container">
           {/* Max Min 값 정해두기 */}
@@ -33,6 +40,7 @@ function App() {
             <Route path="/" element={<Main></Main>}></Route>
 
             <Route path="/" element={<Home></Home>}></Route>
+                                     <Route path="/chat" element={<Chat></Chat>}></Route>
             <Route path="/Board" element={<Board></Board>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/signup" element={<Signup></Signup>}></Route>

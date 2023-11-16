@@ -11,6 +11,12 @@ const sequelize = new Sequelize(
   config
 );
 
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
 //모델
 db.User = require("./User")(sequelize);
 
@@ -44,4 +50,4 @@ db.Like.belongsTo(db.Board, { foreignKey: "boardId" });
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;
