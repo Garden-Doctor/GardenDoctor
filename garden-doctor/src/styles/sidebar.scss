@@ -1,0 +1,28 @@
+@import "./utils.scss";
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60%; // 이것도 수정필요할듯
+  height: 91%; // 이거 그냥 적당히 하단바보다 위에 있게 한거임 수정필요함
+  background-color: white;
+  box-shadow: -5px 0 5px rgba(213, 213, 213, 0.5);
+
+  .sidebar-exitbutton {
+  }
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 30px;
+      width: 100px;
+    }
+  }
+}

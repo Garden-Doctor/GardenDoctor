@@ -1,10 +1,18 @@
 @import "./utils.scss";
 
-$main-content-width: 320px;
-$box-shadow: 0 0 10px rgb(185, 184, 184);
+
+
+
+$main-content-width: 90%;
+$main-content-color: white;
+$box-shadow: 0 0 10px rgb(213, 213, 213);
 
 body {
   margin: 0;
+  background-color: $bg-color;
+  padding-top: 7vh;
+  padding-bottom: 7vh;
+
 }
 // body에 margin 8px가 들어있는데 어디있는 지 모르겠음
 
@@ -23,107 +31,75 @@ a:active {
 }
 
 .main-container {
-  width: 100%;
-  height: 100%;
-  background-color: $bg-color;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
-.content01 {
-  width: 320px;
-  height: 100px;
-  margin-top: 20px;
+.weather-container {
+  width: $main-content-width;
+  height: 5em;
+  background-color: $main-content-color;
+  margin-top: 10px;
+}
+
+.todayboard-container {
+  width: $main-content-width;
+  height: 5em;
+  background-color: $main-content-color;
+  margin-top: 10px;
+}
+
+.dignose-container {
+  width: $main-content-width;
+  height: 10vh;
+  background-color: $main-content-color;
   display: flex;
-  justify-content: space-between;
-
-  &-simulation {
-    width: 150px;
-    height: 100%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: $box-shadow;
-
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $box-shadow;
+  margin-top: 10px;
+  border-radius: 10px;
+  .inner-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    margin: 10px;
+    p {
+      margin: 0;
+      font-size: 0.9em;
+    }
     img {
-      width: 35px;
-      height: 35px;
+      width: 2em;
     }
   }
-  &-dignose {
-    width: 150px;
-    height: 100%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: $box-shadow;
+}
 
+.chatAI-container {
+  width: $main-content-width;
+  height: 10vh;
+  background-color: $main-content-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $box-shadow;
+  margin-top: 10px;
+  border-radius: 10px;
+  .inner-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    img {
-      width: 35px;
-      height: 35px;
+    margin: 10px;
+    p {
+      margin: 0;
+      font-size: 0.9em;
     }
-  }
-}
-
-.weather {
-  width: $main-content-width;
-  height: 100px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: $box-shadow;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-
-  &-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-  }
-}
-
-.ai {
-  width: $main-content-width;
-  height: 100px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: $box-shadow;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-
-  &-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-}
-.community {
-  width: $main-content-width;
-  height: 100px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: $box-shadow;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-
-  &-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    img {
+      width: 2em;
+    }
   }
 }
