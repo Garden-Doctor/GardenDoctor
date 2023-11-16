@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
 
 import "../styles/topbar.scss";
 import axios from "axios";
+import SideBar from "./SideBar";
 
 const TopBar = () => {
   const closeSidebar = () => {
