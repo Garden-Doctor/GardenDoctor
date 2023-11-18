@@ -1,5 +1,9 @@
 import React from "react";
-import "../../sytles/board.scss";
+import "../../styles/board.scss";
+import { useSelector } from "react-redux";
+import redLike from "../../images/redLike.png";
+import likeIcon from "../../images/likeIcon.png";
+import commentIcon from "../../images/commentIcon.png";
 
 const BoardBox = ({
   imgSrc,
@@ -28,6 +32,12 @@ const BoardBox = ({
 
   const formattedDate = formatDate(day);
 
+  const reduxUserId = useSelector((state) => state.user);
+
+  // 좋아요를 눌렀는지 여부를 확인하는 함수
+  const isLikedByUser =
+    likeData && likeData.some((like) => like.userId === reduxUserId);
+
   const clickedBoard = (e) => {
     navigate(`/boardDetail/${userId}/${boardId}`);
   };
@@ -46,18 +56,14 @@ const BoardBox = ({
       <img
         className="boardBox-likeButton"
         alt="좋아요"
-        src="imgs/likeIcon.png"
+        src={isLikedByUser ? redLike : likeIcon}
       />
       {likeData ? (
         <span className="boardBox-likeNum">{likeData.length}</span>
       ) : (
         <span className="boardBox-likeNum">0</span>
       )}
-      <img
-        className="boardBox-commentButton"
-        alt="댓글"
-        src="imgs/commentIcon.png"
-      />
+      <img className="boardBox-commentButton" alt="댓글" src={commentIcon} />
       {commentData ? (
         commentData.map((comment) => (
           <span className="boardBox-commentNum">{commentData.length}</span>

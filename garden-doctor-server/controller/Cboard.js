@@ -1,3 +1,4 @@
+const { and } = require("sequelize");
 const { User, Board, Comment, Like } = require("../models");
 
 const getBoards = async (req, res) => {
@@ -86,11 +87,10 @@ const patch_todo = (req, res) => {
 
 const postLike = async (req, res) => {
   try {
-    console.log(req.body);
-    const { userId, boardId } = req.body;
+    const { userId } = req.body;
     const upload = await Like.create({
       userId,
-      boardId,
+      boardId: req.params.boardId,
     });
     console.log(upload);
     res.send(upload);
@@ -99,10 +99,11 @@ const postLike = async (req, res) => {
   }
 };
 
-const postUnlike = (req, res) => {
-  const { likeId } = req.body;
+const deleteLike = (req, res) => {
+  const { boardId } = req.params;
+  const { userId } = req.body;
   Like.destroy({
-    where: { likeId },
+    where: { userId, boardId },
   }).then(() => {
     res.json({ result: true });
   });
@@ -184,7 +185,7 @@ module.exports = {
   getComments,
   getComment,
   postLike,
-  postUnlike,
+  deleteLike,
   getLikes,
   getLike,
   patch_todo,

@@ -1,10 +1,8 @@
 import Board from "./components/community/Board";
 
 import Footer from "./components/Footer";
-import NaviBar from "./components/NaviBar";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
-import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Login from "./components/logIn/Login";
 import Signup from "./components/signUp/Signup";
@@ -13,6 +11,7 @@ import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
 import BoardDetail from "./components/community/BoardDetail";
 import EditBoard from "./components/community/EditBoard";
+import BottomBar from "./components/BottomBar";
 
 function App() {
   return (
@@ -42,7 +41,7 @@ function App() {
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>
         </div>
-        <Footer />
+        <BottomBar></BottomBar>
       </BrowserRouter>
     </>
   );
