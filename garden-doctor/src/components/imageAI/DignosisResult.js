@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/imageAI/dignosisResult.scss";
 
@@ -67,6 +67,15 @@ const DignosisResult = () => {
     }
   }, [location.search]);
 
+  const navigate = useNavigate();
+
+  const chatButton = () => {
+    navigate("/chat");
+  };
+  const imageAIButton = () => {
+    navigate("/imageAI");
+  };
+
   return (
     <div className="dignosisResult-main-container">
       <h2 className="title">병충해 진단 결과</h2>
@@ -83,11 +92,15 @@ const DignosisResult = () => {
       </div>
       <div className="chat">
         <div className="chatAI">더 자세한 질문을 하고 싶으신가요?</div>
-        <button className="chatAIButton">AI 도우미</button>
+        <button className="chatAIButton" onClick={chatButton}>
+          AI 도우미
+        </button>
       </div>
       <div className="image">
         <div className="imageAI">다른 작물에 대한 진단을 받고 싶으신가요?</div>
-        <button className="imageAIButton">진단하기</button>
+        <button className="imageAIButton" onClick={imageAIButton}>
+          진단하기
+        </button>
       </div>
     </div>
   );
