@@ -1,0 +1,19 @@
+$minWidth: 360px;
+$maxWidth: 1024px;
+
+$minHeight: 640px;
+$maxHeight: 1366px;
+
+.app-container {
+  width: 100%;
+  max-width: $maxWidth;
+  margin: 0 auto;
+
+  @media (min-width: $minWidth) {
+    width: 100%; /* 360px 이상일 때 전체 너비로 확장 */
+  }
+
+  @media (min-width: $maxWidth) {
+    width: $maxWidth; /* 1024px 이상일 때는 최대 너비 1024px로 고정 */
+  }
+}
