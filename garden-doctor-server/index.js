@@ -46,7 +46,10 @@ const upload = multer({
 //multer업로드
 app.post("/upload", upload.array("files"), (req, res) => {
   console.log("asdsadasd", req.files[0].location);
-  res.send(req.files[0].location);
+  const fileLocations = req.files.map((file) => file.location);
+  console.log("Uploaded file locations:", fileLocations);
+  // res.send(req.files[0].location);
+  res.send(fileLocations);
 });
 
 //router 분리
@@ -61,7 +64,7 @@ app.use("*", (req, res) => {
   res.status(404).render("404");
 });
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
   });
