@@ -26,4 +26,10 @@ router.delete("/deleteBoard/:boardId", controller.deleteBoard);
 
 router.patch("/updateBoard/:boardId", controller.updateBoard);
 
+router.post("/myBoards", controller.myBoard);
+
+router.post("/myBoards/comment", controller.myBoardComment);
+
+router.post("/myBoards/like", controller.myBoardLike);
+
 module.exports = router;

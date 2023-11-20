@@ -178,6 +178,52 @@ const updateBoard = async (req, res) => {
   }
 };
 
+const myBoard = async (req, res) => {
+  const { userId } = req.body;
+  console.log("userId", userId);
+  try {
+    const myBoards = await Board.findAll({
+      where: { userId },
+      attributes: [
+        "boardId",
+        "text",
+        "img",
+        "createdAt",
+        "updatedAt",
+        "userId",
+      ],
+    });
+    console.log("myBoards", myBoards);
+    res.status(200).send(myBoards);
+  } catch (error) {
+    res.status(500).send({ message: "에러발생", error });
+  }
+};
+
+const myBoardComment = async (req, res) => {
+  try {
+    const myBoardComments = await Comment.findAll({
+      attributes: ["boardId", "userId", "commentText", "commentId"],
+    });
+    console.log("myBoardComment", myBoardComments);
+    res.status(200).send(myBoardComments);
+  } catch (error) {
+    res.status(500).send({ message: "에러발생", error });
+  }
+};
+
+const myBoardLike = async (req, res) => {
+  try {
+    const myBoardLikes = await Like.findAll({
+      attributes: ["LikeId", "userId", "boardId"],
+    });
+    console.log("myBoardLike", myBoardLikes);
+    res.status(200).send(myBoardLikes);
+  } catch (error) {
+    res.status(500).send({ message: "에러 발생", error });
+  }
+};
+
 module.exports = {
   getBoards,
   uploadBoard,
@@ -192,4 +238,7 @@ module.exports = {
   deleteBoard,
   getBoard,
   updateBoard,
+  myBoard,
+  myBoardComment,
+  myBoardLike,
 };
