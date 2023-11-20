@@ -61,23 +61,40 @@ $color: rgb(229, 243, 223);
   text-align: center;
   margin: 0 auto;
   margin-top: 5%;
+  color: white;
 }
 .solution {
   margin: 5%;
 }
 
 .chat {
-  margin-right: 15%;
-  margin-left: 15%;
+  width: 65%;
+  margin-top: 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .image {
-  margin-right: 15%;
-  margin-left: 15%;
+  width: 65%;
+  margin-top: 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.chatAIButton {
+  color: white;
+  background-color: #3cb362;
+  border-radius: 10px;
+  border: hidden;
+  width: 90px;
+}
+
+.imageAIButton {
+  color: white;
+  background-color: #3cb362;
+  border-radius: 10px;
+  border: hidden;
+  width: 90px;
 }

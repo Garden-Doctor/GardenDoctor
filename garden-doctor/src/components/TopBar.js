@@ -6,7 +6,6 @@ import SideBar from "./SideBar";
 
 import "../styles/topbar.scss";
 import axios from "axios";
-import SideBar from "./SideBar";
 
 const TopBar = () => {
   const closeSidebar = () => {

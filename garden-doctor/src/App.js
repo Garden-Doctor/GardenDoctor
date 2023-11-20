@@ -17,7 +17,7 @@ import BottomBar from "./components/BottomBar";
 import Dignose from "./components/imageAI/Dignose";
 import DignoseResult from "./components/imageAI/DignosisResult";
 
-import BottomBar from "./components/BottomBar";
+import Home from "./components/Home";
 import Board from "./components/community/Board";
 import Footer from "./components/Footer";
 import NaviBar from "./components/NaviBar";
@@ -62,7 +62,6 @@ function App() {
           </Routes>
         </div>
         <BottomBar></BottomBar>
-        <BottomBar />
       </BrowserRouter>
     </>
   );
