@@ -71,7 +71,7 @@ const BoardBox = ({
       ) : (
         <span className="boardBox-commentNum">0</span>
       )}
-      <img className="boardBox-BoardImg" alt="BoardImg" src={imgSrc}></img>
+      <img className="boardBox-BoardImg" alt="BoardImg" src={imgSrc[0]}></img>
     </div>
   );
 };

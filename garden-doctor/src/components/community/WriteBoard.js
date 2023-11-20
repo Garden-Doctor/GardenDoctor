@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../styles/writeBoard.scss";
+import camera from "../../images/camera.png";
 
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
@@ -98,7 +99,7 @@ const WriteBoard = () => {
               className="writeBoard-imageUpload"
               onClick={handleImageUploadClick}
             >
-              <img src="imgs/camera.png" alt="카메라" />
+              <img src={camera} alt="카메라" />
               <span>클릭하여 이미지 추가</span>
             </div>
           )}
