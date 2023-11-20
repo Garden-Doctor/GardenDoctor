@@ -14,13 +14,13 @@ router.get("/getComments", controller.getComments);
 
 router.get("/getComment/:boardId", controller.getComment);
 
-router.post("/postLike", controller.postLike);
-
-router.post("/postUnlike", controller.postUnlike);
+router.post("/postLike/:boardId", controller.postLike);
 
 router.get("/getLikes", controller.getLikes);
 
 router.get("/getLike/:boardId", controller.getLike);
+
+router.delete("/deleteLike/:boardId", controller.deleteLike);
 
 router.delete("/deleteBoard/:boardId", controller.deleteBoard);
 

@@ -1,6 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
-import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 
 import Signup from "./components/signUp/Signup";
@@ -14,6 +13,7 @@ import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
 import BoardDetail from "./components/community/BoardDetail";
 import EditBoard from "./components/community/EditBoard";
+import BottomBar from "./components/BottomBar";
 
 import Dignose from "./components/imageAI/Dignose";
 import DignoseResult from "./components/imageAI/DignosisResult";
@@ -64,7 +64,11 @@ function App() {
             ></Route>
           </Routes>
         </div>
-        <BottomBar />s
+
+        <BottomBar></BottomBar>
+
+        <BottomBar />
+
       </BrowserRouter>
     </>
   );
