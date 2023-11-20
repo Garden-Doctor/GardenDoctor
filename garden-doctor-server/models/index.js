@@ -11,6 +11,9 @@ const sequelize = new Sequelize(
   config
 );
 
+//모델
+db.Plantsolution = require("./Plantsolution")(sequelize);
+
 //모델12
 db.User = require("./User")(sequelize);
 

@@ -59,6 +59,9 @@ app.use("/sign", sign);
 const board = require("./routes/board.js");
 app.use("/board", board);
 
+const plantsolution = require("./routes/plantsolution.js");
+app.use("/dignosisResult", plantsolution);
+
 //오류처리
 app.use("*", (req, res) => {
   res.status(404).render("404");
