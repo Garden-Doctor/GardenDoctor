@@ -1,10 +1,20 @@
 /* boardDetail.scss */
 
+//스크롤 숨기기
+.BoardDetail-comments::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+.BoardDetail-container::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+//////
+
 .BoardDetail-container {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
   width: 90%;
+  max-width: 700px;
   height: 500px;
   border: 1px solid #858585;
   background: #fff;
@@ -30,16 +40,35 @@
   font-weight: bold;
 }
 
-.BoardDetail-editButton {
+.BoardDetail-editButton,
+.BoardDetail-deleteButton {
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.5s ease;
+  color: white;
   position: absolute;
   top: 20px;
+}
+
+.BoardDetail-editButton {
+  background-color: #4caf50; // 수정 버튼 배경색
   right: 60px;
+
+  &:hover {
+    background-color: #317132; // 마우스 호버 시 배경색 변경
+  }
 }
 
 .BoardDetail-deleteButton {
-  position: absolute;
-  top: 20px;
+  background-color: #f44336; // 삭제 버튼 배경색
   right: 15px;
+
+  &:hover {
+    background-color: #a22c24; // 마우스 호버 시 배경색 변경
+  }
 }
 
 .BoardDetail-boardImg {
@@ -53,6 +82,7 @@
 }
 
 .BoardDetail-likeImg {
+  cursor: pointer;
   position: absolute;
   top: 320px;
   width: 30px;
@@ -61,7 +91,7 @@
 .BoardDetail-likeNum {
   position: absolute;
   top: 323px;
-  left: 40px;
+  left: 44px;
   font-weight: 800;
 }
 
@@ -87,7 +117,10 @@
   position: absolute;
   top: 385px;
   left: 20px;
-  height: 30px;
+  height: 85px;
+  width: 95%;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .BoardDetail-comments p {
@@ -102,4 +135,39 @@
 
 .BoardDetail-comments p span {
   margin-left: 5px;
+}
+
+.BoardDetail-commentInput {
+  display: flex;
+  margin-top: 470px;
+  height: 30px;
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px;
+    background-color: #34db71;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-content: center;
+    transition: background-color 0.5s ease;
+
+    &:hover {
+      background-color: rgb(21, 188, 77);
+    }
+
+    img {
+      width: 15px;
+    }
+  }
 }

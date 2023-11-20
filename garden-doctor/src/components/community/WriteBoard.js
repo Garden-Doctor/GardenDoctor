@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "../../sytles/writeBoard.scss";
+import "../../styles/writeBoard.scss";
 
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
@@ -15,10 +15,11 @@ const WriteBoard = () => {
   const uploadButton = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const file = fileInputRef.current.files[0];
+    const files = fileInputRef.current.files;
 
-    if (file) {
-      formData.append("files", file);
+    // 선택된 파일들을 FormData에 추가
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
     }
 
     try {
@@ -107,6 +108,7 @@ const WriteBoard = () => {
             ref={fileInputRef}
             style={{ display: "none" }}
             onChange={handleImageChange}
+            multiple
           />
           <div className="writeBoard-boardTitle">
             제목 <br />

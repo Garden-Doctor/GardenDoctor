@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "../../sytles/writeBoard.scss";
+import "../../styles/writeBoard.scss";
+import arrowRight from "../../images/arrow-right.png";
 
 const EditBoard = () => {
   const { userId, boardId } = useParams();
@@ -99,7 +100,7 @@ const EditBoard = () => {
       <div className="writeBoard-container">
         <img
           className="writeBoard-arrow"
-          src="imgs/arrow-right.png"
+          src={arrowRight}
           alt=""
           onClick={beforePage}
         />
