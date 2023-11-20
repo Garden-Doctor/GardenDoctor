@@ -7,6 +7,8 @@ import likeIcon from "../../images/likeIcon.png";
 import profileExample from "../../images/profile.png";
 import sendImage from "../../images/send-image.png";
 import redLike from "../../images/redLike.png";
+import rightArrow from "../../images/rightArrow.png";
+import leftArrow from "../../images/leftArrow.png";
 
 const BoardDetail = () => {
   const { userId, boardId } = useParams();
@@ -21,6 +23,7 @@ const BoardDetail = () => {
   const commentsDivRef = useRef();
   const navigate = useNavigate();
   const reduxUserId = useSelector((state) => state.user);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,6 +147,18 @@ const BoardDetail = () => {
     }
   };
 
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? boardData.img.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === boardData.img.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <div className="main-container">
       <div className="large-container">
@@ -167,9 +182,25 @@ const BoardDetail = () => {
               </button>
             </>
           )}
+          {boardData.img.length > 1 && (
+            <>
+              <button
+                className="BoardDetail-prevButton"
+                onClick={handlePrevImage}
+              >
+                <img src={leftArrow} alt="previmg" />
+              </button>
+              <button
+                className="BoardDetail-nextButton"
+                onClick={handleNextImage}
+              >
+                <img src={rightArrow} alt="nextimg" />
+              </button>
+            </>
+          )}
           <img
             className="BoardDetail-boardImg"
-            src={boardData.img}
+            src={boardData.img[currentImageIndex]}
             alt="BoardImage"
           />
           <img
