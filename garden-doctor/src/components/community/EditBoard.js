@@ -112,7 +112,7 @@ const EditBoard = () => {
               onClick={handleImageUploadClick}
             >
               <div className="writeBoard-imagePreview">
-                {/* 이미지 미리보기 */}
+                {/* 이미지 미리보기11 */}
                 <img src={imagePreviewUrl} alt="Preview" />
                 <span>클릭하여 이미지 추가</span>
               </div>
