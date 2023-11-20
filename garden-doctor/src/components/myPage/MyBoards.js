@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 const MyBoards = () => {
   const userId = useSelector((state) => state.user);
   const [boards, setBoards] = useState([]);
-  const [commentInputs, setCommentInputs] = useState(null);
   const [commentData, setCommentData] = useState(null);
   const [likeData, setLikeData] = useState(null);
+  const [showMyboards, setShowMyBoards] = useState(false);
+  const [likeBoards, setLikeBoards] = useState(false);
 
+  //내 게시글 불러오기
   useEffect(() => {
     const myboards = async () => {
       try {
@@ -28,9 +30,6 @@ const MyBoards = () => {
         });
 
         setBoards(sortedBoards);
-        setCommentInputs(new Array(sortedBoards.length).fill(""));
-
-        //boardId를 가지고 그에 해당하는 댓글 및 좋아요 수 가져오기
         const groupedCommentData = groupCommentsByBoardId(commentRes.data);
         setCommentData(groupedCommentData);
 
@@ -41,7 +40,7 @@ const MyBoards = () => {
       }
     };
     myboards();
-  }, [userId]); //useEffect의 의존성 배열을 추가하여 userId가 변경될때마다 useEffect가 실행되게 함.
+  }, [userId, showMyboards]); //useEffect의 의존성 배열을 추가하여 userId가 변경될때마다 useEffect가 실행되게 함.
   const groupCommentsByBoardId = (comments) => {
     const groupedData = {};
     comments.forEach((comment) => {
@@ -65,51 +64,40 @@ const MyBoards = () => {
     });
     return groupedData;
   };
+
+  //좋아요 게시글 찾기
+
   const navigate = useNavigate();
 
-  const postCommentButton = async (e, index) => {
-    try {
-      const commentText = commentInputs[index];
-      const data = {
-        commentText,
-        userId: userId,
-        boardId: e.target.value,
-        commentId: commentData[e.target.value]
-          ? commentData[e.target.value].length + 1
-          : 1,
-      };
-
-      const updatedCommentData = { ...commentData };
-      if (updatedCommentData[e.target.value]) {
-        updatedCommentData[e.target.value].push(data);
-      } else {
-        updatedCommentData[e.target.value] = [data];
-      }
-      setCommentData(updatedCommentData);
-      setCommentInputs((prevInputs) =>
-        prevInputs.map((input, i) => (i === index ? "" : input))
-      );
-    } catch (error) {
-      console.error("Error posting comment:", error);
-    }
+  const myBoardsClick = () => {
+    setShowMyBoards(true);
+  };
+  const likeBoardsClick = () => {
+    setLikeBoards(true);
+    setShowMyBoards(false);
   };
   return (
     <div className="myBoard-main-container">
-      {boards.map((item, index) => (
-        <BoardBox
-          key={item.boardId}
-          imgSrc={item.img}
-          text={item.text}
-          userId={item.userId}
-          boardId={item.boardId}
-          likeData={likeData && likeData[item.boardId]}
-          commentData={commentData && commentData[item.boardId]}
-          day={item.createdAt}
-          commentInput={commentInputs[index]}
-          onPostComment={(e) => postCommentButton(e, index)}
-          navigate={navigate}
-        />
-      ))}
+      <button className="myBoardsButton" onClick={myBoardsClick}>
+        내 게시글
+      </button>
+      <button className="likeBoardsButton" onClick={likeBoardsClick}>
+        좋아요한 게시글
+      </button>
+      {showMyboards &&
+        boards.map((item, index) => (
+          <BoardBox
+            key={item.boardId}
+            imgSrc={item.img}
+            text={item.text}
+            userId={item.userId}
+            boardId={item.boardId}
+            likeData={likeData && likeData[item.boardId]}
+            commentData={commentData && commentData[item.boardId]}
+            day={item.createdAt}
+            navigate={navigate}
+          />
+        ))}
     </div>
   );
 };
