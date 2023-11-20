@@ -59,12 +59,15 @@ app.use("/sign", sign);
 const board = require("./routes/board.js");
 app.use("/board", board);
 
+const plantsolution = require("./routes/plantsolution.js");
+app.use("/dignosisResult", plantsolution);
+
 //오류처리
 app.use("*", (req, res) => {
   res.status(404).render("404");
 });
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
   });

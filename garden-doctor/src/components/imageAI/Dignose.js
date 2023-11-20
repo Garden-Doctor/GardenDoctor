@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/dignose.scss";
+import "../../styles/imageAI/dignose.scss";
 import Dignose2 from "../../imgs/dignose2.svg";
 import plantOptions from "./PlantOptions";
 import camera from "../../imgs/camera.svg";
@@ -21,11 +21,82 @@ const Dignose = () => {
   const dignosePlant = async () => {
     let URL;
     console.log("selectedPlant", selectedPlant);
-    //식물에 선택에 맞는 URL 불러오기.
-    if (selectedPlant === "grape") {
-      URL = "https://teachablemachine.withgoogle.com/models/qX_qUo9Fg/";
-    }
 
+    //식물에 선택에 맞는 URL 불러오기.
+    switch (selectedPlant) {
+      case "grape":
+        URL = "https://teachablemachine.withgoogle.com/models/qX_qUo9Fg/";
+        break;
+      case "eggPlant":
+        URL = "";
+        break;
+      case "pepper":
+        URL = "";
+        break;
+      case "sweetPumpkin":
+        URL = "https://teachablemachine.withgoogle.com/models/jY9AAPL6s/";
+        break;
+      case "strawberry":
+        URL = "https://teachablemachine.withgoogle.com/models/7JqoAYQbO/";
+        break;
+      case "lettuce":
+        URL = "https://teachablemachine.withgoogle.com/models/fAMkn0KNO/";
+        break;
+      case "watermelon":
+        URL = "https://teachablemachine.withgoogle.com/models/wW0TgzYsy";
+        break;
+      case "squash":
+        URL = "https://teachablemachine.withgoogle.com/models/rI5TD20Jm/";
+        break;
+      case "zucchiniPumpkin":
+        URL = "https://teachablemachine.withgoogle.com/models/5woOHDAqq/";
+        break;
+      case "cucumber":
+        URL = "https://teachablemachine.withgoogle.com/models/x7QkPjx0i/";
+        break;
+      case "melon":
+        URL = "https://teachablemachine.withgoogle.com/models/Dy99PfcqR/";
+        break;
+      case "tomato":
+        URL = "";
+        break;
+      case "potato":
+        URL = "";
+        break;
+      case "greenOnion":
+        URL = "";
+        break;
+      case "radish":
+        URL = "";
+        break;
+      case "onion":
+        URL = "";
+        break;
+      case "carrot":
+        URL = "";
+        break;
+      case "bean":
+        URL = "";
+        break;
+      case "sesame":
+        URL = "";
+        break;
+      case "sweetPotato":
+        URL = "";
+        break;
+      case "napaCabbage":
+        URL = "";
+        break;
+      case "pumpkin":
+        URL = "";
+        break;
+      case "cabbage":
+        URL = "";
+        break;
+      default:
+        console.log("해당하는 URL이 없습니다.");
+        break;
+    }
     //URL에 따라 예측하기
     if (URL) {
       const modelURL = URL + "model.json";
@@ -37,7 +108,8 @@ const Dignose = () => {
 
       //이미지 예측 실행
       const result = await predict();
-
+      const image = selectedImage;
+      sessionStorage.setItem("selectedImageUrl", image);
       navigate(`/diagnosisResult?result=${result}`);
     } else {
       console.log("식물에 대한 URL이 선택되지 않았습니다.");
@@ -58,7 +130,6 @@ const Dignose = () => {
         prediction[i].probability.toFixed(2) +
         "<br>";
     }
-    console.log("23");
     return predictions;
   }
 
