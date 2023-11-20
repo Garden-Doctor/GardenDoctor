@@ -14,7 +14,7 @@ const Model = (sequelize) => {
       allowNull: false,
     },
     img: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.JSON,
       allowNull: false,
     },
   });
