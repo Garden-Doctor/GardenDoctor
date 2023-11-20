@@ -19,6 +19,7 @@ import DignoseResult from "./components/imageAI/DignosisResult";
 
 import Home from "./components/Home";
 import Board from "./components/community/Board";
+import MyBoards from "./components/myPage/MyBoards";
 import Footer from "./components/Footer";
 import NaviBar from "./components/NaviBar";
 
@@ -59,6 +60,7 @@ function App() {
               path="/diagnosisResult"
               element={<DignoseResult></DignoseResult>}
             ></Route>
+            <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
           </Routes>
         </div>
         <BottomBar></BottomBar>
