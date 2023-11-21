@@ -66,7 +66,7 @@ const vectorStore = await PineconeStore.fromExistingIndex(
 const model = new ChatOpenAI({
   openAIApiKey: process.env.OPEN_AI_KEY,
   modelName: "gpt-3.5-turbo",
-  temperature: 0.9,
+  temperature: 0.3,
 });
 
 //Setting up memory for Conversational QA Chat History
@@ -101,7 +101,7 @@ const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
   returnSourceDocuments: true,
 });
 const response = await chain.call({
-  query: "배추 재배 시기가 궁금해",
+  query: "배추를 언제 심으면 좋을까?",
 });
 console.log(response);
 /*

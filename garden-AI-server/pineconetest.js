@@ -19,7 +19,7 @@ dotenv.config();
 const pinecone = new Pinecone();
 const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX);
 
-const loader = new PDFLoader("./배추.pdf", {
+const loader = new PDFLoader("./고추.pdf", {
   splitPages: false,
 });
 
@@ -87,7 +87,7 @@ const chain = ConversationalRetrievalQAChain.fromLLM(
 );
 
 const result = await chain.call({
-  question: "배추의 기상재해에 대해 알려줘",
+  question: "고추의 기상재해에 대해 알려줘",
 });
 console.log(result);
 
