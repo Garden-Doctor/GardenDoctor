@@ -16,6 +16,22 @@ const Model = (sequelize) => {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    nickName: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    birth: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    telNum: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    userImg: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+    },
   });
 };
 
