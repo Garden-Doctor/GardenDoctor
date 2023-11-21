@@ -36,7 +36,9 @@ a:active {
 
 .weather-container {
   width: $main-content-width;
-  height: 5em;
+  height: 10em;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
   background-color: $main-content-color;
   margin-top: 10px;
 }
@@ -50,7 +52,7 @@ a:active {
 
 .dignose-container {
   width: $main-content-width;
-  height: 13vh;
+  height: 13 vh;
   background-color: $main-content-color;
   display: flex;
   flex-direction: column;
