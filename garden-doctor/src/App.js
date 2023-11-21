@@ -6,7 +6,7 @@ import Signup from "./components/signUp/Signup";
 import WriteBoard from "./components/community/WriteBoard";
 
 import Login from "./components/logIn/Login";
-import Chat from "./components/chatAI/chatBackground";
+import Chat from "./components/chatAI/Chat";
 
 import Main from "./components/main/Main";
 import TopBar from "./components/TopBar";
@@ -63,7 +63,7 @@ function App() {
             <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
           </Routes>
         </div>
-        <BottomBar></BottomBar>
+        <BottomBar />
       </BrowserRouter>
     </>
   );

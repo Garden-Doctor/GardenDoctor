@@ -10,7 +10,7 @@ const Chats = (sequelize) => {
       autoIncrement: true,
     },
     chatMessage: {
-      type: DataTypes.STRING(500),
+      type: DataTypes.STRING(1000),
       allowNull: false,
     },
   });
