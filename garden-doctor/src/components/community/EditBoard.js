@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "../../sytles/writeBoard.scss";
+import "../../styles/writeBoard.scss";
 
 const EditBoard = () => {
   const { userId, boardId } = useParams();

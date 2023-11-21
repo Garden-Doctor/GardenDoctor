@@ -1,5 +1,5 @@
 import React from "react";
-import "../../sytles/board.scss";
+import "../../styles/board.scss";
 
 const BoardBox = ({
   imgSrc,
