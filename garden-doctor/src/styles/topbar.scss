@@ -9,7 +9,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  img {
+  #menu {
+    width: 20px;
+    margin-left: 20px;
+  }
+
+  #logo-img {
     height: 5vh;
     margin-left: 0.5em;
   }

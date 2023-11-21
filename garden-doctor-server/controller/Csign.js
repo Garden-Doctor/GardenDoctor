@@ -17,7 +17,7 @@ const signup = async (req, res) => {
     console.log(req.body);
     const { name, id, pw } = req.body;
     const newPw = bcryptPassword(pw);
-    const signup = await User.create({
+    const signup = await db.User.create({
       name,
       userId: id,
       pw: newPw,
@@ -40,7 +40,7 @@ const login = async (req, res) => {
         const compare = comparePassword(pw, result.dataValues.pw);
         const { id } = req.body;
         const token = jwt.sign({ id }, SECRET);
-        res.send({ result: compare, token: token });
+        res.send({ result: compare, token: token, id: id });
       } else {
         res.send({ result: false });
       }

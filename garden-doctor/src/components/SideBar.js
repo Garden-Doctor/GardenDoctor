@@ -1,65 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/sidebar.scss";
 
-const Sidebar = ({ width = 280, children }) => {
-  const [isOpen, setOpen] = useState(false);
-  const [xPosition, setX] = useState(-width);
-  const side = useRef();
-
-  // button 클릭 시 토글
-  const toggleMenu = () => {
-    if (xPosition < 0) {
-      setX(0);
-      setOpen(true);
-    } else {
-      setX(-width);
-      setOpen(false);
-    }
-  };
-
-  // 사이드바 외부 클릭시 닫히는 함수
-  const handleClose = async (e) => {
-    let sideArea = side.current;
-    let sideCildren = side.current.contains(e.target);
-    if (isOpen && (!sideArea || !sideCildren)) {
-      await setX(-width);
-      await setOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("click", handleClose);
-    return () => {
-      window.removeEventListener("click", handleClose);
-    };
-  });
-
+const SideBar = ({ onClose }) => {
   return (
     <div className="sidebar-container">
-      <div
-        ref={side}
-        className="sidebar-sidebar"
-        style={{
-          width: `${width}px`,
-          height: "100%",
-          transform: `translatex(${-xPosition}px)`,
-        }}
-      >
-        <button onClick={() => toggleMenu()} className="sidebar-button">
-          {isOpen ? (
-            <span>X</span>
-          ) : (
-            <img
-              src="imgs/ai.svg"
-              alr="contact open button"
-              className="sidebar-openBtn"
-            />
-          )}
-        </button>
-        <div className="sidebar-content">{children}</div>
+      <p className="sidebar-eixtbutton" onClick={onClose}>
+        <img alt="나가기" src="/imgs/exit.svg" />
+      </p>
+      <p>
+        <img alt="사람" src="/imgs/user.svg" />
+      </p>
+      <p>누구님</p>
+      <p>마이페이지</p>
+      <div className="sidebar-menu">
+        <span active={true} component={<Link to="/" />}>
+          {"병충해 진단"}
+        </span>
+        <span active={true} component={<Link to="/board" />}>
+          {"AI 도우미"}
+        </span>
+        <span active={true} component={<Link to="/board" />}>
+          {"소통의 정원"}
+        </span>
+        <span active={true} component={<Link to="/board" />}>
+          {"내 작물"}
+        </span>
+        <span active={true} component={<Link to="/board" />}>
+          {"내 게시글"}
+        </span>
+        <span />
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default SideBar;

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LOGIN } from "../../store/isLogin";
 
 import "../../styles/login.scss";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
@@ -30,6 +33,7 @@ const Login = () => {
         console.log(data);
         alert("로그인 성공");
         sessionStorage.setItem("token", data.token);
+        dispatch({ type: LOGIN, user: data.id });
         navigate("/");
       } else {
         console.log(data);

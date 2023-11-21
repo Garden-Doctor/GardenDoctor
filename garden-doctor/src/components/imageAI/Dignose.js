@@ -1,12 +1,66 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/dignose.scss";
 import Dignose2 from "../../imgs/dignose2.svg";
 import plantOptions from "./PlantOptions";
 import camera from "../../imgs/camera.svg";
+import * as tmImage from "@teachablemachine/image";
+
+let model, labelContainer, maxPredictions;
 
 const Dignose = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedPlant, setSelectedPlant] = useState("");
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handlePlantSelect = (e) => {
+    setSelectedPlant(e.target.value);
+  };
+
+  const dignosePlant = async () => {
+    let URL;
+    console.log("selectedPlant", selectedPlant);
+    //식물에 선택에 맞는 URL 불러오기.
+    if (selectedPlant === "grape") {
+      URL = "https://teachablemachine.withgoogle.com/models/qX_qUo9Fg/";
+    }
+
+    //URL에 따라 예측하기
+    if (URL) {
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
+
+      //선택한 모델 로드
+      model = await tmImage.load(modelURL, metadataURL);
+      maxPredictions = model.getTotalClasses();
+
+      //이미지 예측 실행
+      const result = await predict();
+
+      navigate(`/diagnosisResult?result=${result}`);
+    } else {
+      console.log("식물에 대한 URL이 선택되지 않았습니다.");
+    }
+  };
+
+  async function predict() {
+    //예측 로직 수행
+    const image = new Image();
+    image.src = selectedImage;
+    const prediction = await model.predict(image, false);
+    let predictions = "";
+    console.log("predict");
+    for (let i = 0; i < maxPredictions; i++) {
+      predictions +=
+        prediction[i].className +
+        ":" +
+        prediction[i].probability.toFixed(2) +
+        "<br>";
+    }
+    console.log("23");
+    return predictions;
+  }
 
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -41,9 +95,14 @@ const Dignose = () => {
         </div>
       </div>
 
-      <select name="selectPlant" className="selectPlant">
+      <select
+        name="selectPlant"
+        className="selectPlant"
+        onChange={handlePlantSelect}
+        value={selectedPlant}
+      >
         {plantOptions.map((option) => (
-          <option key={option.value} value={option.label}>
+          <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}
@@ -71,6 +130,7 @@ const Dignose = () => {
         {!selectedImage && (
           <div className="imageUploadWrap">
             <input
+              ref={fileInputRef}
               id="file-upload-input"
               className="fileUploadInput"
               type="file"
@@ -86,7 +146,7 @@ const Dignose = () => {
         )}
       </div>
 
-      <button className="diagnosticButton" type="submit">
+      <button className="diagnosticButton" type="submit" onClick={dignosePlant}>
         진단 받기
       </button>
     </div>
