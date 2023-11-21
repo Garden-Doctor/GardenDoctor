@@ -15,12 +15,13 @@ const comparePassword = (password, dbPassword) => {
 const signup = async (req, res) => {
   try {
     console.log(req.body);
-    const { name, id, pw } = req.body;
+    const { name, id, pw, nickName } = req.body;
     const newPw = bcryptPassword(pw);
     const signup = await User.create({
       name,
       userId: id,
       pw: newPw,
+      nickName: nickName,
     });
     console.log(signup);
     res.send(signup);
