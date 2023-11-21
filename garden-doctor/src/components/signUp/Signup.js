@@ -8,6 +8,7 @@ const Signup = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [checkPw, setCheckPw] = useState("");
+  const [nickName, setNickName] = useState("");
 
   const signupButton = () => {
     console.log(name, id, pw, checkPw);
@@ -19,6 +20,7 @@ const Signup = () => {
           name: name,
           id: id,
           pw: pw,
+          nickName: nickName,
         },
       });
       console.log(res.data);
@@ -67,6 +69,15 @@ const Signup = () => {
         placeholder="비밀번호 확인"
         onChange={(e) => {
           setCheckPw(e.target.value);
+        }}
+      />{" "}
+      <br />
+      닉네임:{" "}
+      <input
+        type="text"
+        placeholder="닉네임 설정"
+        onChange={(e) => {
+          setNickName(e.target.value);
         }}
       />{" "}
       <br />
