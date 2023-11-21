@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import BoardBox from "./BoardBox";
+import BoardWrite from "../../images/boardWrite.png";
 
 const Board = () => {
   const [loading, setLoading] = useState(true);
@@ -37,6 +38,8 @@ const Board = () => {
         setLikeData(groupedLikeData);
 
         setLoading(false);
+
+        console.log("userReduxName: " + username);
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
@@ -114,17 +117,17 @@ const Board = () => {
   };
 
   return (
-    <div className="">
+    <div className="large-container">
       <img
         className="boardWriteButton"
-        src="imgs/boardWrite.png"
+        src={BoardWrite}
         alt=""
         onClick={writeButton}
       />
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div>
+        <div className="large-container">
           {boards.map((item, index) => (
             <BoardBox
               key={item.boardId}

@@ -1,0 +1,100 @@
+@import "../utils.scss";
+
+$main-content-width: 320px;
+$box-shadow: 0 0 10px rgb(229, 243, 223);
+$color: rgb(229, 243, 223);
+
+.dignosisResult-main-container {
+  width: 100%;
+  height: 100%;
+  background-color: $color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-image {
+  background-color: #ffffff;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+
+  /* 360px 이상 1024px 미만일 때 */
+  @media screen and (min-width: 360px) and (max-width: 1024px) {
+    width: calc(200px + 2 * ((100vw - 360px) / 14));
+    height: calc(200px + 2 * ((100vw - 360px) / 14));
+  }
+
+  /* 1024px 이상일 때 */
+  @media screen and (min-width: 1024px) {
+    width: 300px;
+    height: 300px;
+  }
+  margin-top: 5%;
+  text-align: center;
+  position: relative;
+  outline: rgb(77, 77, 77) solid 2px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.plantSolutions {
+  background-color: #ffffff;
+  margin-right: 15%;
+  margin-left: 15%;
+  border-radius: 20px;
+}
+
+.explanation {
+  margin-top: 5%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.solutionTitle {
+  background-color: gray;
+  width: 100px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 5%;
+  color: white;
+}
+.solution {
+  margin: 5%;
+}
+
+.chat {
+  width: 65%;
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image {
+  width: 65%;
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chatAIButton {
+  color: white;
+  background-color: #3cb362;
+  border-radius: 10px;
+  border: hidden;
+  width: 90px;
+}
+
+.imageAIButton {
+  color: white;
+  background-color: #3cb362;
+  border-radius: 10px;
+  border: hidden;
+  width: 90px;
+}
