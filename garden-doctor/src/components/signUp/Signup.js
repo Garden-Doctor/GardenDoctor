@@ -34,45 +34,92 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="signup_container">
       <h1>회원가입</h1>
-      이름:{" "}
-      <input
-        type="text"
-        placeholder="이름"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />{" "}
-      <br />
-      아이디:{" "}
-      <input
-        type="text"
-        placeholder="아이디"
-        onChange={(e) => {
-          setId(e.target.value);
-        }}
-      />{" "}
-      <br />
-      비밀번호:{" "}
-      <input
-        type="text"
-        placeholder="비밀번호"
-        onChange={(e) => {
-          setPw(e.target.value);
-        }}
-      />{" "}
-      <br />
-      비밀번호 확인:{" "}
-      <input
-        type="text"
-        placeholder="비밀번호 확인"
-        onChange={(e) => {
-          setCheckPw(e.target.value);
-        }}
-      />{" "}
-      <br />
-      <button onClick={signupButton}>회원가입</button>
+      <div className="signup_top">
+        <div className="Box">
+          <img src="imgs/id.svg" className="idImg" />
+          <input
+            type="text"
+            placeholder="아이디"
+            onChange={(e) => {
+              setId(e.target.value);
+            }}
+            className="signup_id_input"
+          />
+          <button className="check_button">중복 확인</button>
+        </div>
+        <div className="Box">
+          <img src="imgs/password.svg" className="idImg" />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            className="signup_pw_input"
+            onChange={(e) => {
+              setPw(e.target.value);
+            }}
+          />
+        </div>
+        <div className="Box">
+          <img src="imgs/password.svg" className="idImg" />
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            className="signup_pwcheck_input"
+            onChange={(e) => {
+              setCheckPw(e.target.value);
+            }}
+          />
+          <button className="check_button">일치 확인</button>
+        </div>
+      </div>
+      <div className="signup_bottom">
+        <div className="Box">
+          <img src="imgs/id.svg" className="idImg" />
+          <input
+            type="text"
+            placeholder="이름"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+        <div className="Box">
+          <img src="imgs/id.svg" className="idImg" />
+          <input
+            type="text"
+            placeholder="닉네임"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <button className="check_button">중복 확인</button>
+        </div>
+        <div className="Box">
+          <img src="imgs/birth.svg" className="idImg" />
+          <input
+            type="date"
+            placeholder="생년월일"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+        <div className="Box">
+          <img src="imgs/phone.svg" className="idImg" />
+          <input
+            type="text"
+            placeholder="전화번호"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+
+      <button className="register_button" onClick={signupButton}>
+        회원가입
+      </button>
     </div>
   );
 };
