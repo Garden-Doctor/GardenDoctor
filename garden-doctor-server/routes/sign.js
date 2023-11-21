@@ -8,4 +8,6 @@ router.post("/login", controller.login);
 
 router.post("/verify", controller.verify);
 
+router.post("/myInfo", controller.myInfo);
+
 module.exports = router;

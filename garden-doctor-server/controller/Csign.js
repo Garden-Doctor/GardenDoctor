@@ -78,4 +78,18 @@ const delete_todo = (req, res) => {
   });
 };
 
-module.exports = { signup, login, verify, patch_todo, delete_todo };
+const myInfo = async (req, res) => {
+  const { userId } = req.body;
+  console.log("userId", userId);
+  try {
+    const myInfos = await User.findOne({
+      where: { userId: userId },
+      attributes: ["name", "nickName", "birth", "telNum", "userImg"],
+    });
+    res.status(200).send(myInfos);
+  } catch (error) {
+    res.status(500).send({ message: "에러발생", error });
+  }
+};
+
+module.exports = { signup, login, verify, patch_todo, delete_todo, myInfo };
