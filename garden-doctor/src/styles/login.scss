@@ -96,3 +96,13 @@ $pink-shadow: #ffe3e2;
     }
   }
 }
+
+.login_bottom {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  width: 270px;
+  span {
+    margin-bottom: 10px;
+  }
+}

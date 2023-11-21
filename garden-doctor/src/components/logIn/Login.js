@@ -8,6 +8,7 @@ import "../../styles/login.scss";
 
 const Login = () => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const [id, setId] = useState("");
@@ -42,6 +43,14 @@ const Login = () => {
     });
   };
 
+  const signupButton = () => {
+    navigate("/signup");
+  };
+
+  const findIdPwButton = () => {
+    navigate("/findIdPw");
+  };
+
   return (
     <div className="login-container">
       <img src="imgs/login_logo.png" alt="logo" />
@@ -68,6 +77,10 @@ const Login = () => {
         </button>
         <button className="loginbutton kakao">카카오톡으로 로그인</button>
       </span>
+      <div className="login_bottom">
+        <span onClick={signupButton}>회원가입</span>
+        <span onClick={findIdPwButton}>아이디 / 비밀번호 찾기</span>
+      </div>
     </div>
   );
 };

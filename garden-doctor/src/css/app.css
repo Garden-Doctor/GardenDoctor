@@ -1,0 +1,16 @@
+@charset "UTF-8";
+.app-container {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+@media (min-width: 360px) {
+  .app-container {
+    width: 100%; /* 360px 이상일 때 전체 너비로 확장 */
+  }
+}
+@media (min-width: 1024px) {
+  .app-container {
+    width: 1024px; /* 1024px 이상일 때는 최대 너비 1024px로 고정 */
+  }
+}/*# sourceMappingURL=app.css.map */
