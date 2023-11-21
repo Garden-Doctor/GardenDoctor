@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "../../sytles/writeBoard.scss";
+import "../../styles/writeBoard.scss";
 
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
