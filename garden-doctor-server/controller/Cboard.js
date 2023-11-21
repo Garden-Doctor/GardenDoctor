@@ -224,6 +224,41 @@ const myBoardLike = async (req, res) => {
   }
 };
 
+const findMyLike = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const findMyLikes = await Like.findAll({
+      where: { userId },
+      attributes: ["likeId", "userId", "boardId"],
+    });
+    console.log("findMyLike", findMyLikes);
+    res.status(200).send(findMyLikes);
+  } catch (error) {
+    res.status(500).send({ message: "에러 발생", error });
+  }
+};
+
+const findMyLikeBoards = async (req, res) => {
+  const { boardId } = req.body;
+  try {
+    const findMyLikeBoard = await Board.findAll({
+      where: { boardId },
+      attributes: [
+        "boardId",
+        "text",
+        "img",
+        "createdAt",
+        "updatedAt",
+        "userId",
+      ],
+    });
+    console.log("좋아요한 게시글", findMyLikeBoard);
+    res.status(200).send(findMyLikeBoard);
+  } catch (error) {
+    res.status(500).send({ message: "에러 발생", error });
+  }
+};
+
 module.exports = {
   getBoards,
   uploadBoard,
@@ -241,4 +276,6 @@ module.exports = {
   myBoard,
   myBoardComment,
   myBoardLike,
+  findMyLike,
+  findMyLikeBoards,
 };

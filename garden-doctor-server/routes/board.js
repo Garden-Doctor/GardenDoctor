@@ -32,4 +32,8 @@ router.post("/myBoards/comment", controller.myBoardComment);
 
 router.post("/myBoards/like", controller.myBoardLike);
 
+router.post("/myBoards/findMyLike", controller.findMyLike);
+
+router.post("/myBoards/findMyLikeBoards", controller.findMyLikeBoards);
+
 module.exports = router;
