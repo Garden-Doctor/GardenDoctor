@@ -84,7 +84,7 @@ const TopBar = () => {
         ) : (
           <>
             <button onClick={loginButton}>로그인</button>
-            {/* <button onClick={signupButton}>회원가입</button> */}
+            <button onClick={signupButton}>회원가입</button>
           </>
         )}
       </div>
