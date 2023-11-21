@@ -41,20 +41,28 @@ const SideBar = ({ onClose }) => {
 
   return (
     <div className="sidebar-container" ref={sideBarRef}>
-      <p className="sidebar-eixtbutton">
+      <div className="sidebar_eixtbutton">
         <img alt="나가기" src="/imgs/exit.svg" onClick={onClose} />
-      </p>
-      <p>
+      </div>
+      <div className="sidebar_top">
         <img alt="사람" src="/imgs/user.svg" />
-      </p>
-      <p>누구님</p>
-      <p onClick={mypageButton}>마이페이지</p>
-      <div className="sidebar-menu">
+        <p>누구님</p>
+        <span onClick={mypageButton}>마이페이지</span>
+      </div>
+      <div className="sidebar_menu">
         <span onClick={dignoseButton}>병충해 진단</span>
-        <span onClick={chatButton}>AI 도우미</span>
-        <span onClick={boardButton}>소통의 정원</span>
-        <span onClick={myplantButton}>내 작물</span>
-        <span onClick={myboardButton}>내 게시글</span>
+        <span onClick={chatButton} className="sidebar_border_inner">
+          AI 도우미
+        </span>
+        <span onClick={boardButton} className="sidebar_border_inner">
+          소통의 정원
+        </span>
+        <span onClick={myplantButton} className="sidebar_border_inner">
+          내 작물
+        </span>
+        <span onClick={myboardButton} className="sidebar_border_inner">
+          내 게시글
+        </span>
       </div>
     </div>
   );
