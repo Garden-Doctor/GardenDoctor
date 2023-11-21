@@ -1,8 +1,5 @@
 @import "./utils.scss";
 
-
-
-
 $main-content-width: 90%;
 $main-content-color: white;
 $box-shadow: 0 0 10px rgb(213, 213, 213);
@@ -12,7 +9,6 @@ body {
   background-color: $bg-color;
   padding-top: 7vh;
   padding-bottom: 7vh;
-
 }
 // body에 margin 8px가 들어있는데 어디있는 지 모르겠음
 
@@ -40,7 +36,9 @@ a:active {
 
 .weather-container {
   width: $main-content-width;
-  height: 5em;
+  height: 10em;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
   background-color: $main-content-color;
   margin-top: 10px;
 }
@@ -54,7 +52,7 @@ a:active {
 
 .dignose-container {
   width: $main-content-width;
-  height: 10vh;
+  height: 13 vh;
   background-color: $main-content-color;
   display: flex;
   flex-direction: column;
@@ -80,7 +78,7 @@ a:active {
 
 .chatAI-container {
   width: $main-content-width;
-  height: 10vh;
+  height: 13vh;
   background-color: $main-content-color;
   display: flex;
   flex-direction: column;
