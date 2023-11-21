@@ -1,19 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600&display=swap");
+
+$bg: #fff;
+$text: #382b22;
+$light-pink: #fff0f0;
+$pink: #ffe9e9;
+$dark-pink: #f9c4d2;
+$pink-border: #b18597;
+$pink-shadow: #ffe3e2;
+
 .login-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
+  .idBox {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    .idImg {
+      position: absolute;
+      margin-left: 10px;
+      z-index: 1;
+      width: 20px;
+    }
+    input {
+      position: relative;
+      padding: 8px 35px;
+      height: 30px;
+      width: 200px;
+      border: solid 1px black;
+      border-radius: 5px;
+      z-index: 0;
+    }
+  }
+  .pwBox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    .pwImg {
+      position: absolute;
+      margin-left: 10px;
+      z-index: 1;
+      width: 20px;
+    }
+    input {
+      position: relative;
+      padding: 8px 35px;
+      height: 30px;
+      width: 200px;
+      border: solid 1px black;
+      border-radius: 5px;
+      z-index: 0;
+    }
+  }
+
   .login-button-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     .loginbutton {
       position: relative;
       display: inline-block;
       font-size: 1em;
-      width: 100%;
+      font-family: "M PLUS 1", sans-serif;
+      font-weight: 600;
+      width: 270px;
+      height: 45px;
 
       margin: 0 auto;
       color: white;

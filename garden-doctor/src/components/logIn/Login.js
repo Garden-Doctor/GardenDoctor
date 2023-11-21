@@ -45,22 +45,23 @@ const Login = () => {
   return (
     <div className="login-container">
       <img src="imgs/login_logo.png" alt="logo" />
-      <p className="idBox">
-        <img src="imgs/id.svg" />
+      <div className="idBox">
+        <img src="imgs/id.svg" className="idImg" />
         <input
           type="text"
+          id="id_input"
           placeholder="아이디"
           onChange={(e) => setId(e.target.value)}
         />
-      </p>
-      <p className="pwBox">
-        <img src="imgs/pw.svg" />
+      </div>
+      <div className="pwBox">
+        <img src="imgs/pw.svg" className="pwImg" />
         <input
           type="text"
           placeholder="비밀번호"
           onChange={(e) => setPw(e.target.value)}
         />
-      </p>
+      </div>
       <span className="login-button-container">
         <button onClick={loginButton} className="loginbutton">
           로그인
