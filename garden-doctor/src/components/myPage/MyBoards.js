@@ -76,9 +76,11 @@ const MyBoards = () => {
         ]);
 
         const boardIds = likeRes.data.map((board) => board.boardId);
-        const updatedBoards = [...boards]; // 기존 게시글 상태 복사
+        const updatedBoards = []; // 기존 게시글 상태 복사
         const updatedCommentData = { ...commentData }; // 기존 댓글 데이터 복사
         const updatedLikeData = { ...likeData }; // 기존 좋아요 데이터 복사
+        console.log("boardIds", boardIds);
+        console.log("updatedBoards", updatedBoards);
 
         for (const boardId of boardIds) {
           try {
