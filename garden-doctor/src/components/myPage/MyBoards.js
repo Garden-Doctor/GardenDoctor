@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import BoardBox from "../community/BoardBox";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/myPage/myBoard.scss";
 
 const MyBoards = () => {
   const userId = useSelector((state) => state.user);
-  const location = useLocation();
   const [boards, setBoards] = useState([]);
   const [commentData, setCommentData] = useState(null);
   const [likeData, setLikeData] = useState(null);
