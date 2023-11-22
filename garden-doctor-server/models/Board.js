@@ -9,6 +9,10 @@ const Model = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
+    title: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+    },
     text: {
       type: DataTypes.STRING(500),
       allowNull: false,
