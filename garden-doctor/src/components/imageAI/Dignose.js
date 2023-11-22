@@ -28,10 +28,10 @@ const Dignose = () => {
         URL = "https://teachablemachine.withgoogle.com/models/qX_qUo9Fg/";
         break;
       case "eggPlant":
-        URL = "";
+        URL = "https://teachablemachine.withgoogle.com/models/_iqMdmzJL/";
         break;
       case "pepper":
-        URL = "";
+        URL = "https://teachablemachine.withgoogle.com/models/oDFePDvv-/";
         break;
       case "sweetPumpkin":
         URL = "https://teachablemachine.withgoogle.com/models/jY9AAPL6s/";
@@ -58,41 +58,41 @@ const Dignose = () => {
         URL = "https://teachablemachine.withgoogle.com/models/Dy99PfcqR/";
         break;
       case "tomato":
-        URL = "";
+        URL = "https://teachablemachine.withgoogle.com/models/KM_U4mSw6/";
         break;
-      case "potato":
-        URL = "";
-        break;
-      case "greenOnion":
-        URL = "";
-        break;
-      case "radish":
-        URL = "";
-        break;
-      case "onion":
-        URL = "";
-        break;
-      case "carrot":
-        URL = "";
-        break;
-      case "bean":
-        URL = "";
-        break;
-      case "sesame":
-        URL = "";
-        break;
-      case "sweetPotato":
-        URL = "";
-        break;
-      case "napaCabbage":
-        URL = "";
-        break;
-      case "pumpkin":
-        URL = "";
-        break;
-      case "cabbage":
-        URL = "";
-        break;
+      // case "potato":
+      //   URL = "";
+      //   break;
+      // case "greenOnion":
+      //   URL = "";
+      //   break;
+      // case "radish":
+      //   URL = "";
+      //   break;
+      // case "onion":
+      //   URL = "";
+      //   break;
+      // case "carrot":
+      //   URL = "";
+      //   break;
+      // case "bean":
+      //   URL = "";
+      //   break;
+      // case "sesame":
+      //   URL = "";
+      //   break;
+      // case "sweetPotato":
+      //   URL = "";
+      //   break;
+      // case "napaCabbage":
+      //   URL = "";
+      //   break;
+      // case "pumpkin":
+      //   URL = "";
+      //   break;
+      // case "cabbage":
+      //   URL = "";
+      // break;
       default:
         console.log("해당하는 URL이 없습니다.");
         break;
