@@ -15,18 +15,61 @@ const comparePassword = (password, dbPassword) => {
 const signup = async (req, res) => {
   try {
     console.log(req.body);
-    const { name, id, pw, nickName } = req.body;
+    const { name, id, pw, nickName, birth, telNum, img } = req.body;
+
     const newPw = bcryptPassword(pw);
+
     const signup = await User.create({
       name,
       userId: id,
       pw: newPw,
-      nickName: nickName,
+      nickName,
+      birth,
+      telNum,
+      userImg: img,
     });
     console.log(signup);
     res.send(signup);
   } catch (error) {
     console.log(error);
+  }
+};
+
+const checkId = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    const existingUser = await User.findOne({
+      where: {
+        userId: id,
+      },
+    });
+
+    if (existingUser) {
+      return res.json({ message: "중복되는 아이디가 있습니다." });
+    }
+    res.send({ message: "사용가능한 아이디입니다." });
+  } catch (error) {
+    console.log("id중복체크 eroor : ", error);
+  }
+};
+
+const checkNickname = async (req, res) => {
+  try {
+    const { nickName } = req.body;
+
+    const existingUser = await User.findOne({
+      where: {
+        nickName,
+      },
+    });
+
+    if (existingUser) {
+      return res.json({ message: "중복되는 닉네임이 있습니다." });
+    }
+    res.send({ message: "사용가능한 닉네임입니다." });
+  } catch (error) {
+    console.log("id중복체크 eroor : ", error);
   }
 };
 
@@ -92,4 +135,13 @@ const myInfo = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, verify, patch_todo, delete_todo, myInfo };
+module.exports = {
+  signup,
+  checkId,
+  checkNickname,
+  login,
+  verify,
+  patch_todo,
+  delete_todo,
+  myInfo,
+};
