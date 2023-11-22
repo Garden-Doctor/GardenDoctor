@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import { LOGIN, LOGOUT } from "../store/isLogin";
 
 import "../styles/topbar.scss";
@@ -88,6 +89,7 @@ const TopBar = () => {
           </>
         )}
       </div>
+
       {isSideBarVisible && <SideBar onClose={handleCloseSideBar} />}
     </div>
   );
