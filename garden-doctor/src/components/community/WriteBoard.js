@@ -7,6 +7,7 @@ import camera from "../../images/camera.png";
 
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
+  const [boardTitle, setBoardTitle] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(""); // 이미지 미리보기 URL
   const username = useSelector((state) => state.user);
@@ -38,6 +39,7 @@ const WriteBoard = () => {
           url: "http://localhost:8000/board/uploadBoard",
           data: {
             userId: username,
+            title: boardTitle,
             text: boardText,
             img: result.data,
           },
@@ -113,7 +115,11 @@ const WriteBoard = () => {
           />
           <div className="writeBoard-boardTitle">
             제목 <br />
-            <input type="text" />
+            <input
+              type="text"
+              placeholder="제목을 추가해주세요"
+              onChange={(e) => setBoardTitle(e.target.value)}
+            />
           </div>
           <div className="writeBoard-boardContent">
             내용 <br />
