@@ -1,9 +1,32 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/sidebar.scss";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const SideBar = ({ onClose }) => {
   const sideBarRef = useRef();
+  const userId = useSelector((state) => state.user);
+  const [nickName, setNickName] = useState("");
+  const [userImg, setUserImg] = useState("");
+
+  console.log("userid", userId);
+
+  useEffect(() => {
+    const myInfo = async () => {
+      try {
+        const myInfos = await axios.post("http://localhost:8000/sign/myInfo", {
+          userId: userId,
+        });
+        console.log("myInfos", myInfos.data);
+        setNickName(myInfos.data.nickName);
+        setUserImg(myInfos.data.userImg || ""); //null인 경우 방지
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    myInfo();
+  }, [userId]);
 
   const handleClickOutside = (event) => {
     if (sideBarRef.current && !sideBarRef.current.contains(event.target)) {
@@ -36,7 +59,7 @@ const SideBar = ({ onClose }) => {
     navigate("/myplant");
   };
   const myboardButton = () => {
-    navigate("/myboard");
+    navigate("/myBoardS");
   };
 
   return (
@@ -45,8 +68,8 @@ const SideBar = ({ onClose }) => {
         <img alt="나가기" src="/imgs/exit.svg" onClick={onClose} />
       </div>
       <div className="sidebar_top">
-        <img alt="사람" src="/imgs/user.svg" />
-        <p>누구님</p>
+        <img alt="사람" src={{ userImg } ? { userImg } : `/imgs/user.svg`} />
+        <p>{nickName}</p>
         <span onClick={mypageButton}>마이페이지</span>
       </div>
       <div className="sidebar_menu">
