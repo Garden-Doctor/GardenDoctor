@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "root",
+    "username": "user",
     "password": "1234",
     "database": "gardendoctor",
     "host": "127.0.0.1",
