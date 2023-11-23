@@ -5,6 +5,8 @@ import AI_SRC from "../imgs/ai.svg";
 import COMMUNITY_SRC from "../imgs/community.svg";
 import SIMULATION_SRC from "../imgs/simulation.svg";
 import DIGNOSE_SRC from "../imgs/dignose.svg";
+import Dignose from "./imageAI/Dignose";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   return (
@@ -16,7 +18,7 @@ const Main = () => {
         </div>
         <div className="content01-dignose">
           <img src={DIGNOSE_SRC} />
-          <a href="/analysis">병충해 진단 서비스</a>
+          <a href="/imageAI">병충해 진단 서비스</a>
         </div>
       </div>
       <div className="weather">

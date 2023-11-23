@@ -1,0 +1,65 @@
+.chat-background {
+  max-width: 1024px;
+  height: 100vh;
+  background-color: #e5f3df;
+  position: relative;
+  margin: auto;
+}
+.chat-background .myChat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.chat-background .myChat-box .myChat-msg {
+  display: block;
+  background-color: #94ff8b;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10px;
+  margin: 10px 0px;
+  padding: 10px;
+}
+.chat-background .aiChat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.chat-background .aiChat-box .aiChat-msg {
+  display: block;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10px;
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.chat-send-box {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  height: 30px;
+  bottom: 1%;
+}
+.chat-send-box .chat-input {
+  position: absolute;
+  width: calc(100% - 50px);
+  height: 100%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10px;
+}
+.chat-send-box .chat-input:focus {
+  outline: none;
+}
+.chat-send-box .chat-send {
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  right: 0px;
+  bottom: 1%;
+  border: none;
+  background: none;
+}/*# sourceMappingURL=chatBackground.css.map */

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import BoardBox from "../community/BoardBox";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../../styles/myPage/myBoard.scss";
 
 const MyBoards = () => {
   const userId = useSelector((state) => state.user);
@@ -11,6 +12,9 @@ const MyBoards = () => {
   const [likeData, setLikeData] = useState(null);
   const [showMyboards, setShowMyBoards] = useState(false);
   const [showlikeBoards, setShowLikeBoards] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(
+    sessionStorage.getItem("selectedTab")
+  );
 
   //내 게시글 불러오기
   useEffect(() => {
@@ -125,29 +129,58 @@ const MyBoards = () => {
     }
   }, [userId, showlikeBoards]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (selectedTab === "my-boards") {
+      setShowMyBoards(true);
+      setShowLikeBoards(false);
+    } else if (selectedTab === "like-boards") {
+      setShowLikeBoards(true);
+      setShowMyBoards(false);
+    }
+  }, [selectedTab]);
 
   const myBoardsClick = () => {
     setShowMyBoards(true);
     setShowLikeBoards(false);
+    sessionStorage.setItem("selectedTab", "my-boards");
+    setSelectedTab("my-boards");
   };
+
   const likeBoardsClick = () => {
     setShowLikeBoards(true);
     setShowMyBoards(false);
+    sessionStorage.setItem("selectedTab", "like-boards");
+    setSelectedTab("like-boards");
   };
+
+  const navigate = useNavigate();
+
   return (
     <div className="myBoard-main-container">
-      <button className="myBoardsButton" onClick={myBoardsClick}>
-        내 게시글
-      </button>
-      <button className="likeBoardsButton" onClick={likeBoardsClick}>
-        좋아요한 게시글
-      </button>
+      <div className="buttons">
+        <button
+          className={`myBoardsButton ${
+            selectedTab === "my-boards" ? "selected" : ""
+          }`}
+          onClick={myBoardsClick}
+        >
+          내 게시글
+        </button>
+        <button
+          className={`likeBoardsButton ${
+            selectedTab === "like-boards" ? "selected" : ""
+          }`}
+          onClick={likeBoardsClick}
+        >
+          좋아요한 게시글
+        </button>
+      </div>
       {showMyboards &&
         boards.map((item, index) => (
           <BoardBox
             key={item.boardId}
             imgSrc={item.img}
+            title={item.title}
             text={item.text}
             userId={item.userId}
             boardId={item.boardId}
@@ -162,6 +195,7 @@ const MyBoards = () => {
           <BoardBox
             key={item.boardId}
             imgSrc={item.img}
+            title={item.title}
             text={item.text}
             userId={item.userId}
             boardId={item.boardId}

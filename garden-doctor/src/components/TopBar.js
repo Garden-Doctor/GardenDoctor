@@ -1,23 +1,31 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
 
 import "../styles/topbar.scss";
 import axios from "axios";
+import SideBar from "./SideBar";
 
 const TopBar = () => {
-  const closeSidebar = () => {
-    setIsSidebarVisible(false);
-  };
-
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const sidebarRef = useRef(null);
-
   const isLogin = useSelector((state) => state.isLogIn);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
+
+  //SideBar 관련
+
+  const [isSideBarVisible, setSideBarVisible] = useState(false);
+
+  const handleMenuButtonClick = () => {
+    setSideBarVisible(!isSideBarVisible);
+  };
+
+  const handleCloseSideBar = () => {
+    setSideBarVisible(false);
+  };
+
+  // //SideBar 관련
 
   useEffect(() => {
     const jwtToken = sessionStorage.getItem("token");
@@ -59,15 +67,11 @@ const TopBar = () => {
     navigate("/signup");
   };
 
-  const menuButton = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
-
   return (
     <div>
       <div className="topbar-container">
-        <div className="sidbar-container" onClick={menuButton}>
-          <img src="imgs/menu.svg" id="menu" />
+        <div id="sidbar-container">
+          <img src="imgs/menu.svg" id="menu" onClick={handleMenuButtonClick} />
         </div>
         <div className="logo" onClick={logoButton}>
           <img src="imgs/logo.svg" id="logo-img" />
@@ -80,11 +84,14 @@ const TopBar = () => {
         ) : (
           <>
             <button onClick={loginButton}>로그인</button>
-            <button onClick={signupButton}>회원가입</button>
+            {/* <button onClick={signupButton}>회원가입</button> */}
           </>
         )}
       </div>
-      {/* {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />} */}
+
+      {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />}
+
+
     </div>
   );
 };
