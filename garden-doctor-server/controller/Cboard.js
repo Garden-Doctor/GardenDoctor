@@ -4,7 +4,7 @@ const { User, Board, Comment, Like } = require("../models");
 const getBoards = async (req, res) => {
   try {
     const getBoards = await Board.findAll({
-      attributes: ["boardId", "userId", "text", "img", "createdAt"],
+      attributes: ["boardId", "userId", "text", "title", "img", "createdAt"],
     });
     res.send(getBoards);
   } catch (error) {
@@ -27,9 +27,10 @@ const getBoard = async (req, res) => {
 const uploadBoard = async (req, res) => {
   try {
     console.log(req.body);
-    const { userId, text, img } = req.body;
+    const { userId, text, img, title } = req.body;
     const upload = await Board.create({
       userId,
+      title,
       text,
       img,
     });
@@ -155,12 +156,12 @@ const deleteBoard = async (req, res) => {
 
 const updateBoard = async (req, res) => {
   const { boardId } = req.params;
-  const { text, img } = req.body;
+  const { text, img, title } = req.body;
 
   try {
     // 1. 게시글(Board) 업데이트
     await Board.update(
-      { text, img },
+      { text, img, title },
       {
         where: { boardId },
       }
@@ -187,6 +188,7 @@ const myBoard = async (req, res) => {
       attributes: [
         "boardId",
         "text",
+        "title",
         "img",
         "createdAt",
         "updatedAt",
@@ -246,6 +248,7 @@ const findMyLikeBoards = async (req, res) => {
       attributes: [
         "boardId",
         "text",
+        "title",
         "img",
         "createdAt",
         "updatedAt",

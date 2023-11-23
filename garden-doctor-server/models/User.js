@@ -18,7 +18,7 @@ const Model = (sequelize) => {
     },
     nickName: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     birth: {
       type: DataTypes.DATEONLY,
