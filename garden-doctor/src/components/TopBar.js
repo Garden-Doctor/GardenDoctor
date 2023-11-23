@@ -84,7 +84,7 @@ const TopBar = () => {
           </>
         )}
       </div>
-      {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />}
+      {/* {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />} */}
     </div>
   );
 };

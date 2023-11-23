@@ -26,6 +26,7 @@ import NaviBar from "./components/NaviBar";
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
+import MyPlants from "./components/myPage/MyPlants";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
               element={<DignoseResult></DignoseResult>}
             ></Route>
             <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
+            <Route path="/myPlants" element={<MyPlants></MyPlants>}></Route>
           </Routes>
         </div>
         <BottomBar />
