@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../../store/isLogin";
 
+import "../../styles/login.scss";
+
 const Login = () => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const [id, setId] = useState("");
@@ -40,24 +43,44 @@ const Login = () => {
     });
   };
 
+  const signupButton = () => {
+    navigate("/signup");
+  };
+
+  const findIdPwButton = () => {
+    navigate("/findIdPw");
+  };
+
   return (
-    <div>
-      <h1>Login</h1>
-      아이디:{" "}
-      <input
-        type="text"
-        placeholder="아이디"
-        onChange={(e) => setId(e.target.value)}
-      />{" "}
-      <br />
-      비밀번호:{" "}
-      <input
-        type="text"
-        placeholder="비밀번호"
-        onChange={(e) => setPw(e.target.value)}
-      />{" "}
-      <br />
-      <button onClick={loginButton}>로그인</button>
+    <div className="login-container">
+      <img src="imgs/login_logo.png" alt="logo" />
+      <div className="idBox">
+        <img src="imgs/id.svg" className="idImg" />
+        <input
+          type="text"
+          id="id_input"
+          placeholder="아이디"
+          onChange={(e) => setId(e.target.value)}
+        />
+      </div>
+      <div className="pwBox">
+        <img src="imgs/pw.svg" className="pwImg" />
+        <input
+          type="text"
+          placeholder="비밀번호"
+          onChange={(e) => setPw(e.target.value)}
+        />
+      </div>
+      <span className="login-button-container">
+        <button onClick={loginButton} className="loginbutton">
+          로그인
+        </button>
+        <button className="loginbutton kakao">카카오톡으로 로그인</button>
+      </span>
+      <div className="login_bottom">
+        <span onClick={signupButton}>회원가입</span>
+        <span onClick={findIdPwButton}>아이디 / 비밀번호 찾기</span>
+      </div>
     </div>
   );
 };
