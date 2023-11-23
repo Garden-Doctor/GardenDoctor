@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;600&display=swap");
 .sidebar-container {
-  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
