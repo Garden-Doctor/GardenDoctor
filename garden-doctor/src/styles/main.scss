@@ -39,14 +39,17 @@ a:active {
 
 .todayboard-container {
   width: $main-content-width;
-  height: 5em;
+  height: 20vh;
   background-color: $main-content-color;
   margin-top: 10px;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+  background-color: $main-content-color;
 }
 
 .dignose-container {
   width: $main-content-width;
-  height: 13 vh;
+  height: 13vh;
   background-color: $main-content-color;
   display: flex;
   flex-direction: column;
