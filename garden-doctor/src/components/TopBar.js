@@ -89,7 +89,9 @@ const TopBar = () => {
         )}
       </div>
 
-      {isSideBarVisible && <SideBar onClose={handleCloseSideBar} />}
+      {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />}
+
+
     </div>
   );
 };
