@@ -46,9 +46,9 @@ const checkId = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.json({ message: "중복되는 아이디가 있습니다." });
+      return res.json({ result: false });
     }
-    res.send({ message: "사용가능한 아이디입니다." });
+    res.send({ result: true });
   } catch (error) {
     console.log("id중복체크 eroor : ", error);
   }
@@ -65,9 +65,9 @@ const checkNickname = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.json({ message: "중복되는 닉네임이 있습니다." });
+      return res.json({ result: false });
     }
-    res.send({ message: "사용가능한 닉네임입니다." });
+    res.send({ result: true });
   } catch (error) {
     console.log("id중복체크 eroor : ", error);
   }
