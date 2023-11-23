@@ -25,7 +25,7 @@ aws.config.update({
 //aws s3 인스턴스 생성
 const s3 = new aws.S3();
 
-// multer설정 - aws
+// multer설정(다중 파일 업로드) - aws
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -50,6 +50,29 @@ app.post("/upload", upload.array("files"), (req, res) => {
   console.log("Uploaded file locations:", fileLocations);
   // res.send(req.files[0].location);
   res.send(fileLocations);
+});
+
+// Multer 설정 - AWS S3 (단일 파일 업로드)
+const uploadSingle = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET,
+    acl: "public-read",
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString() + "-" + file.originalname);
+    },
+  }),
+});
+
+// Multer 업로드 (단일 파일 업로드)
+app.post("/upload/single", uploadSingle.single("file"), (req, res) => {
+  console.log("upload single location", req.file.location);
+  const fileLocation = req.file.location;
+  console.log("Uploaded file location:", fileLocation);
+  res.send(fileLocation);
 });
 
 //router 분리
