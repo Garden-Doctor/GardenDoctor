@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const BottomContent = () => {
   return (
@@ -10,8 +11,18 @@ const BottomContent = () => {
 };
 
 const Dignore = () => {
+  const navigate = useNavigate();
+
+  const dignoseClick = () => {
+    navigate("/imageAI");
+  };
+
+  const ChatAIClick = () => {
+    navigate("/chat");
+  };
+
   return (
-    <div className="dignose-container">
+    <div className="dignose-container" onClick={dignoseClick}>
       <div className="inner-container">
         <p>병충해 사진 진단</p>
         <p>
@@ -24,8 +35,14 @@ const Dignore = () => {
 };
 
 const ChatAI = () => {
+  const navigate = useNavigate();
+
+  const ChatAIClick = () => {
+    navigate("/chat");
+  };
+
   return (
-    <div className="chatAI-container">
+    <div className="chatAI-container" onClick={ChatAIClick}>
       <div className="inner-container">
         <p>AI 도우미</p>
         <p>
