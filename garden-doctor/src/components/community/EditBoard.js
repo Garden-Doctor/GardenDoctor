@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../styles/writeBoard.scss";
+import arrowRight from "../../images/arrow-right.png";
+import camera from "../../images/camera.png";
 
 const EditBoard = () => {
   const { userId, boardId } = useParams();
@@ -34,15 +36,16 @@ const EditBoard = () => {
   const uploadButton = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const file = fileInputRef.current.files[0];
+    const files = fileInputRef.current.files;
 
-    if (file) {
-      formData.append("files", file);
+    // 선택된 파일들을 FormData에 추가
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
     }
 
     try {
       const res = await axios({
-        method: "GET",
+        method: "POST",
         url: "http://localhost:8000/upload",
         data: formData,
         headers: {
@@ -62,7 +65,7 @@ const EditBoard = () => {
         console.log(res2);
       });
       console.log("res", res);
-      alert("게시글 생성 완료!");
+      alert("게시글 수정 완료!");
       navigate("/board");
     } catch (error) {
       console.log(error);
@@ -99,7 +102,7 @@ const EditBoard = () => {
       <div className="writeBoard-container">
         <img
           className="writeBoard-arrow"
-          src="imgs/arrow-right.png"
+          src={arrowRight}
           alt=""
           onClick={beforePage}
         />
@@ -111,7 +114,7 @@ const EditBoard = () => {
               onClick={handleImageUploadClick}
             >
               <div className="writeBoard-imagePreview">
-                {/* 이미지 미리보기 */}
+                {/* 이미지 미리보기11 */}
                 <img src={imagePreviewUrl} alt="Preview" />
                 <span>클릭하여 이미지 추가</span>
               </div>
@@ -121,7 +124,7 @@ const EditBoard = () => {
               className="writeBoard-imageUpload"
               onClick={handleImageUploadClick}
             >
-              <img src={boardData.img} alt="카메라" />
+              <img src={boardData.img[0]} alt="카메라" />
               <span>클릭하여 이미지 추가</span>
             </div>
           )}
@@ -131,6 +134,7 @@ const EditBoard = () => {
             ref={fileInputRef}
             style={{ display: "none" }} // 숨겨진 input 엘리먼트
             onChange={handleImageChange}
+            multiple
           />
           <div className="writeBoard-boardTitle">
             제목 <br />

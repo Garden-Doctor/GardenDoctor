@@ -1,0 +1,114 @@
+@import "../utils.scss";
+$main-content-width: 320px;
+$box-shadow: 0 0 10px rgb(229, 243, 223);
+$color: rgb(229, 243, 223);
+.myPage-main-container {
+  width: 100%;
+  height: 100%;
+  background-color: $color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Title {
+  font-weight: bold;
+  margin: 3% 0;
+  font-size: 40px;
+}
+
+.myInfo {
+  background-color: white;
+  width: 70%;
+  border-radius: 10px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.myInfoTop {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  margin-top: 5%;
+}
+
+.nameInfo {
+  margin: 0 auto 0 10%;
+}
+
+.editButton {
+  margin-right: 10%;
+  border-color: #fffff000;
+  background-color: #fffff000;
+  cursor: pointer;
+}
+
+.myInfoBottom {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  margin: 5% 0;
+}
+
+.userImg {
+  margin: 0 10% 0;
+}
+
+.myInfoRight {
+  margin-right: 10%;
+}
+
+.myInfoRight > div {
+  margin-bottom: 5%;
+}
+
+.myInfoBoards {
+  margin-top: 3%;
+  background-color: white;
+  width: 70%;
+  border-radius: 10px;
+  display: flex;
+  height: 150px;
+}
+
+.myInfoBoards > div {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.myPlants,
+.myBoards,
+.myLikes {
+  flex-direction: column;
+  margin-top: 5%;
+}
+
+.plantsCount,
+.boardsCount,
+.likesCount {
+  margin-top: 10%;
+  font-size: 30px;
+  color: #3cb362;
+  font-weight: bold;
+  background-color: #fffff000;
+  border-color: #fffff000;
+  cursor: pointer;
+}
+.plantsCount:active,
+.boardsCount:active,
+.likesCount:active,
+.plantsCount:hover,
+.boardsCount:hover,
+.likesCount:hover,
+.plantsCount:focus,
+.boardsCount:focus,
+.likesCount:focus {
+  background-color: #3cb362;
+  color: #ffffff;
+  border-radius: 5px;
+}

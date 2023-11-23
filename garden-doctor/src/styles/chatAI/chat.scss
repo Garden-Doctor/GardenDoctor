@@ -1,0 +1,125 @@
+$max-screen-width: 1024px;
+$background-color: #e5f3df;
+$myChat-color: #94ff8b;
+$aiChat-color: white;
+
+@mixin border-radius-and-shadow() {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10px;
+}
+
+@mixin chat-box() {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+@mixin chat-msg($color) {
+  display: block;
+  background-color: $color;
+  @include border-radius-and-shadow();
+  margin: 10px 0px;
+  padding: 10px;
+}
+
+.chat-background {
+  max-width: 1024px;
+  height: 83.6vh;
+  background-color: $background-color;
+  position: relative;
+  margin: auto;
+}
+.chat-msgContainer {
+  @extend .chat-background;
+  height: calc(83.6vh - 60px);
+  overflow-y: auto;
+  .myChat-box {
+    @include chat-box();
+    align-items: flex-end;
+    .myChat-msg {
+      @include chat-msg($myChat-color);
+    }
+  }
+  .aiChat-box {
+    @include chat-box();
+    align-items: flex-start;
+    .aiChat-msg {
+      @include chat-msg($aiChat-color);
+    }
+  }
+}
+.chat-background::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 스크롤바 막대 설정*/
+.chat-background::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 1);
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.chat-background::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.chat-send-box {
+  position: fixed;
+  width: 50vw;
+  min-width: 200px;
+  max-width: 924px;
+  left: 25vw;
+  height: 30px;
+  bottom: 12vh;
+  .chat-input {
+    position: absolute;
+    width: calc(100% - 50px);
+    height: 100%;
+    @include border-radius-and-shadow();
+  }
+  .chat-input:focus {
+    outline: none;
+  }
+  .chat-send {
+    position: absolute;
+    height: 100%;
+    width: 30px;
+    right: 0px;
+    bottom: 1%;
+    border: none;
+    background: none;
+  }
+}
+
+// 로딩
+
+.loader {
+  content: "";
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #ff3d00;
+  box-shadow: 20px 0 #ff3d00, -20px 0 #ff3d00;
+  animation: flash 0.5s ease-out infinite alternate;
+}
+
+@keyframes flash {
+  0% {
+    background-color: rgba(255, 60, 0, 0.25);
+    box-shadow: 20px 0 rgba(255, 60, 0, 0.25), -20px 0 #ff3d00;
+  }
+  50% {
+    background-color: #ff3d00;
+    box-shadow: 20px 0 rgba(255, 60, 0, 0.25), -20px 0 rgba(255, 60, 0, 0.25);
+  }
+  100% {
+    background-color: rgba(255, 60, 0, 0.25);
+    box-shadow: 20px 0 #ff3d00, -20px 0 rgba(255, 60, 0, 0.25);
+  }
+}

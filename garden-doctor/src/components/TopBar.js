@@ -5,7 +5,6 @@ import { LOGIN, LOGOUT } from "../store/isLogin";
 
 import "../styles/topbar.scss";
 import axios from "axios";
-import SideBar from "./SideBar";
 
 const TopBar = () => {
   const isLogin = useSelector((state) => state.isLogIn);

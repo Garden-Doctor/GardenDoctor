@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../styles/writeBoard.scss";
+import camera from "../../images/camera.png";
 
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
@@ -15,10 +16,11 @@ const WriteBoard = () => {
   const uploadButton = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const file = fileInputRef.current.files[0];
+    const files = fileInputRef.current.files;
 
-    if (file) {
-      formData.append("files", file);
+    // 선택된 파일들을 FormData에 추가
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
     }
 
     try {
@@ -87,7 +89,7 @@ const WriteBoard = () => {
               onClick={handleImageUploadClick}
             >
               <div className="writeBoard-imagePreview">
-                {/* 이미지 미리보기 */}
+                {/* 이미지 미리보기1 */}
                 <img src={imagePreviewUrl} alt="Preview" />
                 <span>클릭하여 이미지 추가</span>
               </div>
@@ -97,7 +99,7 @@ const WriteBoard = () => {
               className="writeBoard-imageUpload"
               onClick={handleImageUploadClick}
             >
-              <img src="imgs/camera.png" alt="카메라" />
+              <img src={camera} alt="카메라" />
               <span>클릭하여 이미지 추가</span>
             </div>
           )}
@@ -107,6 +109,7 @@ const WriteBoard = () => {
             ref={fileInputRef}
             style={{ display: "none" }}
             onChange={handleImageChange}
+            multiple
           />
           <div className="writeBoard-boardTitle">
             제목 <br />

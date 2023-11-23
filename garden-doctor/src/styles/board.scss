@@ -1,67 +1,18 @@
-// @import "./utils.scss";
-
-// $main-content-width: 90vw;
-// $main-content-color: white;
-// $box-shadow: 0 0 10px rgb(213, 213, 213);
-
-// .board-container {
-//   position: relative;
-//   width: $main-content-width;
-//   height: 5em;
-//   background-color: $main-content-color;
-//   margin-top: 10px;
-//   border-radius: 10px;
-//   border: 1px solid #858585;
-//   background: #fff;
-//   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-// }
-
-// .boardBox-userImg {
-//   width: 25px;
-//   height: 25px;
-//   margin-left: 2%;
-//   margin-top: 2%;
-// }
-
-// .boardBox-userName {
-//   color: #000;
-//   text-align: center;
-//   font-family: M PLUS 1;
-//   font-size: 15px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: normal;
-// }
-
-// .boardBox-Dday {
-// }
-
-// .boardBox-boardTitle {
-// }
-
-// .boardBox-likeButton {
-// }
-
-// .boardBox-likeNum {
-// }
-
-// .boardBox-commentButton {
-// }
-
-// .boardBox-commentNum {
-// }
-
-// .boardBox-BoardImg {
-// }
-
-////////////////////////////////
 /* board.scss */
+
+.large-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 
 .board-container {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
   width: 90%;
+  max-width: 700px;
   height: 110px;
   border: 1px solid #858585;
   background: #fff;
@@ -106,13 +57,13 @@
 .boardBox-likeButton {
   position: absolute;
   bottom: 10px;
-  width: 35px;
+  width: 30px;
 }
 
 .boardBox-likeNum {
   position: absolute;
   bottom: 17px;
-  left: 45px;
+  left: 47px;
 }
 
 .boardBox-commentButton {
@@ -141,11 +92,16 @@
   width: 45px;
   border-radius: 10px;
   border: 1px solid black;
-  background-color: rgb(169, 237, 66);
+  background-color: rgb(194, 233, 135);
   position: fixed;
-  bottom: 20px; /* 아이콘의 아래 여백 설정 */
+  bottom: 70px; /* 아이콘의 아래 여백 설정 */
   right: 20px; /* 아이콘의 오른쪽 여백 설정 */
   width: 50px; /* 아이콘의 너비 설정 */
   height: 50px; /* 아이콘의 높이 설정 */
   z-index: 3;
+  transition: background-color 0.5s ease;
+
+  &:hover {
+    background-color: rgb(42, 188, 91);
+  }
 }
