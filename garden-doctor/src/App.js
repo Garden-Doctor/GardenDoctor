@@ -31,7 +31,6 @@ import MyPlants from "./components/myPage/MyPlants";
 
 import MyPage from "./components/myPage/MyPage";
 
-
 function App() {
   return (
     <>
@@ -70,7 +69,6 @@ function App() {
             <Route path="/myPlants" element={<MyPlants></MyPlants>}></Route>
 
             <Route path="/myPage" element={<MyPage></MyPage>}></Route>
-
           </Routes>
         </div>
         <BottomBar />
