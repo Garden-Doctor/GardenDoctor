@@ -133,6 +133,7 @@ const Board = () => {
               key={item.boardId}
               imgSrc={item.img}
               text={item.text}
+              title={item.title}
               userId={item.userId}
               boardId={item.boardId}
               likeData={likeData && likeData[item.boardId]}

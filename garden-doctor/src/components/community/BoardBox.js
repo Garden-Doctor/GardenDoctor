@@ -7,6 +7,7 @@ import commentIcon from "../../images/commentIcon.png";
 
 const BoardBox = ({
   imgSrc,
+  title,
   text,
   userId,
   boardId,
@@ -51,7 +52,7 @@ const BoardBox = ({
       ></img>
       <span className="boardBox-userName">{userId}</span>
       <span className="boardBox-Dday">{formattedDate}</span> <br></br>
-      <span className="boardBox-boardTitle">{text}</span>
+      <span className="boardBox-boardTitle">{title}</span>
       <br></br>
       <img
         className="boardBox-likeButton"
