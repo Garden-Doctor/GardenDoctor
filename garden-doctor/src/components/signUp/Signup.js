@@ -15,7 +15,11 @@ const Signup = () => {
   const [birth, setBirth] = useState("");
   const [telNum, setTelNum] = useState("");
 
-  let passwordPlag = false;
+  const [isIdAvailable, setIsIdAvailable] = useState(false);
+  const [isNickNameAvailable, setIsNickNameAvailable] = useState(false);
+  const [passwordPlag, setPasswordPlag] = useState(false);
+
+  const [checkMessage, setCheckMessage] = useState("");
 
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
@@ -33,8 +37,30 @@ const Signup = () => {
   const signupButton = async (e) => {
     e.preventDefault();
 
+    // 빈칸일 때 처리
+    if (!id || !pw || !name || !nickName || !birth || !telNum) {
+      setCheckMessage("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    if (imgFile == "") {
+      setCheckMessage("프로필 이미지를 넣어주세요");
+      return;
+    }
+
+    // ID NickName 체크
+    if (!isIdAvailable) {
+      setCheckMessage("아이디 : 중복 확인을 눌러주세요");
+      return;
+    }
+
     if (!passwordPlag) {
-      alert("비밀번호가 일치하지 않습니다.");
+      setCheckMessage("비밀번호 : 일치 확인을 눌러주세요");
+      return;
+    }
+
+    if (!isNickNameAvailable) {
+      setCheckMessage("닉네임 : 중복 확인을 눌러주세요");
       return;
     }
 
@@ -77,16 +103,6 @@ const Signup = () => {
     }
   };
 
-  // 비밀번호 일치 버튼
-  const pwCheckButton = () => {
-    if (pw === checkPw) {
-      alert("비밀번호가 일치합니다.");
-      passwordPlag = true;
-    } else {
-      alert("비밀번호가 서로 다릅니다.");
-    }
-  };
-
   // 아이디 중복 확인 버튼
   const checkIdButton = async () => {
     try {
@@ -97,9 +113,27 @@ const Signup = () => {
       });
 
       // 응답을 확인하고 메시지에 따라 처리
-      alert(res.data.message);
+      // 사용 가능할때
+      if (res.data.result === true) {
+        setCheckMessage("아이디 : 사용 가능한 아이디입니다.");
+        setIsIdAvailable(true);
+      } else {
+        setCheckMessage("아이디 : 이미 사용중인 아이디입니다.");
+        setIsIdAvailable(false);
+      }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  // 비밀번호 일치 버튼
+  const pwCheckButton = () => {
+    if (pw === checkPw) {
+      setCheckMessage("비밀번호가 일치합니다.");
+      setPasswordPlag(true);
+    } else {
+      setCheckMessage("비밀번호가 서로 다릅니다.");
+      setPasswordPlag(false);
     }
   };
 
@@ -113,7 +147,13 @@ const Signup = () => {
       });
 
       // 응답을 확인하고 메시지에 따라 처리
-      alert(res.data.message);
+      if (res.data.result === true) {
+        setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
+        setIsNickNameAvailable(true);
+      } else {
+        setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
+        setIsNickNameAvailable(false);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -191,6 +231,10 @@ const Signup = () => {
             </button>
           </div>
         </div>
+
+        {/* ----- 중복 확인 멘트 ------ */}
+        <div className="signup_check_box">{checkMessage}</div>
+
         <div className="signup_bottom">
           <div className="Box">
             <img src="imgs/id.svg" className="idImg" />

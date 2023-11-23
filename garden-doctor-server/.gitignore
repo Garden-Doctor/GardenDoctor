@@ -1,2 +1,5 @@
 /node_modules
 .env
+
+confing.json
+package-lock.json
