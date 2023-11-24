@@ -56,7 +56,7 @@ const kakaoUserData = async (req, res) => {
         userId,
         nickName: nickname,
         userImg,
-        loginType: "local",
+        loginType: "kakao",
       },
     });
 
