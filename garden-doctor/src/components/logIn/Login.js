@@ -51,6 +51,15 @@ const Login = () => {
     navigate("/findIdPw");
   };
 
+  const Rest_api_key = process.env.REACT_APP_KAKAO_INIT_KEY;
+  const redirect_uri = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+
+  const kakaoURI = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+
+  const kakaoLogin = () => {
+    window.location.href = kakaoURI;
+  };
+
   return (
     <div className="login-container">
       <img src="imgs/login_logo.png" alt="logo" />
@@ -75,7 +84,9 @@ const Login = () => {
         <button onClick={loginButton} className="loginbutton">
           로그인
         </button>
-        <button className="loginbutton kakao">카카오톡으로 로그인</button>
+        <button className="loginbutton kakao" onClick={kakaoLogin}>
+          카카오톡으로 로그인
+        </button>
       </span>
       <div className="login_bottom">
         <span onClick={signupButton}>회원가입</span>
