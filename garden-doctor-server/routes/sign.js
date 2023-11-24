@@ -21,4 +21,6 @@ router.post("/kakaoUserData", controller.kakaoUserData);
 
 router.post("/makeToken", controller.makeToken);
 
+router.post("/findLoginType", controller.findLoginType);
+
 module.exports = router;

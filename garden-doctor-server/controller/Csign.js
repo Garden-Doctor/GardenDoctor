@@ -245,6 +245,20 @@ const requestRefreshToken = async (refreshToken) => {
   }
 };
 
+//findLoginType
+const findLoginType = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const findType = await User.findOne({
+      where: { userId },
+      attributes: ["loginType"],
+    });
+    res.send(findType);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   signup,
   checkId,
@@ -257,4 +271,5 @@ module.exports = {
   kakaoLogin,
   kakaoUserData,
   makeToken,
+  findLoginType,
 };
