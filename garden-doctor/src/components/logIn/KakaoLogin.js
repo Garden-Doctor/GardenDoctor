@@ -55,10 +55,18 @@ const KakaoLogin = () => {
               }
             );
 
+            const loginKaKao = await axios.post(
+              "http://localhost:8000/sign/makeToken",
+              {
+                userId,
+              }
+            );
+
+            sessionStorage.setItem("token", loginKaKao.data.token);
+            dispatch({ type: LOGIN, user: loginKaKao.data.id });
             console.log("userDataResponse", userDataResponse);
           }
 
-          dispatch({ type: LOGIN, user: kakaoID });
           navigate("/");
         }
       } catch (error) {
