@@ -3,6 +3,10 @@ const bcrypt = require("bcrypt");
 const saltNumber = 10;
 const SECRET = "secretKey";
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
+const dotenv = require("dotenv");
+const querystring = require("querystring");
+const { response } = require("express");
 
 const bcryptPassword = (password) => {
   return bcrypt.hashSync(password, saltNumber);
@@ -12,6 +16,7 @@ const comparePassword = (password, dbPassword) => {
   return bcrypt.compareSync(password, dbPassword);
 };
 
+//local 회원가입
 const signup = async (req, res) => {
   try {
     console.log(req.body);
@@ -27,9 +32,34 @@ const signup = async (req, res) => {
       birth,
       telNum,
       userImg: img,
+      loginType: "local",
     });
     console.log(signup);
     res.send(signup);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//카카오 회원가입.
+const kakaoUserData = async (req, res) => {
+  try {
+    const { userId, name, nickname, userImg } = req.body;
+    console.log("req.body", req.body);
+    console.log("Ddddd", userId, name, nickname, userImg);
+
+    //중복체크 findOrCreate ( where에 해당 값이 없으면 create)
+    const kakaoSignUp = await User.findOrCreate({
+      where: { userId: userId },
+      defaults: {
+        name,
+        userId,
+        nickName: nickname,
+        userImg,
+        loginType: "local",
+      },
+    });
+    res.send(kakaoSignUp);
   } catch (error) {
     console.log(error);
   }
@@ -135,6 +165,31 @@ const myInfo = async (req, res) => {
   }
 };
 
+//카카오 로그인 인증
+const kakaoLogin = async (req, res) => {
+  const { code } = req.body;
+  const REST_API_KEY = process.env.REST_API_KEY;
+  const REDIRECT_URI = process.env.REDIRECT_URI;
+
+  const data = querystring.stringify({
+    grant_type: "authorization_code",
+    client_id: REST_API_KEY,
+    redirect_uri: REDIRECT_URI,
+    code: code,
+  });
+
+  const kakaoToken = await axios.post(
+    "https://kauth.kakao.com/oauth/token",
+    data,
+    {
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+  res.status(200).json(kakaoToken.data);
+};
+
 module.exports = {
   signup,
   checkId,
@@ -144,4 +199,6 @@ module.exports = {
   patch_todo,
   delete_todo,
   myInfo,
+  kakaoLogin,
+  kakaoUserData,
 };

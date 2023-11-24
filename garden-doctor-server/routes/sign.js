@@ -14,4 +14,9 @@ router.post("/verify", controller.verify);
 
 router.post("/myInfo", controller.myInfo);
 
+router.post("/kakaoLogin", controller.kakaoLogin);
+
+//카카오 정보로 회원 가입 시키기.
+router.post("/kakaoUserData", controller.kakaoUserData);
+
 module.exports = router;
