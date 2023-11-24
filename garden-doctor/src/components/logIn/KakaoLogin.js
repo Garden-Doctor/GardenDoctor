@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LOGIN } from "../../store/isLogin";
 
 const KakaoLogin = () => {
   const navigate = useNavigate();
-  const [kakaoId, setKakaoId] = useState("");
-  const [kakaoName, setKakaoName] = useState("");
-  const [kakaoProfileImage, setKakaoProfileImage] = useState("");
+  const dispatch = useDispatch();
+  const [kakaoID, setKakaoId] = useState(" ");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,8 +44,6 @@ const KakaoLogin = () => {
             const profileImage = response.data.properties.profile_image;
 
             setKakaoId(userId);
-            setKakaoName(nickname);
-            setKakaoProfileImage(profileImage);
 
             const userDataResponse = await axios.post(
               "http://localhost:8000/sign/kakaoUserData",
@@ -59,6 +58,7 @@ const KakaoLogin = () => {
             console.log("userDataResponse", userDataResponse);
           }
 
+          dispatch({ type: LOGIN, user: kakaoID });
           navigate("/");
         }
       } catch (error) {
@@ -67,7 +67,7 @@ const KakaoLogin = () => {
     };
 
     fetchData();
-  }, [navigate]);
+  }, [navigate, dispatch, kakaoID]);
 
   return <div>카카오 로그인 중...</div>;
 };
