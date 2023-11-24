@@ -19,4 +19,6 @@ router.post("/kakaoLogin", controller.kakaoLogin);
 //카카오 정보로 회원 가입 시키기.
 router.post("/kakaoUserData", controller.kakaoUserData);
 
+router.post("/makeToken", controller.makeToken);
+
 module.exports = router;
