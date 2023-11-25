@@ -8,9 +8,9 @@
     "port": "30134"
   },
   "test": {
-    "username": "root",
-    "password": "1234",
-    "database": "kdt8",
+    "username": "hi",
+    "password": "12345678!",
+    "database": "gardendoctor",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
