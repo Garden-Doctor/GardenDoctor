@@ -14,7 +14,7 @@ const Model = (sequelize) => {
     },
     pw: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     nickName: {
       type: DataTypes.STRING(100),
@@ -31,6 +31,10 @@ const Model = (sequelize) => {
     userImg: {
       type: DataTypes.JSON,
       allowNull: true,
+    },
+    loginType: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
   });
 };

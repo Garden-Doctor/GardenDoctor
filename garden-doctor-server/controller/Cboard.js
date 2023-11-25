@@ -261,6 +261,44 @@ const findMyLikeBoards = async (req, res) => {
   }
 };
 
+const getMostLikedBoards = async (req, res) => {
+  try {
+    const mostLikedBoard = await Like.findAll({
+      attributes: ["boardId", "userId", "likeId"],
+    });
+    // 중복된 boardId를 세는 객체를 만듭니다.
+    const boardIdCount = mostLikedBoard.reduce((acc, like) => {
+      acc[like.boardId] = (acc[like.boardId] || 0) + 1;
+      return acc;
+    }, {});
+
+    // 가장 많은 count값을 가진 boardId 찾기
+    let maxCount = 0;
+    let maxBoardId = null;
+
+    for (const boardId in boardIdCount) {
+      if (
+        boardIdCount.hasOwnProperty(boardId) &&
+        boardIdCount[boardId] > maxCount
+      ) {
+        maxCount = boardIdCount[boardId];
+        maxBoardId = boardId;
+      }
+    }
+
+    const maxLikedBoardData = await Board.findOne({
+      where: { boardId: maxBoardId },
+      // 추가적으로 필요한 속성을 attributes 배열에 지정할 수 있습니다.
+    });
+
+    // maxLikedBoardData를 클라이언트에게 응답합니다.
+    res.status(200).send(maxLikedBoardData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   getBoards,
   uploadBoard,
@@ -280,4 +318,5 @@ module.exports = {
   myBoardLike,
   findMyLike,
   findMyLikeBoards,
+  getMostLikedBoards,
 };
