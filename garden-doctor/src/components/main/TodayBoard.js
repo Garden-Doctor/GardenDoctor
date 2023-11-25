@@ -76,7 +76,7 @@ const TodayBoard = () => {
 
   return (
     <div className="todayboard-container">
-      TodayBoard
+      오늘의 게시물
       <BoardBox
         key={mostLikedBoards.boardId}
         imgSrc={mostLikedBoards.img}

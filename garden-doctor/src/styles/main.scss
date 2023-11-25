@@ -39,12 +39,16 @@ a:active {
 
 .todayboard-container {
   width: $main-content-width;
-  height: 20vh;
+  height: 25vh;
   background-color: $main-content-color;
   margin-top: 10px;
   box-shadow: $box-shadow;
   border-radius: 10px;
   background-color: $main-content-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .dignose-container {
