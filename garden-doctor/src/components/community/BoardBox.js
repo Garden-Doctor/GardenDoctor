@@ -63,9 +63,7 @@ const BoardBox = ({
       )}
       <img className="boardBox-commentButton" alt="댓글" src={commentIcon} />
       {commentData ? (
-        commentData.map((comment) => (
-          <span className="boardBox-commentNum">{commentData.length}</span>
-        ))
+        <span className="boardBox-commentNum">{commentData.length}</span>
       ) : (
         <span className="boardBox-commentNum">0</span>
       )}

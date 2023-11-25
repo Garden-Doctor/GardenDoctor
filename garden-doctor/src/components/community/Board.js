@@ -142,7 +142,7 @@ const Board = () => {
   };
 
   return (
-    <div className="large-container">
+    <div className="main-container">
       <img
         className="boardWriteButton"
         src={BoardWrite}
