@@ -1,4 +1,3 @@
-const { and } = require("sequelize");
 const { User, Board, Comment, Like } = require("../models");
 
 const getBoards = async (req, res) => {
