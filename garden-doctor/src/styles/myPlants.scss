@@ -1,8 +1,25 @@
+@import "./utils.scss";
+
 $background-color: #e5f3df;
 
 .myPlant-container {
   background-color: $background-color;
-  height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    color: white;
+    background-color: $point-color;
+    align-self: flex-end;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 30%;
+    height: 40px;
+  }
+  .row {
+    width: 100%;
+  }
   .myPlant-box {
     padding: 0;
     margin: 10px;

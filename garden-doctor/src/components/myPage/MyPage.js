@@ -81,7 +81,8 @@ const MyPage = () => {
   };
 
   const plantsCountButton = () => {
-    navigate("/mypage");
+    sessionStorage.setItem("selectedTab", "my-plants");
+    navigate("/myPlants");
   };
 
   return (

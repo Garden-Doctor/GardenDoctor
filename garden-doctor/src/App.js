@@ -30,7 +30,7 @@ import { useState } from "react";
 import MyPlants from "./components/myPage/MyPlants";
 
 import MyPage from "./components/myPage/MyPage";
-
+import AddPlant from "./components/myPlants/AddPlant";
 
 function App() {
   return (
@@ -68,9 +68,12 @@ function App() {
             <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
 
             <Route path="/myPlants" element={<MyPlants></MyPlants>}></Route>
+            <Route
+              path="/myPlants/addPlant"
+              element={<AddPlant></AddPlant>}
+            ></Route>
 
             <Route path="/myPage" element={<MyPage></MyPage>}></Route>
-
           </Routes>
         </div>
         <BottomBar />
