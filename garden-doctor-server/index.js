@@ -85,12 +85,15 @@ app.use("/board", board);
 const plantsolution = require("./routes/plantsolution.js");
 app.use("/dignosisResult", plantsolution);
 
+const weather = require("./routes/weather.js");
+app.use("/weather", weather);
+
 //오류처리
 app.use("*", (req, res) => {
   res.status(404).render("404");
 });
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
   });
