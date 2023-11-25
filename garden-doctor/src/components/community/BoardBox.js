@@ -10,6 +10,7 @@ const BoardBox = ({
   title,
   text,
   userId,
+  userImg,
   boardId,
   likeData,
   commentData,
@@ -45,11 +46,7 @@ const BoardBox = ({
 
   return (
     <div className="board-container" onClick={(e) => clickedBoard(e)}>
-      <img
-        className="boardBox-userImg"
-        alt="userImg"
-        src="https://img.freepik.com/premium-vector/avatar-profile-icon_188544-4755.jpg"
-      ></img>
+      <img className="boardBox-userImg" alt="userImg" src={userImg}></img>
       <span className="boardBox-userName">{userId}</span>
       <span className="boardBox-Dday">{formattedDate}</span> <br></br>
       <span className="boardBox-boardTitle">{title}</span>
@@ -66,9 +63,7 @@ const BoardBox = ({
       )}
       <img className="boardBox-commentButton" alt="댓글" src={commentIcon} />
       {commentData ? (
-        commentData.map((comment) => (
-          <span className="boardBox-commentNum">{commentData.length}</span>
-        ))
+        <span className="boardBox-commentNum">{commentData.length}</span>
       ) : (
         <span className="boardBox-commentNum">0</span>
       )}

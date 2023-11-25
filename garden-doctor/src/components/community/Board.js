@@ -28,7 +28,32 @@ const Board = () => {
           return dateB - dateA;
         });
 
-        setBoards(sortedBoards);
+        const boardsWithUserImg = [];
+
+        for (const board of sortedBoards) {
+          // Fetch userImg for each userId
+          const userImgRes = await axios.post(
+            "http://localhost:8000/sign/myInfo",
+            {
+              userId: board.userId,
+            }
+          );
+
+          const url = userImgRes.data.userImg;
+          let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
+          console.log(cleanedUrl);
+
+          const boardWithUserImg = {
+            ...board,
+            userImg: cleanedUrl, // Replace with the actual field name from your API
+          };
+
+          boardsWithUserImg.push(boardWithUserImg);
+        }
+
+        setBoards(boardsWithUserImg);
+        console.log(boards);
+
         setCommentInputs(new Array(sortedBoards.length).fill(""));
 
         const groupedCommentData = groupCommentsByBoardId(commentRes.data);
@@ -117,7 +142,7 @@ const Board = () => {
   };
 
   return (
-    <div className="large-container">
+    <div className="main-container">
       <img
         className="boardWriteButton"
         src={BoardWrite}
@@ -135,6 +160,7 @@ const Board = () => {
               text={item.text}
               title={item.title}
               userId={item.userId}
+              userImg={item.userImg}
               boardId={item.boardId}
               likeData={likeData && likeData[item.boardId]}
               commentData={commentData && commentData[item.boardId]}

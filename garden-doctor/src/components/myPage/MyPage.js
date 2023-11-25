@@ -22,11 +22,15 @@ const MyPage = () => {
           userId: userId,
         });
         console.log("myInfos", myInfos.data);
+        const url = myInfos.data.userImg;
+        let cleanedUrl = url.replace(/^"(.*)"$/, "$1");
+
+        console.log(cleanedUrl);
         setName(myInfos.data.name);
         setNickName(myInfos.data.nickName);
         setBirth(myInfos.data.birth || "생일정보가 없습니다."); //null인 경우 방지
         setTelNum(myInfos.data.telNum || "전화번호 정보가 없습니다."); //null인 경우 방지
-        setUserImg(myInfos.data.userImg || ""); //null인 경우 방지
+        setUserImg(cleanedUrl || ""); //null인 경우 방지
       } catch (error) {
         console.log("error", error);
       }
@@ -94,7 +98,7 @@ const MyPage = () => {
           <button className="editButton">수정</button>
         </div>
         <div className="myInfoBottom">
-          <img className="userImg" alt="프로필 이미지" src={userImg[0]}></img>
+          <img className="userImg" alt="프로필 이미지" src={userImg}></img>
           <div className="myInfoRight">
             <div className="nickName">닉네임: {nickName}</div>
             <div className="birth">{birth}</div>

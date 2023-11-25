@@ -4,7 +4,7 @@
 }
 
 .writeBoard-arrow {
-  width: 8%;
+  width: 45px;
   height: width;
   position: absolute;
   top: 68px;
@@ -88,7 +88,12 @@
 
     &:hover {
       background-color: #588d62;
+      color: #fff;
     }
+  }
+
+  textarea {
+    height: 140px;
   }
 }
 
