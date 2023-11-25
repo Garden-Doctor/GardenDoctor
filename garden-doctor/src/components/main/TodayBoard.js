@@ -8,6 +8,7 @@ import redLike from "../../images/redLike.png";
 
 const TodayBoard = () => {
   const [mostLikedBoards, setMostLikedBoards] = useState([]);
+  const [userData, setUserData] = useState(null);
   const [boardData, setBoardData] = useState(null);
   const [commentData, setCommentData] = useState(null);
   const [likeData, setLikeData] = useState(null);
@@ -27,7 +28,7 @@ const TodayBoard = () => {
         const mostLikedBoardId = response.data.boardId;
 
         console.log("Fetching data...");
-        const [boardResponse, likeResponse, commentResponse] =
+        const [boardResponse, likeResponse, commentResponse, userResponse] =
           await Promise.all([
             axios.get(
               `http://localhost:8000/board/getBoard/${mostLikedBoardId}`
@@ -38,18 +39,27 @@ const TodayBoard = () => {
             axios.get(
               `http://localhost:8000/board/getComment/${mostLikedBoardId}`
             ),
+            axios.post("http://localhost:8000/sign/myInfo", {
+              userId: response.data.userId,
+            }),
           ]);
 
         console.log(
           "Data fetched:",
           boardResponse,
           likeResponse,
-          commentResponse
+          commentResponse,
+          userResponse
         );
+
+        const url = userResponse.data.userImg;
+        let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
+        console.log(cleanedUrl);
 
         setBoardData(boardResponse.data);
         setLikeData(likeResponse.data);
         setCommentData(commentResponse.data);
+        setUserData(cleanedUrl);
 
         // 클라이언트의 userId가 이미 좋아요를 눌렀는지 여부 확인
         const isLikedByUser = likeResponse.data.some(
@@ -65,29 +75,36 @@ const TodayBoard = () => {
     };
 
     fetchMostLikedBoards();
-  }, []);
+  }, [reduxUserId]);
 
   const navigate = useNavigate();
 
   if (loading) {
     // 추가: 로딩 중일 때 로딩 화면을 보여줍니다.
-    return <div>Loading...</div>;
+    return <div>Loading.....</div>;
   }
 
   return (
     <div className="todayboard-container">
-      오늘의 게시물
-      <BoardBox
-        key={mostLikedBoards.boardId}
-        imgSrc={mostLikedBoards.img}
-        title={mostLikedBoards.title}
-        userId={mostLikedBoards.userId}
-        boardId={mostLikedBoards.boardId}
-        likeData={likeData}
-        commentData={commentData}
-        day={mostLikedBoards.createdAt}
-        navigate={navigate}
-      />
+      {mostLikedBoards ? (
+        <>
+          <span>오늘의 게시물</span>
+          <BoardBox
+            key={mostLikedBoards.boardId}
+            imgSrc={mostLikedBoards.img}
+            title={mostLikedBoards.title}
+            userId={mostLikedBoards.userId}
+            userImg={userData}
+            boardId={mostLikedBoards.boardId}
+            likeData={likeData}
+            commentData={commentData}
+            day={mostLikedBoards.createdAt}
+            navigate={navigate}
+          />
+        </>
+      ) : (
+        <span>No data available</span>
+      )}
     </div>
   );
 };
