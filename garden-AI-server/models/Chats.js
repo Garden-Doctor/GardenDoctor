@@ -13,6 +13,11 @@ const Chats = (sequelize) => {
       type: DataTypes.STRING(1000),
       allowNull: false,
     },
+    isAI: {
+      type: DataTypes.BOOLEAN,
+      allowNul: false,
+
+    }
   });
 };
 
