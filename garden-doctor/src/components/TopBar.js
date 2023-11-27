@@ -76,6 +76,7 @@ const TopBar = () => {
     dispatch({ type: LOGOUT });
     sessionStorage.removeItem("token");
     alert("로그아웃 되었습니다.");
+    navigate("/");
   };
 
   const signupButton = () => {

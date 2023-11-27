@@ -47,9 +47,14 @@ const SideBar = ({ onClose }) => {
     navigate("/imageAI");
   };
   const chatButton = () => {
-    navigate("/chatAI");
+    navigate("/chat");
   };
   const mypageButton = () => {
+    if (!userId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
     navigate("/mypage");
   };
   const boardButton = () => {

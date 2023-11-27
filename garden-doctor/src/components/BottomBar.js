@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/bottombar.scss";
+import { useSelector } from "react-redux";
 
 const BottomBar = () => {
   const navigate = useNavigate();
+  const reduxUserId = useSelector((state) => state.user);
 
   const [selectedButton, setSelectedButton] = useState(null);
 
@@ -24,6 +26,11 @@ const BottomBar = () => {
   };
 
   const myButton = () => {
+    if (!reduxUserId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
     navigate("/mypage");
     setSelectedButton("my");
   };
@@ -61,7 +68,7 @@ const BottomBar = () => {
             }
             alt="board"
           />
-          게시판
+          소통의 정원
         </span>
         <span
           className={`BottomBar-chatButton ${
