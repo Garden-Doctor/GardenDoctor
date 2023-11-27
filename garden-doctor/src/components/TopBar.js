@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, userId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
@@ -10,6 +10,8 @@ import SideBar from "./SideBar";
 const TopBar = () => {
   const isLogin = useSelector((state) => state.isLogIn);
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user);
+  console.log("userId", userId);
 
   const [loading, setLoading] = useState(true);
 
@@ -57,7 +59,20 @@ const TopBar = () => {
     navigate("/login");
   };
 
-  const logoutButton = () => {
+  const Rest_api_key = process.env.REACT_APP_KAKAO_INIT_KEY;
+  const redirect_uri = process.env.REACT_APP_KAKAO_LOGOUT_REDIRECT_URI;
+
+  const logoutButton = async () => {
+    const findLoginType = await axios.post(
+      "http://localhost:8000/sign/findLoginType",
+      {
+        userId,
+      }
+    );
+    console.log("findLoginType", findLoginType);
+    if (findLoginType === "kakao") {
+      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${Rest_api_key}&logout_redirect_uri=${redirect_uri}`;
+    }
     dispatch({ type: LOGOUT });
     sessionStorage.removeItem("token");
     alert("로그아웃 되었습니다.");

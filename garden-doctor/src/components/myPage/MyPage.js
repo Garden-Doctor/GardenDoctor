@@ -1,11 +1,12 @@
 import "../../styles/myPage/myPage.scss";
 import axios from "axios";
-import { useEffect, useId, useState } from "react";
+import { useEffect, userId, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const userId = useSelector((state) => state.user);
+  console.log("userId", userId);
   const [name, setName] = useState("");
   const [nickName, setNickName] = useState("");
   const [birth, setBirth] = useState("");
