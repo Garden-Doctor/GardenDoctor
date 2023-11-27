@@ -69,7 +69,7 @@ const kakaoUserData = async (req, res) => {
 const makeToken = async (req, res) => {
   const { userId } = req.body;
 
-  const token = jwt.sign({ userId }, SECRET);
+  const token = jwt.sign({ id: userId }, SECRET);
   res.send({ token: token, id: userId });
 };
 
