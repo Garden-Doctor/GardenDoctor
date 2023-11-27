@@ -17,6 +17,8 @@ const MyPageEdit = () => {
   const [checkPw, setCheckPw] = useState("");
   const [checkMessage, setCheckMessage] = useState("");
   const [loginType, setLoginType] = useState("");
+  const [imageSelected, setImageSelected] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
 
   const [isNickNameAvailable, setIsNickNameAvailable] = useState(false);
   const [passwordPlag, setPasswordPlag] = useState(false);
@@ -50,15 +52,26 @@ const MyPageEdit = () => {
   }, [userId]);
 
   const saveImgFile = () => {
-    const file = imgRef.current?.files[0];
+    // const file1 = imgRef.current?.files[0];
+    // const reader1 = new FileReader();
+    // if (file) {
+    //   reader.readAsDataURL(file);
+    //   reader.onloadend = () => {
+    //     setUserImg(reader.result);
+    //   };
+    // }
+    // console.log("userImg", userImg);
+
+    const file = fileInputRef.current.files[0];
+    setImageSelected(true);
+    console.log(file);
+
+    // 이미지 미리보기 URL 설정
     const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setUserImg(reader.result);
-      };
-    }
-    console.log("userImg", userImg);
+    reader.onloadend = () => {
+      setImagePreviewUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   // 비밀번호 일치 버튼
@@ -90,7 +103,6 @@ const MyPageEdit = () => {
       return;
     }
 
-    const formData = new FormData();
     const files = fileInputRef.current.files;
 
     if (files[0] == null) {
@@ -114,8 +126,8 @@ const MyPageEdit = () => {
       }
     } else {
       // 이미지를 변경하지 않았을 때 기존 이미지 URL을 서버로 보냄
-      const file = imgRef;
-      formData.append("file", file);
+      const formData = new FormData();
+      formData.append("file", files[0]);
 
       console.log("formData", formData);
       try {
@@ -182,9 +194,16 @@ const MyPageEdit = () => {
       <h1>내 정보 수정</h1>
       <form className="edit_form" encType="multipart/form-data">
         <div className="edit_img">
-          <div className="profile_box">
-            <img src={userImg} alt="프로필 이미지" />
-          </div>
+          {imageSelected ? (
+            <div className="profile_box">
+              <img src={imagePreviewUrl} alt="프로필 이미지" />
+            </div>
+          ) : (
+            <div className="profile_box">
+              <img src={userImg} alt="프로필 이미지" />
+            </div>
+          )}
+
           <label className="edit-profileImg-label" htmlFor="profileImg">
             프로필 이미지 변경
           </label>
@@ -194,7 +213,7 @@ const MyPageEdit = () => {
             accept="image/*"
             id="profileImg"
             onChange={saveImgFile}
-            ref={(ref) => (fileInputRef.current = ref)}
+            ref={fileInputRef}
           />
         </div>
         <div className="edit_top">
