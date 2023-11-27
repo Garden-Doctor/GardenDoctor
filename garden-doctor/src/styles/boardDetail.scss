@@ -14,11 +14,11 @@
 
 .BoardDetail-container {
   padding: 10px;
-  margin: 10px;
+  margin-top: 7px;
   border-radius: 10px;
   width: 90%;
   max-width: 700px;
-  height: 550px;
+  height: 560px;
   border: 1px solid #858585;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
@@ -77,11 +77,11 @@
 .BoardDetail-boardImg {
   position: absolute;
   top: 60px;
-  justify-content: center;
+  // justify-content: center;
   width: 80%;
   height: 250px;
   border-radius: 10px;
-  left: 9%;
+  left: 10%;
 }
 
 // Add these styles in your boardDetail.scss file
@@ -89,7 +89,7 @@
 .BoardDetail-prevButton,
 .BoardDetail-nextButton {
   position: absolute;
-  top: 37%;
+  top: 34%;
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
@@ -157,7 +157,7 @@
 
 .BoardDetail-comments {
   position: absolute;
-  top: 410px;
+  top: 415px;
   left: 20px;
   height: 90px;
   width: 95%;
@@ -182,7 +182,7 @@
 
 .BoardDetail-commentInput {
   display: flex;
-  margin-top: 500px;
+  margin-top: 505px;
   height: 30px;
 
   input {
