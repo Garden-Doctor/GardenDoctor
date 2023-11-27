@@ -33,6 +33,7 @@ import MyPage from "./components/myPage/MyPage";
 
 import KakaoLogin from "./components/logIn/KakaoLogin";
 import axios from "axios";
+import MyPageEdit from "./components/myPage/MyPageEdit";
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
             <Route path="/myPage" element={<MyPage></MyPage>}></Route>
 
             <Route path="/kakao/callback" element={<KakaoLogin />} />
+            <Route path="/myPageEdit" element={<MyPageEdit></MyPageEdit>} />
           </Routes>
         </div>
         <BottomBar />
