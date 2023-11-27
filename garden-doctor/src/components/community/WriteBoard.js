@@ -8,6 +8,7 @@ import camera from "../../images/camera.png";
 const WriteBoard = () => {
   const [boardText, setBoardText] = useState("");
   const [boardTitle, setBoardTitle] = useState("");
+  const [prevImageNum, setPrevImageNum] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(""); // 이미지 미리보기 URL
   const username = useSelector((state) => state.user);
@@ -61,6 +62,7 @@ const WriteBoard = () => {
   const handleImageChange = () => {
     const file = fileInputRef.current.files[0];
     setImageSelected(true);
+    setPrevImageNum(fileInputRef.current.files.length);
 
     // 이미지 미리보기 URL 설정
     const reader = new FileReader();
@@ -72,6 +74,20 @@ const WriteBoard = () => {
 
   const beforePage = () => {
     navigate("/board");
+  };
+
+  const handleTextareaChange = (e) => {
+    const newText = e.target.value;
+
+    // Enter 키를 눌렀을 때 처리
+    if (e.key === "Enter") {
+      e.preventDefault();
+      console.log("Enter");
+      setBoardText((prevText) => prevText + "\n");
+    } else {
+      // Enter 키가 아닌 경우에는 일반적으로 값을 업데이트
+      setBoardText(newText);
+    }
   };
 
   return (
@@ -93,7 +109,8 @@ const WriteBoard = () => {
               <div className="writeBoard-imagePreview">
                 {/* 이미지 미리보기1 */}
                 <img src={imagePreviewUrl} alt="Preview" />
-                <span>클릭하여 이미지 추가</span>
+                <span>{prevImageNum}개의 이미지가 선택되었습니다</span>
+                {/* <span>클릭하여 이미지 추가</span> */}
               </div>
             </div>
           ) : (
@@ -106,6 +123,7 @@ const WriteBoard = () => {
             </div>
           )}
           <input
+            className="writeBoard-prevImageUpload"
             type="file"
             name="image"
             ref={fileInputRef}
@@ -129,7 +147,7 @@ const WriteBoard = () => {
               cols="30"
               rows="10"
               placeholder="내용을 추가해주세요"
-              onChange={(e) => setBoardText(e.target.value)}
+              onChange={(e) => handleTextareaChange(e)}
             ></textarea>
           </div>
           <button className="writeBoard-uploadButton" onClick={uploadButton}>

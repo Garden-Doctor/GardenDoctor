@@ -7,6 +7,9 @@
 .BoardDetail-container::-webkit-scrollbar {
   display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
+.BoardDetail-boardText::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
 //////
 
 .BoardDetail-container {
@@ -15,7 +18,7 @@
   border-radius: 10px;
   width: 90%;
   max-width: 700px;
-  height: 530px;
+  height: 550px;
   border: 1px solid #858585;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
@@ -135,13 +138,16 @@
   position: absolute;
   top: 350px;
   left: 20px;
-  height: 30px;
+  height: 50px;
+  width: 95%;
   font-weight: 600;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .BoardDetail-commentNum {
   position: absolute;
-  top: 380px;
+  top: 400px;
   left: 15px;
   height: 30px;
   font-style: oblique;
@@ -151,9 +157,9 @@
 
 .BoardDetail-comments {
   position: absolute;
-  top: 385px;
+  top: 410px;
   left: 20px;
-  height: 85px;
+  height: 90px;
   width: 95%;
   overflow: hidden;
   overflow-y: scroll;
@@ -175,7 +181,7 @@
 
 .BoardDetail-commentInput {
   display: flex;
-  margin-top: 470px;
+  margin-top: 500px;
   height: 30px;
 
   input {

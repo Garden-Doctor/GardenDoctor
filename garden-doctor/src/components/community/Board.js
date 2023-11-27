@@ -101,7 +101,12 @@ const Board = () => {
   const navigate = useNavigate();
 
   const writeButton = () => {
-    navigate("/writeBoard");
+    if (!username) {
+      alert("로그인 해주세요.");
+      navigate("/login");
+    } else {
+      navigate("/writeBoard");
+    }
   };
 
   const postCommentButton = async (e, index) => {
@@ -142,7 +147,7 @@ const Board = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="">
       <img
         className="boardWriteButton"
         src={BoardWrite}
@@ -153,6 +158,12 @@ const Board = () => {
         <div>Loading...</div>
       ) : (
         <div className="large-container">
+          <img
+            className="boardWriteButton"
+            src={BoardWrite}
+            alt=""
+            onClick={writeButton}
+          />
           {boards.map((item, index) => (
             <BoardBox
               key={item.boardId}
