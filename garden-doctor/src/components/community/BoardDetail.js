@@ -58,7 +58,7 @@ const BoardDetail = () => {
 
         // 클라이언트의 userId가 이미 좋아요를 눌렀는지 여부 확인
         const isLikedByUser = likeResponse.data.some(
-          (like) => like.userId === reduxUserId
+          (like) => like.userId == reduxUserId
         );
         setIsLiked(isLikedByUser);
         setLikeImage(isLikedByUser ? redLike : likeIcon);
@@ -86,7 +86,7 @@ const BoardDetail = () => {
     return <div>Loading...</div>;
   }
 
-  const showEditDeleteButtons = userId === reduxUserId;
+  const showEditDeleteButtons = userId == reduxUserId;
 
   const handleDelete = () => {
     // Confirm delete using the browser's built-in confirmation dialog

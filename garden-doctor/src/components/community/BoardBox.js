@@ -38,7 +38,7 @@ const BoardBox = ({
 
   // 좋아요를 눌렀는지 여부를 확인하는 함수
   const isLikedByUser =
-    likeData && likeData.some((like) => like.userId === reduxUserId);
+    likeData && likeData.some((like) => like.userId == reduxUserId);
 
   const clickedBoard = (e) => {
     navigate(`/boardDetail/${userId}/${boardId}`);

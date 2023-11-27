@@ -9,6 +9,7 @@ import camera from "../../images/camera.png";
 const EditBoard = () => {
   const { userId, boardId } = useParams();
   const [boardData, setBoardData] = useState(null);
+  const [prevImageNum, setPrevImageNum] = useState("");
   const [boardText, setBoardText] = useState("");
   const [boardTitle, setBoardTitle] = useState("");
   const [boardImg, setBoardImg] = useState("");
@@ -30,6 +31,7 @@ const EditBoard = () => {
         setBoardTitle(boardResponse.data.title);
         setBoardText(boardResponse.data.text);
         setBoardImg(boardResponse.data.img);
+        setPrevImageNum(boardResponse.data.img.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -108,6 +110,7 @@ const EditBoard = () => {
   const handleImageChange = () => {
     const file = fileInputRef.current.files[0];
     setImageSelected(true);
+    setPrevImageNum(fileInputRef.current.files.length);
 
     // 이미지 미리보기 URL 설정
     const reader = new FileReader();
@@ -144,7 +147,7 @@ const EditBoard = () => {
               <div className="writeBoard-imagePreview">
                 {/* 이미지 미리보기11 */}
                 <img src={imagePreviewUrl} alt="Preview" />
-                <span>클릭하여 이미지 추가</span>
+                <span>{prevImageNum}개의 이미지가 선택되었습니다</span>
               </div>
             </div>
           ) : (
@@ -153,7 +156,7 @@ const EditBoard = () => {
               onClick={handleImageUploadClick}
             >
               <img src={boardData.img[0]} alt="카메라" />
-              <span>클릭하여 이미지 추가</span>
+              <span>{prevImageNum}개의 이미지가 선택되었습니다</span>
             </div>
           )}
           <input
