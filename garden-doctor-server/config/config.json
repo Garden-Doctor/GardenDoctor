@@ -20,6 +20,13 @@
     "dialect": "mariadb",
     "port": "30134"
   },
+  "test2": {
+    "username": "user",
+    "password": "1234",
+    "database": "gardendoctor",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
   "production": {
     "username": "root",
     "password": null,

@@ -13,10 +13,10 @@ const Model = (sequelize) => {
       allowNull: false,
     },
     explanation: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
     },
     solution: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
     },
   });
 };

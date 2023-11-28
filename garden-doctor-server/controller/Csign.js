@@ -69,7 +69,7 @@ const kakaoUserData = async (req, res) => {
 const makeToken = async (req, res) => {
   const { userId } = req.body;
 
-  const token = jwt.sign({ userId }, SECRET);
+  const token = jwt.sign({ id: userId }, SECRET);
   res.send({ token: token, id: userId });
 };
 
@@ -165,7 +165,14 @@ const myInfo = async (req, res) => {
   try {
     const myInfos = await User.findOne({
       where: { userId: userId },
-      attributes: ["name", "nickName", "birth", "telNum", "userImg"],
+      attributes: [
+        "name",
+        "nickName",
+        "birth",
+        "telNum",
+        "userImg",
+        "loginType",
+      ],
     });
     res.status(200).send(myInfos);
   } catch (error) {
@@ -259,6 +266,28 @@ const findLoginType = async (req, res) => {
   }
 };
 
+const edit = async (req, res) => {
+  const { name, userId, pw, nickName, birth, telNum, img } = req.body;
+  const newPw = bcryptPassword(pw);
+  console.log("img", img);
+
+  const edit = await User.update(
+    {
+      name,
+      pw: newPw,
+      nickName,
+      birth,
+      telNum,
+      userImg: img,
+    },
+    {
+      where: {
+        userId,
+      },
+    }
+  );
+};
+
 module.exports = {
   signup,
   checkId,
@@ -272,4 +301,5 @@ module.exports = {
   kakaoUserData,
   makeToken,
   findLoginType,
+  edit,
 };
