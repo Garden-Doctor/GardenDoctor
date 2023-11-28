@@ -43,7 +43,7 @@ const Signup = () => {
       return;
     }
 
-    if (imgFile == "") {
+    if (imgFile === "") {
       setCheckMessage("프로필 이미지를 넣어주세요");
       return;
     }
@@ -159,6 +159,10 @@ const Signup = () => {
     }
   };
 
+  //오늘 날짜 구하기
+  const today = new Date();
+  const formattedToday = today.toISOString().split("T")[0];
+
   return (
     <div className="signup_container">
       <h1>회원가입</h1>
@@ -271,6 +275,7 @@ const Signup = () => {
               onChange={(e) => {
                 setBirth(e.target.value);
               }}
+              max={formattedToday}
             />
           </div>
           <div className="Box">

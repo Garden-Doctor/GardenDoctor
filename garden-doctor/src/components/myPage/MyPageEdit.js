@@ -188,6 +188,8 @@ const MyPageEdit = () => {
       setIsNickNameAvailable(true);
     }
   };
+  const today = new Date();
+  const formattedToday = today.toISOString().split("T")[0];
 
   return (
     <div className="myPageEdit-main-container">
@@ -290,6 +292,7 @@ const MyPageEdit = () => {
               onChange={(e) => {
                 setBirth(e.target.value);
               }}
+              max={formattedToday}
             />
           </div>
           <div className="Box">
