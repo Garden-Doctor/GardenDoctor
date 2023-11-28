@@ -30,11 +30,56 @@ a:active {
 
 .weather-container {
   width: $main-content-width;
-  height: 10em;
+
   border-radius: 10px;
   box-shadow: $box-shadow;
   background-color: $main-content-color;
   margin-top: 10px;
+  &-inner {
+    display: flex;
+    height: 7em;
+
+    .weather_left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 50%;
+      margin-left: 20px;
+    }
+    .weather_right {
+      display: flex;
+      width: 50%;
+      justify-content: center;
+      align-items: center;
+      .weather_right_left {
+        margin-right: 20px;
+        img {
+          width: 80px;
+          height: 80px;
+        }
+      }
+      .weather_right_right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .currentTemp {
+          font-size: 30px;
+          margin: 0;
+        }
+        .todayTemp {
+          .red {
+            color: red;
+            margin-right: 5px;
+          }
+          .blue {
+            margin-left: 5px;
+            color: blue;
+          }
+        }
+      }
+    }
+  }
 }
 
 .todayboard-container {
@@ -88,6 +133,10 @@ a:active {
   box-shadow: $box-shadow;
   margin-top: 10px;
   border-radius: 10px;
+  p {
+    margin: 0;
+    padding: 0;
+  }
   .inner-container {
     display: flex;
     flex-direction: column;
