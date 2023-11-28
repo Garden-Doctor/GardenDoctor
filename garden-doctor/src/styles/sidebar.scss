@@ -20,6 +20,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    img {
+      width: 100px;
+      border-radius: 50%;
+    }
   }
   .sidebar_menu {
     display: flex;

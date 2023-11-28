@@ -2,6 +2,8 @@ import React, { useEffect, userId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LOGIN, LOGOUT } from "../store/isLogin";
+import menu from "../images/menu.svg";
+import logo from "../images/logo.svg";
 
 import "../styles/topbar.scss";
 import axios from "axios";
@@ -87,10 +89,10 @@ const TopBar = () => {
     <div>
       <div className="topbar-container">
         <div id="sidbar-container">
-          <img src="imgs/menu.svg" id="menu" onClick={handleMenuButtonClick} />
+          <img src={menu} id="menu" onClick={handleMenuButtonClick} />
         </div>
         <div className="logo" onClick={logoButton}>
-          <img src="imgs/logo.svg" id="logo-img" />
+          <img src={logo} id="logo-img" />
         </div>
 
         {loading ? (

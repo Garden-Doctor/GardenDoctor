@@ -19,8 +19,12 @@ const SideBar = ({ onClose }) => {
           userId: userId,
         });
         console.log("myInfos", myInfos.data);
+        const url = myInfos.data.userImg;
+        let cleanedUrl = url.replace(/^"(.*)"$/, "$1");
+
+        console.log(cleanedUrl);
         setNickName(myInfos.data.nickName);
-        setUserImg(myInfos.data.userImg || ""); //null인 경우 방지
+        setUserImg(cleanedUrl); //null인 경우 방지
       } catch (error) {
         console.log("error", error);
       }
@@ -73,7 +77,7 @@ const SideBar = ({ onClose }) => {
         <img alt="나가기" src="/imgs/exit.svg" onClick={onClose} />
       </div>
       <div className="sidebar_top">
-        <img alt="사람" src={{ userImg } ? { userImg } : `/imgs/user.svg`} />
+        <img alt="사람" src={userImg} />
         <p>{nickName}</p>
         <span onClick={mypageButton}>마이페이지</span>
       </div>

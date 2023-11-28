@@ -81,7 +81,7 @@ const TodayBoard = () => {
 
   if (loading) {
     // 추가: 로딩 중일 때 로딩 화면을 보여줍니다.
-    return <div>Loading.....</div>;
+    return <div>로딩중이거나 좋아요한 게시글이 없습니다.</div>;
   }
 
   return (
