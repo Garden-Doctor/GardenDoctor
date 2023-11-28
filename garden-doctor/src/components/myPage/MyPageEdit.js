@@ -13,7 +13,7 @@ const MyPageEdit = () => {
   const [birth, setBirth] = useState("");
   const [telNum, setTelNum] = useState("");
   const [userImg, setUserImg] = useState("");
-  const [pw, setPw] = useState("");
+  const [pw, setPw] = useState(null);
   const [checkPw, setCheckPw] = useState("");
   const [checkMessage, setCheckMessage] = useState("");
   const [loginType, setLoginType] = useState("");
@@ -52,16 +52,6 @@ const MyPageEdit = () => {
   }, [userId]);
 
   const saveImgFile = () => {
-    // const file1 = imgRef.current?.files[0];
-    // const reader1 = new FileReader();
-    // if (file) {
-    //   reader.readAsDataURL(file);
-    //   reader.onloadend = () => {
-    //     setUserImg(reader.result);
-    //   };
-    // }
-    // console.log("userImg", userImg);
-
     const file = fileInputRef.current.files[0];
     setImageSelected(true);
     console.log(file);
@@ -76,12 +66,16 @@ const MyPageEdit = () => {
 
   // 비밀번호 일치 버튼
   const pwCheckButton = () => {
-    if (pw === checkPw) {
-      setCheckMessage("비밀번호가 일치합니다.");
-      setPasswordPlag(true);
-    } else {
-      setCheckMessage("비밀번호가 서로 다릅니다.");
-      setPasswordPlag(false);
+    if (pw !== null) {
+      if (pw === checkPw) {
+        setCheckMessage("비밀번호가 일치합니다.");
+        setPasswordPlag(true);
+      } else {
+        setCheckMessage("비밀번호가 서로 다릅니다.");
+        setPasswordPlag(false);
+      }
+    } else if (pw === null) {
+      setCheckMessage("비밀번호를 입력해주세요.");
     }
   };
 
@@ -164,32 +158,56 @@ const MyPageEdit = () => {
 
   // 닉네임 중복 확인 버튼
   const checkNickButton = async () => {
-    if (prevNickName !== nickName) {
-      try {
-        const res = await axios({
-          method: "POST",
-          url: "http://localhost:8000/sign/signup/checknickname",
-          data: { nickName },
-        });
+    if (nickName !== null) {
+      if (prevNickName !== nickName) {
+        try {
+          const res = await axios({
+            method: "POST",
+            url: "http://localhost:8000/sign/signup/checknickname",
+            data: { nickName },
+          });
 
-        // 응답을 확인하고 메시지에 따라 처리
-        if (res.data.result === true) {
-          setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
-          setIsNickNameAvailable(true);
-        } else {
-          setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
-          setIsNickNameAvailable(false);
+          // 응답을 확인하고 메시지에 따라 처리
+          if (res.data.result === true) {
+            setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
+            setIsNickNameAvailable(true);
+          } else {
+            setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
+            setIsNickNameAvailable(false);
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
+      } else if (prevNickName === nickName) {
+        setCheckMessage("닉네임: 변경사항이 없습니다.");
+        setIsNickNameAvailable(true);
       }
-    } else if (prevNickName === nickName) {
-      setCheckMessage("닉네임: 변경사항이 없습니다.");
-      setIsNickNameAvailable(true);
+    } else if (nickName === null) {
+      setCheckMessage("닉네임을 입력해주세요.");
     }
   };
+  //오늘 날짜 계산
   const today = new Date();
   const formattedToday = today.toISOString().split("T")[0];
+
+  //전화번호 자동 하이픈 및 번호 입력만 받음
+  const handleChange = (e) => {
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(e.target.value)) {
+      setTelNum(e.target.value);
+    }
+  };
+
+  useEffect(() => {
+    if (telNum.length === 10) {
+      setTelNum(telNum.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
+    }
+    if (telNum.length === 13) {
+      setTelNum(
+        telNum.replace(/-/g, "").replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
+      );
+    }
+  }, [telNum]);
 
   return (
     <div className="myPageEdit-main-container">
@@ -297,13 +315,7 @@ const MyPageEdit = () => {
           </div>
           <div className="Box">
             <img src="imgs/phone.svg" className="idImg" />
-            <input
-              type="text"
-              value={telNum}
-              onChange={(e) => {
-                setTelNum(e.target.value);
-              }}
-            />
+            <input type="text" value={telNum} onChange={handleChange} />
           </div>
         </div>
 
