@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -6,13 +6,13 @@ import "../../styles/signup.scss";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
-  const [checkPw, setCheckPw] = useState("");
+  const [name, setName] = useState(null);
+  const [id, setId] = useState(null);
+  const [pw, setPw] = useState(null);
+  const [checkPw, setCheckPw] = useState(null);
 
-  const [nickName, setNickName] = useState("");
-  const [birth, setBirth] = useState("");
+  const [nickName, setNickName] = useState(null);
+  const [birth, setBirth] = useState(null);
   const [telNum, setTelNum] = useState("");
 
   const [isIdAvailable, setIsIdAvailable] = useState(false);
@@ -43,7 +43,7 @@ const Signup = () => {
       return;
     }
 
-    if (imgFile == "") {
+    if (imgFile === "") {
       setCheckMessage("프로필 이미지를 넣어주세요");
       return;
     }
@@ -105,59 +105,95 @@ const Signup = () => {
 
   // 아이디 중복 확인 버튼
   const checkIdButton = async () => {
-    try {
-      const res = await axios({
-        method: "POST",
-        url: "http://localhost:8000/sign/signup/checkid",
-        data: { id },
-      });
+    console.log("id", id);
+    if (id !== null) {
+      try {
+        const res = await axios({
+          method: "POST",
+          url: "http://localhost:8000/sign/signup/checkid",
+          data: { id },
+        });
 
-      // 응답을 확인하고 메시지에 따라 처리
-      // 사용 가능할때
-      if (res.data.result === true) {
-        setCheckMessage("아이디 : 사용 가능한 아이디입니다.");
-        setIsIdAvailable(true);
-      } else {
-        setCheckMessage("아이디 : 이미 사용중인 아이디입니다.");
-        setIsIdAvailable(false);
+        // 응답을 확인하고 메시지에 따라 처리
+        // 사용 가능할때
+        if (res.data.result === true) {
+          setCheckMessage("아이디 : 사용 가능한 아이디입니다.");
+          setIsIdAvailable(true);
+        } else {
+          setCheckMessage("아이디 : 이미 사용중인 아이디입니다.");
+          setIsIdAvailable(false);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    } else if (id === null) {
+      setCheckMessage("아이디를 입력해주세요");
     }
   };
 
   // 비밀번호 일치 버튼
   const pwCheckButton = () => {
-    if (pw === checkPw) {
-      setCheckMessage("비밀번호가 일치합니다.");
-      setPasswordPlag(true);
-    } else {
-      setCheckMessage("비밀번호가 서로 다릅니다.");
-      setPasswordPlag(false);
+    if (pw !== null) {
+      if (pw === checkPw) {
+        setCheckMessage("비밀번호가 일치합니다.");
+        setPasswordPlag(true);
+      } else {
+        setCheckMessage("비밀번호가 서로 다릅니다.");
+        setPasswordPlag(false);
+      }
+    } else if (pw === null) {
+      setCheckMessage("비밀번호를 입력해주세요.");
     }
   };
 
   // 닉네임 중복 확인 버튼
   const checkNickButton = async () => {
-    try {
-      const res = await axios({
-        method: "POST",
-        url: "http://localhost:8000/sign/signup/checknickname",
-        data: { nickName },
-      });
+    if (nickName !== null) {
+      try {
+        const res = await axios({
+          method: "POST",
+          url: "http://localhost:8000/sign/signup/checknickname",
+          data: { nickName },
+        });
 
-      // 응답을 확인하고 메시지에 따라 처리
-      if (res.data.result === true) {
-        setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
-        setIsNickNameAvailable(true);
-      } else {
-        setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
-        setIsNickNameAvailable(false);
+        // 응답을 확인하고 메시지에 따라 처리
+        if (res.data.result === true) {
+          setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
+          setIsNickNameAvailable(true);
+        } else {
+          setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
+          setIsNickNameAvailable(false);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    } else if (nickName === null) {
+      setCheckMessage("닉네임을 입력해주세요.");
     }
   };
+
+  //오늘 날짜 구하기
+  const today = new Date();
+  const formattedToday = today.toISOString().split("T")[0];
+
+  //전화번호 자동 하이픈 및 번호 입력만 받음
+  const handleChange = (e) => {
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(e.target.value)) {
+      setTelNum(e.target.value);
+    }
+  };
+
+  useEffect(() => {
+    if (telNum.length === 10) {
+      setTelNum(telNum.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"));
+    }
+    if (telNum.length === 13) {
+      setTelNum(
+        telNum.replace(/-/g, "").replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
+      );
+    }
+  }, [telNum]);
 
   return (
     <div className="signup_container">
@@ -271,6 +307,7 @@ const Signup = () => {
               onChange={(e) => {
                 setBirth(e.target.value);
               }}
+              max={formattedToday}
             />
           </div>
           <div className="Box">
@@ -278,9 +315,8 @@ const Signup = () => {
             <input
               type="text"
               placeholder="전화번호"
-              onChange={(e) => {
-                setTelNum(e.target.value);
-              }}
+              onChange={handleChange}
+              value={telNum}
             />
           </div>
         </div>
