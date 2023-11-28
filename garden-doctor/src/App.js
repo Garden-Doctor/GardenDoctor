@@ -34,6 +34,7 @@ import MyPage from "./components/myPage/MyPage";
 import KakaoLogin from "./components/logIn/KakaoLogin";
 import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
+import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
 
 function App() {
   return (
@@ -50,6 +51,10 @@ function App() {
             <Route path="/Board" element={<Board></Board>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/signup" element={<Signup></Signup>}></Route>
+            <Route
+              path="/findIdPw"
+              element={<FindMyyIdPw></FindMyyIdPw>}
+            ></Route>
             <Route
               path="/writeBoard"
               element={<WriteBoard></WriteBoard>}

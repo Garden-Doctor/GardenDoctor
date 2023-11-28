@@ -8,6 +8,10 @@ import ChatAI from "./ChatAI";
 import BottomContent from "./BottomContent";
 
 const Main = () => {
+  const str = "아a녕ㅇ";
+
+  console.log(`${str} ${str.length}`);
+
   return (
     <>
       <div className="main-container">
@@ -15,6 +19,7 @@ const Main = () => {
         <TodayBoard></TodayBoard>
         <BottomContent />
       </div>
+      {}
     </>
   );
 };
