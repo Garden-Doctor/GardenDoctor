@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../../store/isLogin";
 
+import logo_src from "../../images/login_logo.png";
+import id_src from "../../images/id.svg";
+import pw_src from "../../images/pw.svg";
+
 import "../../styles/login.scss";
 
 const Login = () => {
@@ -62,9 +66,9 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <img src="imgs/login_logo.png" alt="logo" />
+      <img src={logo_src} alt="logo" />
       <div className="idBox">
-        <img src="imgs/id.svg" className="idImg" />
+        <img src={id_src} className="idImg" />
         <input
           type="text"
           id="id_input"
@@ -73,7 +77,7 @@ const Login = () => {
         />
       </div>
       <div className="pwBox">
-        <img src="imgs/pw.svg" className="pwImg" />
+        <img src={pw_src} className="pwImg" />
         <input
           type="text"
           placeholder="비밀번호"

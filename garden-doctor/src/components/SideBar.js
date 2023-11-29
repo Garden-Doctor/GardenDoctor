@@ -4,6 +4,9 @@ import "../styles/sidebar.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import exit_src from "../images/exit.svg";
+import user_src from "../images/user.svg";
+
 const SideBar = ({ onClose }) => {
   const sideBarRef = useRef();
   const userId = useSelector((state) => state.user);
@@ -74,10 +77,10 @@ const SideBar = ({ onClose }) => {
   return (
     <div className="sidebar-container" ref={sideBarRef}>
       <div className="sidebar_eixtbutton">
-        <img alt="나가기" src="/imgs/exit.svg" onClick={onClose} />
+        <img alt="나가기" src={exit_src} onClick={onClose} />
       </div>
       <div className="sidebar_top">
-        <img alt="사람" src={userImg} />
+        <img alt="사람" src={userImg ? userImg : user_src} />
         <p>{nickName}</p>
         <span onClick={mypageButton}>마이페이지</span>
       </div>

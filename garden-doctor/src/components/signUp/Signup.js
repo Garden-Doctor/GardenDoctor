@@ -2,6 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import id_src from "../../images/id.svg";
+import pw_src from "../../images/pw.svg";
+import user_src from "../../images/user.svg";
+import birth_src from "../../images/birth.svg";
+import phone_src from "../../images/phone.svg";
+
 import "../../styles/signup.scss";
 
 const Signup = () => {
@@ -201,10 +207,7 @@ const Signup = () => {
       <form className="signup_form" encType="multipart/form-data">
         <div className="signup_img">
           <div className="profile_box">
-            <img
-              src={imgFile ? imgFile : `/imgs/user.svg`}
-              alt="프로필 이미지"
-            />
+            <img src={imgFile ? imgFile : user_src} alt="프로필 이미지" />
           </div>
           <label className="signup-profileImg-label" htmlFor="profileImg">
             프로필 이미지 추가
@@ -220,7 +223,7 @@ const Signup = () => {
         </div>
         <div className="signup_top">
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={id_src} className="idImg" />
             <input
               type="text"
               placeholder="아이디"
@@ -238,7 +241,7 @@ const Signup = () => {
             </button>
           </div>
           <div className="Box">
-            <img src="imgs/password.svg" className="idImg" />
+            <img src={pw_src} className="idImg" />
             <input
               type="password"
               placeholder="비밀번호"
@@ -249,7 +252,7 @@ const Signup = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/password.svg" className="idImg" />
+            <img src={pw_src} className="idImg" />
             <input
               type="password"
               placeholder="비밀번호 확인"
@@ -273,7 +276,7 @@ const Signup = () => {
 
         <div className="signup_bottom">
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={id_src} className="idImg" />
             <input
               type="text"
               placeholder="이름"
@@ -283,7 +286,7 @@ const Signup = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={id_src} className="idImg" />
             <input
               type="text"
               placeholder="닉네임"
@@ -300,7 +303,7 @@ const Signup = () => {
             </button>
           </div>
           <div className="Box">
-            <img src="imgs/birth.svg" className="idImg" />
+            <img src={birth_src} className="idImg" />
             <input
               type="date"
               placeholder="생년월일"
@@ -311,7 +314,7 @@ const Signup = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/phone.svg" className="idImg" />
+            <img src={phone_src} className="idImg" />
             <input
               type="text"
               placeholder="전화번호"
