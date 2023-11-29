@@ -27,10 +27,11 @@ import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
 
-import MyPlants from "./components/myPage/MyPlants";
+import { MyPlants } from "./components/myPage/MyPlants";
 
 import MyPage from "./components/myPage/MyPage";
 import AddPlant from "./components/myPlants/AddPlant";
+import PlantDetail from "./components/myPlants/PlantDetail";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
             <Route path="/signup" element={<Signup></Signup>}></Route>
             <Route
               path="/writeBoard"
+              element={<WriteBoard></WriteBoard>}
+            ></Route>
+            <Route
+              path="/writeBoard/:userId/:myPlantId"
               element={<WriteBoard></WriteBoard>}
             ></Route>
             <Route
@@ -71,6 +76,11 @@ function App() {
             <Route
               path="/myPlants/addPlant"
               element={<AddPlant></AddPlant>}
+            ></Route>
+
+            <Route
+              path="/myPlants/plantDetail/:URLuserId/:plantId"
+              element={<PlantDetail></PlantDetail>}
             ></Route>
 
             <Route path="/myPage" element={<MyPage></MyPage>}></Route>

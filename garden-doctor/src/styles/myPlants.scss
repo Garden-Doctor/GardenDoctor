@@ -7,7 +7,7 @@ $background-color: #e5f3df;
   display: flex;
   flex-direction: column;
   align-items: center;
-  button {
+  .myPlantbox-addPlant {
     color: white;
     background-color: $point-color;
     align-self: flex-end;
@@ -50,11 +50,24 @@ $background-color: #e5f3df;
       margin-left: 40%;
       top: 20px;
     }
-    .myPlantBox-plantTemp {
+    .myPlantBox-plantNickname {
       position: absolute;
       margin-left: 40%;
       top: 45px;
     }
+    .myPlantBox-plantPlanted {
+      position: absolute;
+      margin-left: 15px;
+      top: 115px;
+    }
+    .myPlantBox-PostJournalButton {
+      position: absolute;
+      right: 10px;
+      top: 115px;
+      border: none;
+      background: none;
+    }
+
     .myPlantBox-line {
       margin-top: 110px;
       opacity: 0.6;

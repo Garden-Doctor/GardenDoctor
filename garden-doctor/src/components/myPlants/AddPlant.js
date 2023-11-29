@@ -4,140 +4,141 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 //import "../../styles/writeBoard.scss";
 import camera from "../../images/camera.png";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "../../styles/myPlants.scss";
+import { PageTitle } from "../myPage/MyPlants";
+import plantOptions from "../imageAI/PlantOptions";
 
 const AddPlant = () => {
-  const [boardText, setBoardText] = useState("");
-  const [boardTitle, setBoardTitle] = useState("");
-  const [imageSelected, setImageSelected] = useState(false);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(""); // 이미지 미리보기 URL
+  const [plantNickname, setPlantNickname] = useState("");
+  const [selectedPlant, setSelectedPlant] = useState("");
+  const [plantDate, setPlantDate] = useState(new Date());
+  const [checkMessage, setCheckMessage] = useState("");
+
   const username = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
+
+  const handlePlantSelect = (e) => {
+    setSelectedPlant(e.target.value);
+  };
+
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+  };
 
   const uploadButton = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    const files = fileInputRef.current.files;
-
-    // 선택된 파일들을 FormData에 추가
-    for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i]);
+    if (imgRef.current && imgRef.current.files.length > 0) {
+      const file = imgRef.current.files[0];
+      formData.append("file", file);
+    }
+    if (!plantNickname) {
+      setCheckMessage("식물 종류를 선택해주세요");
+      return;
     }
 
     try {
-      const res = await axios({
+      const res1 = await axios({
         method: "POST",
-        url: "http://localhost:8000/upload",
+        url: "http://localhost:8000/upload/single",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }).then((result) => {
-        console.log(result.data);
-        const res2 = axios({
-          method: "POST",
-          url: "http://localhost:8000/board/uploadBoard",
-          data: {
-            userId: username,
-            title: boardTitle,
-            text: boardText,
-            img: result.data,
-          },
-        });
-        console.log(res2);
       });
-      console.log("res", res);
-      alert("게시글 생성 완료!");
-      navigate("/board");
+      const res2 = await axios({
+        method: "POST",
+        url: "http://localhost:8000/myPlants/addPlant",
+        data: {
+          user_id: username,
+          plant_nickname: plantNickname,
+          plant_img: res1.data,
+          plant_type: selectedPlant,
+          plant_date: plantDate,
+        },
+      });
+      console.log("res1", res1);
+      console.log("res2", res2);
+      alert("작물 추가 완료!");
+      navigate("/myPlants");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleImageUploadClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleImageChange = () => {
-    const file = fileInputRef.current.files[0];
-    setImageSelected(true);
-
-    // 이미지 미리보기 URL 설정
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreviewUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
   const beforePage = () => {
-    navigate("/board");
+    navigate("/myPlants");
   };
 
   return (
-    <div className="main-container">
-      <div className="writeBoard-container">
-        <img
-          className="writeBoard-arrow"
-          src="imgs/arrow-right.png"
-          alt=""
-          onClick={beforePage}
-        />
-        <span className="writeBoard-topSpan">새 게시글 작성</span>
-        <form className="writeBoard-form" encType="multipart/form-data">
-          {imageSelected ? (
-            <div
-              className="writeBoard-imageUpload"
-              onClick={handleImageUploadClick}
-            >
-              <div className="writeBoard-imagePreview">
-                {/* 이미지 미리보기1 */}
-                <img src={imagePreviewUrl} alt="Preview" />
-                <span>클릭하여 이미지 추가</span>
-              </div>
-            </div>
-          ) : (
-            <div
-              className="writeBoard-imageUpload"
-              onClick={handleImageUploadClick}
-            >
-              <img src={camera} alt="카메라" />
-              <span>클릭하여 이미지 추가</span>
-            </div>
-          )}
+    <Container className="myPlant-container">
+      <PageTitle>나의 작물 추가</PageTitle>
+      <form className="writeBoard-form" encType="multipart/form-data">
+        <div className="signup_img">
+          <div className="profile_box">
+            <img src={imgFile ? imgFile : `/imgs/user.svg`} alt="식물 이미지" />
+          </div>
+          <label className="signup-profileImg-label" htmlFor="profileImg">
+            식물 이미지 추가
+          </label>
           <input
+            className="signup-profileImg-input"
             type="file"
-            name="image"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleImageChange}
-            multiple
+            accept="image/*"
+            id="profileImg"
+            onChange={saveImgFile}
+            ref={imgRef}
           />
-          <div className="writeBoard-boardTitle">
-            제목 <br />
-            <input
-              type="text"
-              placeholder="제목을 추가해주세요"
-              onChange={(e) => setBoardTitle(e.target.value)}
-            />
-          </div>
-          <div className="writeBoard-boardContent">
-            내용 <br />
-            <textarea
-              name="boardText"
-              id="boardText"
-              cols="30"
-              rows="10"
-              placeholder="내용을 추가해주세요"
-              onChange={(e) => setBoardText(e.target.value)}
-            ></textarea>
-          </div>
-          <button className="writeBoard-uploadButton" onClick={uploadButton}>
-            게시
-          </button>
-        </form>
-      </div>
-    </div>
+        </div>
+
+        <div>
+          식물 종류
+          <br />
+          <select
+            name="selectPlant"
+            className="selectPlant"
+            onChange={handlePlantSelect}
+            value={selectedPlant}
+          >
+            {plantOptions.map((option) => (
+              <option key={option.value} value={option.label}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="signup_check_box">{checkMessage}</div>
+
+        <div className="writeBoard-boardTitle">
+          식물 별명 (선택)
+          <br />
+          <input
+            type="text"
+            placeholder="내 식물의 별명을 추가해보세요"
+            onChange={(e) => setPlantNickname(e.target.value)}
+          />
+        </div>
+        <div className="writeBoard-boardTitle">
+          심은 날:
+          <input type="date" onChange={(e) => setPlantDate(e.target.value)} />
+        </div>
+
+        <button className="writeBoard-uploadButton" onClick={uploadButton}>
+          게시
+        </button>
+      </form>
+    </Container>
   );
 };
 

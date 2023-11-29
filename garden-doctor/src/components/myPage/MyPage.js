@@ -73,6 +73,24 @@ const MyPage = () => {
     };
     myLike();
   }, [userId]);
+
+  useEffect(() => {
+    const myPlant = async () => {
+      try {
+        const myPlants = await axios.post(
+          "http://localhost:8000/board/myBoards/findMyPlant",
+          {
+            userId: userId,
+          }
+        );
+        setPlantsCount(myPlants.data.length);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    myPlant();
+  }, [userId]);
+  
   const navigate = useNavigate();
   const boardsCountButton = () => {
     sessionStorage.setItem("selectedTab", "my-boards"); //내 게시글 선택한 채로 이동
