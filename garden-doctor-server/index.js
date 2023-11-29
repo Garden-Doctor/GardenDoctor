@@ -82,6 +82,9 @@ app.use("/sign", sign);
 const board = require("./routes/board.js");
 app.use("/board", board);
 
+const plants = require("./routes/myPlants.js");
+app.use("/myPlants", plants);
+
 const plantsolution = require("./routes/plantsolution.js");
 app.use("/dignosisResult", plantsolution);
 

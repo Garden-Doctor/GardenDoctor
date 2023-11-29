@@ -26,7 +26,11 @@ db.Comment = require("./Comment")(sequelize);
 //모델
 db.Like = require("./Like")(sequelize);
 
-// 사용자와 댓글 관계 설정
+db.MyPlants = require("./MyPlants")(sequelize);
+
+db.PlantType = require("./PlantType")(sequelize);
+
+// 사용자와 게시글 관계 설정
 db.User.hasMany(db.Board, { foreignKey: "userId" });
 db.Board.belongsTo(db.User, { foreignKey: "userId" });
 
@@ -43,6 +47,10 @@ db.Like.belongsTo(db.User, { foreignKey: "userId" });
 // 게시물와 댓글 관계 설정
 db.Board.hasMany(db.Like, { foreignKey: "boardId" });
 db.Like.belongsTo(db.Board, { foreignKey: "boardId" });
+
+//사용자와 식물 관계 설정(다대다)
+db.MyPlants.belongsToMany(db.PlantType, { through: "myPlantsTypes" });
+db.PlantType.belongsToMany(db.MyPlants, { through: "myPlantsTypes" });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

@@ -1,29 +1,17 @@
 const { DataTypes } = require("sequelize");
 
 const Model = (sequelize) => {
-  return sequelize.define("Boards", {
+  return sequelize.define("PlantType", {
     //컬럼 정의
-    boardId: {
+    type_id: {
       type: DataTypes.INTEGER,
       allowNull: false, //NOT NULL
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
+    plant_type: {
       type: DataTypes.STRING(500),
       allowNull: false,
-    },
-    text: {
-      type: DataTypes.STRING(500),
-      allowNull: false,
-    },
-    img: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    },
-    plant_id: {
-      type: DataTypes.STRING(500),
-      allowNull: true,
     },
   });
 };

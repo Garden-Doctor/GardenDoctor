@@ -1,4 +1,4 @@
-const { User, Board, Comment, Like } = require("../models");
+const { User, Board, Comment, Like, MyPlants } = require("../models");
 
 const getBoards = async (req, res) => {
   try {
@@ -26,12 +26,13 @@ const getBoard = async (req, res) => {
 const uploadBoard = async (req, res) => {
   try {
     console.log(req.body);
-    const { userId, text, img, title } = req.body;
+    const { userId, text, img, title, plant_id } = req.body;
     const upload = await Board.create({
       userId,
       title,
       text,
       img,
+      plant_id,
     });
     console.log(upload);
     res.send(upload);
@@ -239,6 +240,20 @@ const findMyLike = async (req, res) => {
   }
 };
 
+const findMyPlant = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const findMyPlants = await MyPlants.findAll({
+      where: { user_id: userId },
+      attributes: ["myPlant_id"],
+    });
+    console.log("findMyPlant", findMyPlants);
+    res.status(200).send(findMyPlants);
+  } catch (error) {
+    res.status(500).send({ message: "에러 발생", error });
+  }
+};
+
 const findMyLikeBoards = async (req, res) => {
   const { boardId } = req.body;
   try {
@@ -317,6 +332,7 @@ module.exports = {
   myBoardComment,
   myBoardLike,
   findMyLike,
+  findMyPlant,
   findMyLikeBoards,
   getMostLikedBoards,
 };

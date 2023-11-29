@@ -34,6 +34,8 @@ router.post("/myBoards/like", controller.myBoardLike);
 
 router.post("/myBoards/findMyLike", controller.findMyLike);
 
+router.post("/myBoards/findMyPlant", controller.findMyPlant);
+
 router.post("/myBoards/findMyLikeBoards", controller.findMyLikeBoards);
 
 router.get("/getMostLikedBoards", controller.getMostLikedBoards);
