@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const dotenv = require("dotenv");
 const querystring = require("querystring");
-const { response } = require("express");
 
 const bcryptPassword = (password) => {
   return bcrypt.hashSync(password, saltNumber);
@@ -288,6 +287,32 @@ const edit = async (req, res) => {
   );
 };
 
+const findId = async (req, res) => {
+  const { name, nickname, birth } = req.body;
+
+  try {
+    // 사용자 정보를 데이터베이스에서 찾기
+    const user = await User.findOne({
+      where: {
+        name,
+        nickname,
+        birth,
+      },
+    });
+
+    if (user) {
+      // 사용자를 찾았을 경우
+      res.json({ foundId: user.userId });
+    } else {
+      // 사용자를 찾지 못했을 경우
+      res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+    }
+  } catch (error) {
+    console.error("Error finding user:", error);
+    res.status(500).json({ error: "서버 오류" });
+  }
+};
+
 module.exports = {
   signup,
   checkId,
@@ -302,4 +327,5 @@ module.exports = {
   makeToken,
   findLoginType,
   edit,
+  findId,
 };
