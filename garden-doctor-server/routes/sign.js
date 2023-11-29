@@ -23,4 +23,8 @@ router.post("/makeToken", controller.makeToken);
 
 router.post("/findLoginType", controller.findLoginType);
 
+router.post("/edit", controller.edit);
+
+router.post("/findId", controller.findId);
+
 module.exports = router;

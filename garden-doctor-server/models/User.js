@@ -25,7 +25,7 @@ const Model = (sequelize) => {
       allowNull: true,
     },
     telNum: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: true,
     },
     userImg: {

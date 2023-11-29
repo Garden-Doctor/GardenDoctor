@@ -1,15 +1,21 @@
 {
   "development": {
-    "username": "root",
+    "username": "user",
     "password": "1234",
-    "database": "kdt8",
-    "host": "svc.sel5.cloudtype.app",
-    "dialect": "mariadb",
-    "port": "30134"
+    "database": "gardendoctor",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
   "test": {
     "username": "hi",
     "password": "12345678!",
+    "database": "gardendoctor",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test2": {
+    "username": "user",
+    "password": "1234",
     "database": "gardendoctor",
     "host": "127.0.0.1",
     "dialect": "mysql"

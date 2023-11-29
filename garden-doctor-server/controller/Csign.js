@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const dotenv = require("dotenv");
 const querystring = require("querystring");
-const { response } = require("express");
 
 const bcryptPassword = (password) => {
   return bcrypt.hashSync(password, saltNumber);
@@ -69,7 +68,7 @@ const kakaoUserData = async (req, res) => {
 const makeToken = async (req, res) => {
   const { userId } = req.body;
 
-  const token = jwt.sign({ userId }, SECRET);
+  const token = jwt.sign({ id: userId }, SECRET);
   res.send({ token: token, id: userId });
 };
 
@@ -165,7 +164,14 @@ const myInfo = async (req, res) => {
   try {
     const myInfos = await User.findOne({
       where: { userId: userId },
-      attributes: ["name", "nickName", "birth", "telNum", "userImg"],
+      attributes: [
+        "name",
+        "nickName",
+        "birth",
+        "telNum",
+        "userImg",
+        "loginType",
+      ],
     });
     res.status(200).send(myInfos);
   } catch (error) {
@@ -259,6 +265,54 @@ const findLoginType = async (req, res) => {
   }
 };
 
+const edit = async (req, res) => {
+  const { name, userId, pw, nickName, birth, telNum, img } = req.body;
+  const newPw = bcryptPassword(pw);
+  console.log("img", img);
+
+  const edit = await User.update(
+    {
+      name,
+      pw: newPw,
+      nickName,
+      birth,
+      telNum,
+      userImg: img,
+    },
+    {
+      where: {
+        userId,
+      },
+    }
+  );
+};
+
+const findId = async (req, res) => {
+  const { name, nickname, birth } = req.body;
+
+  try {
+    // 사용자 정보를 데이터베이스에서 찾기
+    const user = await User.findOne({
+      where: {
+        name,
+        nickname,
+        birth,
+      },
+    });
+
+    if (user) {
+      // 사용자를 찾았을 경우
+      res.json({ foundId: user.userId });
+    } else {
+      // 사용자를 찾지 못했을 경우
+      res.status(404).json({ error: "사용자를 찾을 수 없습니다." });
+    }
+  } catch (error) {
+    console.error("Error finding user:", error);
+    res.status(500).json({ error: "서버 오류" });
+  }
+};
+
 module.exports = {
   signup,
   checkId,
@@ -272,4 +326,6 @@ module.exports = {
   kakaoUserData,
   makeToken,
   findLoginType,
+  edit,
+  findId,
 };

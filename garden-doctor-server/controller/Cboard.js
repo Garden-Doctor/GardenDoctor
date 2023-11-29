@@ -193,6 +193,7 @@ const myBoard = async (req, res) => {
         "createdAt",
         "updatedAt",
         "userId",
+        "birth",
       ],
     });
     console.log("myBoards", myBoards);
