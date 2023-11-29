@@ -221,11 +221,13 @@ const BoardDetail = () => {
               </button>
             </>
           )}
-          <img
-            className="BoardDetail-boardImg"
-            src={boardData.img[currentImageIndex]}
-            alt="BoardImage"
-          />
+          <div className="BoardDetail-boardImgContainer">
+            <img
+              className="BoardDetail-boardImg"
+              src={boardData.img[currentImageIndex]}
+              alt="BoardImage"
+            />
+          </div>
           <img
             className="BoardDetail-likeImg"
             alt="좋아요"

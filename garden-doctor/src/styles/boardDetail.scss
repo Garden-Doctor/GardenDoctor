@@ -74,6 +74,20 @@
   }
 }
 
+// .BoardDetail-boardImgContainer {
+//   width: 100%; /* Make the container 100% width of its parent */
+//   position: relative; /* Set position to relative for absolute positioning */
+//   overflow: hidden; /* Hide any overflow beyond the container */
+// }
+
+// .BoardDetail-boardImg {
+//   width: 100%; /* Make the image 100% width of the container */
+//   height: auto; /* Automatically calculate the height based on the width to maintain aspect ratio */
+//   position: absolute; /* Set position to absolute for absolute positioning */
+//   top: 0; /* Align to the top of the container */
+//   left: 0; /* Align to the left of the container */
+// }
+
 .BoardDetail-boardImg {
   position: absolute;
   top: 60px;
