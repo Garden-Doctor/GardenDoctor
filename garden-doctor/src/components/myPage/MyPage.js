@@ -1,11 +1,12 @@
 import "../../styles/myPage/myPage.scss";
 import axios from "axios";
-import { useEffect, useId, useState } from "react";
+import { useEffect, userId, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const userId = useSelector((state) => state.user);
+  console.log("userId", userId);
   const [name, setName] = useState("");
   const [nickName, setNickName] = useState("");
   const [birth, setBirth] = useState("");
@@ -22,11 +23,15 @@ const MyPage = () => {
           userId: userId,
         });
         console.log("myInfos", myInfos.data);
+        const url = myInfos.data.userImg;
+        let cleanedUrl = url.replace(/^"(.*)"$/, "$1");
+
+        console.log(cleanedUrl);
         setName(myInfos.data.name);
         setNickName(myInfos.data.nickName);
         setBirth(myInfos.data.birth || "생일정보가 없습니다."); //null인 경우 방지
         setTelNum(myInfos.data.telNum || "전화번호 정보가 없습니다."); //null인 경우 방지
-        setUserImg(myInfos.data.userImg || ""); //null인 경우 방지
+        setUserImg(cleanedUrl || ""); //null인 경우 방지
       } catch (error) {
         console.log("error", error);
       }
@@ -84,16 +89,22 @@ const MyPage = () => {
     navigate("/mypage");
   };
 
+  const editButton = () => {
+    navigate("/mypageEdit");
+  };
+
   return (
     <div className="myPage-main-container">
       <div className="Title">마이페이지</div>
       <div className="myInfo">
         <div className="myInfoTop">
           <div className="nameInfo">{name}님의 정보</div>
-          <button className="editButton">수정</button>
+          <button className="editButton" onClick={editButton}>
+            수정
+          </button>
         </div>
         <div className="myInfoBottom">
-          <img className="userImg" alt="프로필 이미지" src={userImg[0]}></img>
+          <img className="userImg" alt="프로필 이미지" src={userImg}></img>
           <div className="myInfoRight">
             <div className="nickName">닉네임: {nickName}</div>
             <div className="birth">{birth}</div>

@@ -9,7 +9,10 @@ import camera from "../../images/camera.png";
 const EditBoard = () => {
   const { userId, boardId } = useParams();
   const [boardData, setBoardData] = useState(null);
+  const [prevImageNum, setPrevImageNum] = useState("");
   const [boardText, setBoardText] = useState("");
+  const [boardTitle, setBoardTitle] = useState("");
+  const [boardImg, setBoardImg] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(""); // 이미지 미리보기 URL
   const username = useSelector((state) => state.user);
@@ -25,6 +28,10 @@ const EditBoard = () => {
         );
         console.log("Data fetched:", boardResponse);
         setBoardData(boardResponse.data);
+        setBoardTitle(boardResponse.data.title);
+        setBoardText(boardResponse.data.text);
+        setBoardImg(boardResponse.data.img);
+        setPrevImageNum(boardResponse.data.img.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,37 +45,60 @@ const EditBoard = () => {
     const formData = new FormData();
     const files = fileInputRef.current.files;
 
-    // 선택된 파일들을 FormData에 추가
-    for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i]);
-    }
-
-    try {
-      const res = await axios({
-        method: "POST",
-        url: "http://localhost:8000/upload",
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then((result) => {
-        console.log(result.data);
-        const res2 = axios({
+    if (files[0] == null) {
+      try {
+        const res = axios({
           method: "PATCH",
           url: `http://localhost:8000/board/updateBoard/${boardId}`,
           data: {
             userId: username,
+            title: boardTitle,
             text: boardText,
-            img: result.data,
+            img: boardImg,
           },
+        }).then((result) => {
+          console.log(result.data);
         });
-        console.log(res2);
-      });
-      console.log("res", res);
-      alert("게시글 수정 완료!");
-      navigate("/board");
-    } catch (error) {
-      console.log(error);
+        console.log(res);
+        alert("게시글 수정 완료!");
+        navigate("/board");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // 선택된 파일들을 FormData에 추가
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
+      try {
+        const res = await axios({
+          method: "POST",
+          url: "http://localhost:8000/upload",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then((result) => {
+          console.log(result.data);
+          const res2 = axios({
+            method: "PATCH",
+            url: `http://localhost:8000/board/updateBoard/${boardId}`,
+            data: {
+              userId: username,
+              title: boardTitle,
+              text: boardText,
+              img: result.data,
+            },
+          });
+          console.log(res2);
+        });
+        console.log("res", res);
+        alert("게시글 수정 완료!");
+        navigate("/board");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -80,6 +110,7 @@ const EditBoard = () => {
   const handleImageChange = () => {
     const file = fileInputRef.current.files[0];
     setImageSelected(true);
+    setPrevImageNum(fileInputRef.current.files.length);
 
     // 이미지 미리보기 URL 설정
     const reader = new FileReader();
@@ -116,7 +147,7 @@ const EditBoard = () => {
               <div className="writeBoard-imagePreview">
                 {/* 이미지 미리보기11 */}
                 <img src={imagePreviewUrl} alt="Preview" />
-                <span>클릭하여 이미지 추가</span>
+                <span>{prevImageNum}개의 이미지가 선택되었습니다</span>
               </div>
             </div>
           ) : (
@@ -125,7 +156,7 @@ const EditBoard = () => {
               onClick={handleImageUploadClick}
             >
               <img src={boardData.img[0]} alt="카메라" />
-              <span>클릭하여 이미지 추가</span>
+              <span>{prevImageNum}개의 이미지가 선택되었습니다</span>
             </div>
           )}
           <input
@@ -138,7 +169,12 @@ const EditBoard = () => {
           />
           <div className="writeBoard-boardTitle">
             제목 <br />
-            <input type="text" />
+            <input
+              type="text"
+              placeholder="제목을 추가해주세요"
+              value={boardTitle}
+              onChange={(e) => setBoardTitle(e.target.value)}
+            />
           </div>
           <div className="writeBoard-boardContent">
             내용 <br />
@@ -148,6 +184,7 @@ const EditBoard = () => {
               cols="30"
               rows="10"
               placeholder="내용을 추가해주세요"
+              value={boardText}
               onChange={(e) => setBoardText(e.target.value)}
             >
               {boardData.text}

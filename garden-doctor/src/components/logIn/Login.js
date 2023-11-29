@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../../store/isLogin";
 
+import logo_src from "../../images/login_logo.png";
+import id_src from "../../images/id.svg";
+import pw_src from "../../images/pw.svg";
+
 import "../../styles/login.scss";
 
 const Login = () => {
@@ -51,11 +55,20 @@ const Login = () => {
     navigate("/findIdPw");
   };
 
+  const Rest_api_key = process.env.REACT_APP_KAKAO_INIT_KEY;
+  const redirect_uri = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+
+  const kakaoURI = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+
+  const kakaoLogin = () => {
+    window.location.href = kakaoURI;
+  };
+
   return (
     <div className="login-container">
-      <img src="imgs/login_logo.png" alt="logo" />
+      <img src={logo_src} alt="logo" />
       <div className="idBox">
-        <img src="imgs/id.svg" className="idImg" />
+        <img src={id_src} className="idImg" />
         <input
           type="text"
           id="id_input"
@@ -64,7 +77,7 @@ const Login = () => {
         />
       </div>
       <div className="pwBox">
-        <img src="imgs/pw.svg" className="pwImg" />
+        <img src={pw_src} className="pwImg" />
         <input
           type="text"
           placeholder="비밀번호"
@@ -75,7 +88,9 @@ const Login = () => {
         <button onClick={loginButton} className="loginbutton">
           로그인
         </button>
-        <button className="loginbutton kakao">카카오톡으로 로그인</button>
+        <button className="loginbutton kakao" onClick={kakaoLogin}>
+          카카오톡으로 로그인
+        </button>
       </span>
       <div className="login_bottom">
         <span onClick={signupButton}>회원가입</span>

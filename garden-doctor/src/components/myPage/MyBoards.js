@@ -180,6 +180,7 @@ const MyBoards = () => {
           <BoardBox
             key={item.boardId}
             imgSrc={item.img}
+            title={item.title}
             text={item.text}
             userId={item.userId}
             boardId={item.boardId}
@@ -194,6 +195,7 @@ const MyBoards = () => {
           <BoardBox
             key={item.boardId}
             imgSrc={item.img}
+            title={item.title}
             text={item.text}
             userId={item.userId}
             boardId={item.boardId}

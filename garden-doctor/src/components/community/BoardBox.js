@@ -7,8 +7,10 @@ import commentIcon from "../../images/commentIcon.png";
 
 const BoardBox = ({
   imgSrc,
+  title,
   text,
   userId,
+  userImg,
   boardId,
   likeData,
   commentData,
@@ -36,7 +38,7 @@ const BoardBox = ({
 
   // 좋아요를 눌렀는지 여부를 확인하는 함수
   const isLikedByUser =
-    likeData && likeData.some((like) => like.userId === reduxUserId);
+    likeData && likeData.some((like) => like.userId == reduxUserId);
 
   const clickedBoard = (e) => {
     navigate(`/boardDetail/${userId}/${boardId}`);
@@ -44,14 +46,10 @@ const BoardBox = ({
 
   return (
     <div className="board-container" onClick={(e) => clickedBoard(e)}>
-      <img
-        className="boardBox-userImg"
-        alt="userImg"
-        src="https://img.freepik.com/premium-vector/avatar-profile-icon_188544-4755.jpg"
-      ></img>
+      <img className="boardBox-userImg" alt="userImg" src={userImg}></img>
       <span className="boardBox-userName">{userId}</span>
       <span className="boardBox-Dday">{formattedDate}</span> <br></br>
-      <span className="boardBox-boardTitle">{text}</span>
+      <span className="boardBox-boardTitle">{title}</span>
       <br></br>
       <img
         className="boardBox-likeButton"
@@ -65,9 +63,7 @@ const BoardBox = ({
       )}
       <img className="boardBox-commentButton" alt="댓글" src={commentIcon} />
       {commentData ? (
-        commentData.map((comment) => (
-          <span className="boardBox-commentNum">{commentData.length}</span>
-        ))
+        <span className="boardBox-commentNum">{commentData.length}</span>
       ) : (
         <span className="boardBox-commentNum">0</span>
       )}

@@ -28,7 +28,32 @@ const Board = () => {
           return dateB - dateA;
         });
 
-        setBoards(sortedBoards);
+        const boardsWithUserImg = [];
+
+        for (const board of sortedBoards) {
+          // Fetch userImg for each userId
+          const userImgRes = await axios.post(
+            "http://localhost:8000/sign/myInfo",
+            {
+              userId: board.userId,
+            }
+          );
+
+          const url = userImgRes.data.userImg;
+          let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
+          console.log(cleanedUrl);
+
+          const boardWithUserImg = {
+            ...board,
+            userImg: cleanedUrl, // Replace with the actual field name from your API
+          };
+
+          boardsWithUserImg.push(boardWithUserImg);
+        }
+
+        setBoards(boardsWithUserImg);
+        console.log(boards);
+
         setCommentInputs(new Array(sortedBoards.length).fill(""));
 
         const groupedCommentData = groupCommentsByBoardId(commentRes.data);
@@ -76,7 +101,12 @@ const Board = () => {
   const navigate = useNavigate();
 
   const writeButton = () => {
-    navigate("/writeBoard");
+    if (!username) {
+      alert("로그인 해주세요.");
+      navigate("/login");
+    } else {
+      navigate("/writeBoard");
+    }
   };
 
   const postCommentButton = async (e, index) => {
@@ -117,7 +147,7 @@ const Board = () => {
   };
 
   return (
-    <div className="large-container">
+    <div className="">
       <img
         className="boardWriteButton"
         src={BoardWrite}
@@ -128,12 +158,20 @@ const Board = () => {
         <div>Loading...</div>
       ) : (
         <div className="large-container">
+          <img
+            className="boardWriteButton"
+            src={BoardWrite}
+            alt=""
+            onClick={writeButton}
+          />
           {boards.map((item, index) => (
             <BoardBox
               key={item.boardId}
               imgSrc={item.img}
               text={item.text}
+              title={item.title}
               userId={item.userId}
+              userImg={item.userImg}
               boardId={item.boardId}
               likeData={likeData && likeData[item.boardId]}
               commentData={commentData && commentData[item.boardId]}

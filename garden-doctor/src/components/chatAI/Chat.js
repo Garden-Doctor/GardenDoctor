@@ -105,8 +105,4 @@ const ChatList = React.forwardRef(({ chatList }, ref) => {
   );
 });
 
-const Loading = React.forwardRef((ref) => {
-  return <></>;
-});
-
 export default Chat;

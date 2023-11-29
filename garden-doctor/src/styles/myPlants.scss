@@ -1,0 +1,51 @@
+$background-color: #e5f3df;
+
+.myPlant-container {
+  background-color: $background-color;
+  // height: 86vh;
+  .myPlant-box {
+    padding: 0;
+    margin: 10px;
+    border-radius: 10px;
+    width: calc(100% - 20px);
+    height: 150px;
+    border: 1px solid #858585;
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+    //   display: flex;
+    //   flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    //   align-items: center; /* 세로 중앙 정렬 */
+    .myPlantBox-plantImg {
+      position: absolute;
+      margin-top: 15px;
+      margin-left: 15px;
+      width: 85px; /* 이미지 너비 설정 */
+      height: 85px; /* 이미지 높이 설정 */
+      border-radius: 50%;
+      border: solid;
+    }
+    .myPlantBox-plantName {
+      position: absolute;
+      font-weight: bold;
+      margin-left: 40%;
+      top: 20px;
+    }
+    .myPlantBox-plantTemp {
+      position: absolute;
+      margin-left: 40%;
+      top: 45px;
+    }
+    .myPlantBox-line {
+      margin-top: 110px;
+      opacity: 0.6;
+    }
+  }
+  @media (min-width: 700px) {
+    .myPlant-box {
+      width: calc(50% - 20px);
+    }
+  }
+}

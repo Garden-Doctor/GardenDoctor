@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/bottombar.scss";
+import { useSelector } from "react-redux";
+import home from "../images/home.svg";
+import home_selected from "../images/home_selected.svg";
+import board from "../images/board.svg";
+import board_selected from "../images/board_selected.svg";
+import chat from "../images/chat.svg";
+import chat_selected from "../images/chat_selected.svg";
+import my from "../images/my.svg";
+import my_selected from "../images/my_selected.svg";
 
 const BottomBar = () => {
   const navigate = useNavigate();
+  const reduxUserId = useSelector((state) => state.user);
 
   const [selectedButton, setSelectedButton] = useState(null);
 
@@ -24,6 +34,11 @@ const BottomBar = () => {
   };
 
   const myButton = () => {
+    if (!reduxUserId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
     navigate("/mypage");
     setSelectedButton("my");
   };
@@ -38,11 +53,7 @@ const BottomBar = () => {
           onClick={homeButton}
         >
           <img
-            src={
-              selectedButton === "home"
-                ? "imgs/home_selected.svg"
-                : "imgs/home.svg"
-            }
+            src={selectedButton === "home" ? home_selected : home}
             alt="home"
           />
           홈
@@ -54,14 +65,10 @@ const BottomBar = () => {
           onClick={boardButton}
         >
           <img
-            src={
-              selectedButton === "board"
-                ? "imgs/board_selected.svg"
-                : "imgs/board.svg"
-            }
+            src={selectedButton === "board" ? board_selected : board}
             alt="board"
           />
-          게시판
+          소통의 정원
         </span>
         <span
           className={`BottomBar-chatButton ${
@@ -70,11 +77,7 @@ const BottomBar = () => {
           onClick={chatButton}
         >
           <img
-            src={
-              selectedButton === "chat"
-                ? "imgs/chat_selected.svg"
-                : "imgs/chat.svg"
-            }
+            src={selectedButton === "chat" ? chat_selected : chat}
             alt="chat"
           />
           채팅봇
@@ -85,12 +88,7 @@ const BottomBar = () => {
           }`}
           onClick={myButton}
         >
-          <img
-            src={
-              selectedButton === "my" ? "imgs/my_selected.svg" : "imgs/my.svg"
-            }
-            alt="my"
-          />
+          <img src={selectedButton === "my" ? my_selected : my} alt="my" />
           MY
         </span>
       </div>

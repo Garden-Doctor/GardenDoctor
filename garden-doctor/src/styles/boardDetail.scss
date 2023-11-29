@@ -7,15 +7,18 @@
 .BoardDetail-container::-webkit-scrollbar {
   display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
+.BoardDetail-boardText::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
 //////
 
 .BoardDetail-container {
   padding: 10px;
-  margin: 10px;
+  margin-top: 7px;
   border-radius: 10px;
   width: 90%;
   max-width: 700px;
-  height: 500px;
+  height: 560px;
   border: 1px solid #858585;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
@@ -74,11 +77,11 @@
 .BoardDetail-boardImg {
   position: absolute;
   top: 60px;
-  justify-content: center;
+  // justify-content: center;
   width: 80%;
   height: 250px;
   border-radius: 10px;
-  left: 9%;
+  left: 10%;
 }
 
 // Add these styles in your boardDetail.scss file
@@ -86,7 +89,7 @@
 .BoardDetail-prevButton,
 .BoardDetail-nextButton {
   position: absolute;
-  top: 37%;
+  top: 34%;
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
@@ -135,13 +138,16 @@
   position: absolute;
   top: 350px;
   left: 20px;
-  height: 30px;
+  height: 50px;
+  width: 95%;
   font-weight: 600;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .BoardDetail-commentNum {
   position: absolute;
-  top: 380px;
+  top: 400px;
   left: 15px;
   height: 30px;
   font-style: oblique;
@@ -151,9 +157,9 @@
 
 .BoardDetail-comments {
   position: absolute;
-  top: 385px;
+  top: 415px;
   left: 20px;
-  height: 85px;
+  height: 90px;
   width: 95%;
   overflow: hidden;
   overflow-y: scroll;
@@ -165,8 +171,9 @@
 }
 
 .BoardDetail-commentUserName {
-  width: 35px; /* 이미지 너비 설정 */
+  // width: 35px; /* 이미지 너비 설정 */
   height: 25px; /* 이미지 높이 설정 */
+  // overflow-x: scroll;
 }
 
 .BoardDetail-comments p span {
@@ -175,7 +182,7 @@
 
 .BoardDetail-commentInput {
   display: flex;
-  margin-top: 470px;
+  margin-top: 505px;
   height: 30px;
 
   input {
@@ -188,7 +195,6 @@
   }
 
   button {
-    padding: 10px;
     background-color: #34db71;
     color: #fff;
     border: none;
@@ -196,6 +202,7 @@
     cursor: pointer;
     font-size: 16px;
     align-content: center;
+    justify-content: center;
     transition: background-color 0.5s ease;
 
     &:hover {
@@ -203,7 +210,9 @@
     }
 
     img {
-      width: 15px;
+      width: 20px;
+      height: 20px;
+      border-radius: 10%;
     }
   }
 }

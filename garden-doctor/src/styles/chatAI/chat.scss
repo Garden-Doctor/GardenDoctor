@@ -13,6 +13,7 @@ $aiChat-color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin: 0 10px;
 }
 
 @mixin chat-msg($color) {
@@ -21,11 +22,12 @@ $aiChat-color: white;
   @include border-radius-and-shadow();
   margin: 10px 0px;
   padding: 10px;
+  white-space: pre-wrap;
 }
 
 .chat-background {
   max-width: 1024px;
-  height: 83.6vh;
+  // height: 83.6vh;
   background-color: $background-color;
   position: relative;
   margin: auto;
@@ -67,10 +69,12 @@ $aiChat-color: white;
 
 .chat-send-box {
   position: fixed;
-  width: 50vw;
+  width: 80vw;
   min-width: 200px;
   max-width: 924px;
-  left: 25vw;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   height: 30px;
   bottom: 12vh;
   .chat-input {

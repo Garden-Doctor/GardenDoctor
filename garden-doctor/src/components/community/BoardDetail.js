@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import likeIcon from "../../images/likeIcon.png";
-import profileExample from "../../images/profile.png";
 import sendImage from "../../images/send-image.png";
 import redLike from "../../images/redLike.png";
 import rightArrow from "../../images/rightArrow.png";
@@ -12,6 +11,7 @@ import leftArrow from "../../images/leftArrow.png";
 
 const BoardDetail = () => {
   const { userId, boardId } = useParams();
+  const [userData, setUserData] = useState(null);
   const [boardData, setBoardData] = useState(null);
   const [likeData, setLikeData] = useState(null);
   const [commentData, setCommentData] = useState([]);
@@ -29,27 +29,36 @@ const BoardDetail = () => {
     const fetchData = async () => {
       try {
         console.log("Fetching data...");
-        const [boardResponse, likeResponse, commentResponse] =
+        const [boardResponse, likeResponse, commentResponse, userResponse] =
           await Promise.all([
             axios.get(`http://localhost:8000/board/getBoard/${boardId}`),
             axios.get(`http://localhost:8000/board/getLike/${boardId}`),
             axios.get(`http://localhost:8000/board/getComment/${boardId}`),
+            axios.post("http://localhost:8000/sign/myInfo", {
+              userId,
+            }),
           ]);
 
         console.log(
           "Data fetched:",
           boardResponse,
           likeResponse,
-          commentResponse
+          commentResponse,
+          userResponse
         );
+
+        const url = userResponse.data.userImg;
+        let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
+        console.log(cleanedUrl);
 
         setBoardData(boardResponse.data);
         setLikeData(likeResponse.data);
         setCommentData(commentResponse.data);
+        setUserData(cleanedUrl);
 
         // 클라이언트의 userId가 이미 좋아요를 눌렀는지 여부 확인
         const isLikedByUser = likeResponse.data.some(
-          (like) => like.userId === reduxUserId
+          (like) => like.userId == reduxUserId
         );
         setIsLiked(isLikedByUser);
         setLikeImage(isLikedByUser ? redLike : likeIcon);
@@ -62,7 +71,7 @@ const BoardDetail = () => {
     };
 
     fetchData();
-  }, [boardId, reduxUserId, isLiked]);
+  }, [boardId, reduxUserId, isLiked, userId]);
 
   useEffect(() => {
     if (commentsDivRef.current) {
@@ -77,7 +86,7 @@ const BoardDetail = () => {
     return <div>Loading...</div>;
   }
 
-  const showEditDeleteButtons = userId === reduxUserId;
+  const showEditDeleteButtons = userId == reduxUserId;
 
   const handleDelete = () => {
     // Confirm delete using the browser's built-in confirmation dialog
@@ -102,6 +111,12 @@ const BoardDetail = () => {
   };
 
   const postCommentButton = (e) => {
+    if (!reduxUserId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
+
     if (commentInputs === "") return;
 
     let commentText = commentInputs; // commentInput 값을 임시 변수에 저장
@@ -127,6 +142,12 @@ const BoardDetail = () => {
   };
 
   const likeButtonClick = async () => {
+    if (!reduxUserId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
+
     try {
       if (isLiked) {
         await axios.delete(
@@ -159,15 +180,17 @@ const BoardDetail = () => {
     );
   };
 
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      postCommentButton(e);
+    }
+  };
+
   return (
     <div className="main-container">
       <div className="large-container">
         <div className="BoardDetail-container">
-          <img
-            className="BoardDetail-userImg"
-            src={profileExample}
-            alt="프로필"
-          />
+          <img className="BoardDetail-userImg" src={userData} alt="프로필" />
           <span className="BoardDetail-userName">{boardData.userId}</span>
           {showEditDeleteButtons && (
             <>
@@ -210,7 +233,14 @@ const BoardDetail = () => {
             onClick={likeButtonClick}
           />
           <span className="BoardDetail-likeNum">{likeData.length}</span>
-          <span className="BoardDetail-boardText">{boardData.text}</span>
+          <span className="BoardDetail-boardText">
+            {boardData.text.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
+          </span>
           <span className="BoardDetail-commentNum">
             댓글 {commentData.length}
           </span>
@@ -235,6 +265,7 @@ const BoardDetail = () => {
                 const newCommentInput = e.target.value; // 단일 문자열로 변경
                 setCommentInputs(newCommentInput);
               }}
+              onKeyDown={handleEnterKey}
             />
             <button onClick={(e) => postCommentButton(e)} value={boardId}>
               <img src={sendImage} alt="" />
