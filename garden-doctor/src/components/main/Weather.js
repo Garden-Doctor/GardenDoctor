@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import manyclouds from "../../images/구름많음.svg";
+import cloudy from "../../images/cloudy.svg";
+import rainy from "../../images/rainy.svg";
+import sunny from "../../images/sunny.svg";
+import location_src from "../../images/location.svg";
 
 const Weather = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -94,13 +99,13 @@ const Weather = () => {
   const getWeatherImage = () => {
     switch (sky) {
       case "맑음":
-        return "imgs/sunny.svg";
+        return sunny;
       case "구름많음":
-        return "imgs/구름많음.svg";
+        return manyclouds;
       case "흐림":
-        return "imgs/cloudy.svg";
+        return cloudy;
       case "비":
-        return "imgs/rainy.svg";
+        return rainy;
       default:
         return ""; // 실제 파일 경로로 바꾸세요
     }
@@ -154,7 +159,7 @@ const Weather = () => {
         <div className="weather-container-inner">
           <div className="weather_left">
             <div>
-              <img src="imgs/location.svg" />
+              <img src={location_src} />
               {location}
             </div>
             <span>{viewedCurrentDate()}</span>
