@@ -58,7 +58,7 @@ const BoardDetail = () => {
 
         // 클라이언트의 userId가 이미 좋아요를 눌렀는지 여부 확인
         const isLikedByUser = likeResponse.data.some(
-          (like) => like.userId === reduxUserId
+          (like) => like.userId == reduxUserId
         );
         setIsLiked(isLikedByUser);
         setLikeImage(isLikedByUser ? redLike : likeIcon);
@@ -86,7 +86,7 @@ const BoardDetail = () => {
     return <div>Loading...</div>;
   }
 
-  const showEditDeleteButtons = userId === reduxUserId;
+  const showEditDeleteButtons = userId == reduxUserId;
 
   const handleDelete = () => {
     // Confirm delete using the browser's built-in confirmation dialog
@@ -111,6 +111,12 @@ const BoardDetail = () => {
   };
 
   const postCommentButton = (e) => {
+    if (!reduxUserId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
+
     if (commentInputs === "") return;
 
     let commentText = commentInputs; // commentInput 값을 임시 변수에 저장
@@ -136,6 +142,12 @@ const BoardDetail = () => {
   };
 
   const likeButtonClick = async () => {
+    if (!reduxUserId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
+
     try {
       if (isLiked) {
         await axios.delete(
@@ -166,6 +178,12 @@ const BoardDetail = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === boardData.img.length - 1 ? 0 : prevIndex + 1
     );
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      postCommentButton(e);
+    }
   };
 
   return (
@@ -203,11 +221,13 @@ const BoardDetail = () => {
               </button>
             </>
           )}
-          <img
-            className="BoardDetail-boardImg"
-            src={boardData.img[currentImageIndex]}
-            alt="BoardImage"
-          />
+          <div className="BoardDetail-boardImgContainer">
+            <img
+              className="BoardDetail-boardImg"
+              src={boardData.img[currentImageIndex]}
+              alt="BoardImage"
+            />
+          </div>
           <img
             className="BoardDetail-likeImg"
             alt="좋아요"
@@ -215,7 +235,14 @@ const BoardDetail = () => {
             onClick={likeButtonClick}
           />
           <span className="BoardDetail-likeNum">{likeData.length}</span>
-          <span className="BoardDetail-boardText">{boardData.text}</span>
+          <span className="BoardDetail-boardText">
+            {boardData.text.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
+          </span>
           <span className="BoardDetail-commentNum">
             댓글 {commentData.length}
           </span>
@@ -240,6 +267,7 @@ const BoardDetail = () => {
                 const newCommentInput = e.target.value; // 단일 문자열로 변경
                 setCommentInputs(newCommentInput);
               }}
+              onKeyDown={handleEnterKey}
             />
             <button onClick={(e) => postCommentButton(e)} value={boardId}>
               <img src={sendImage} alt="" />

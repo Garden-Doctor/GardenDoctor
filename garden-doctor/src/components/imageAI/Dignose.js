@@ -5,12 +5,14 @@ import Dignose2 from "../../imgs/dignose2.svg";
 import plantOptions from "./PlantOptions";
 import camera from "../../imgs/camera.svg";
 import * as tmImage from "@teachablemachine/image";
+import GridLoader from "react-spinners/GridLoader";
 
 let model, labelContainer, maxPredictions;
 
 const Dignose = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedPlant, setSelectedPlant] = useState("");
+  const [loading, setLoading] = useState(false); //react-spinner을 위한 상태관리
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ const Dignose = () => {
   const dignosePlant = async () => {
     let URL;
     console.log("selectedPlant", selectedPlant);
+    setLoading(true);
 
     //식물에 선택에 맞는 URL 불러오기.
     switch (selectedPlant) {
@@ -110,6 +113,7 @@ const Dignose = () => {
       const result = await predict();
       const image = selectedImage;
       sessionStorage.setItem("selectedImageUrl", image);
+      setLoading(false);
       navigate(`/diagnosisResult?result=${result}`);
     } else {
       console.log("식물에 대한 URL이 선택되지 않았습니다.");
@@ -123,6 +127,7 @@ const Dignose = () => {
     const prediction = await model.predict(image, false);
     let predictions = "";
     console.log("predict");
+
     for (let i = 0; i < maxPredictions; i++) {
       predictions +=
         prediction[i].className +
@@ -130,6 +135,7 @@ const Dignose = () => {
         prediction[i].probability.toFixed(2) +
         "<br>";
     }
+
     return predictions;
   }
 
@@ -155,71 +161,87 @@ const Dignose = () => {
   };
 
   return (
-    <div className="dignose-main-container">
-      <div className="introduce">
-        <img src={Dignose2} alt="농작물 이미지" />
-        <span className="title">농작물 병충해 판단 서비스란?</span>
-        <br />
-        <div className="introduceDetails">
-          작물 사진을 업로드하면 병을 신속하게 식별하여 농작물 건강을 돕는
-          서비스입니다.
-        </div>
-      </div>
-
-      <select
-        name="selectPlant"
-        className="selectPlant"
-        onChange={handlePlantSelect}
-        value={selectedPlant}
-      >
-        {plantOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-
-      <div className="fileUpload">
-        {selectedImage && (
-          <div className="fileUploadContent">
-            <img
-              className="fileUploadImage"
-              src={selectedImage}
-              alt="업로드된 이미지"
-              onClick={handleImageClick}
-            />
-            <input
-              ref={fileInputRef}
-              id="file-upload-input"
-              className="fileUploadInput"
-              type="file"
-              onChange={handleImageChange}
-            />
+    <div>
+      {loading ? (
+        <div className="dignose-main-container">
+          <div className="loading">
+            <h5>진단중</h5>
+            <GridLoader color="#3CB362" loading={loading} size={80} />
           </div>
-        )}
-
-        {!selectedImage && (
-          <div className="imageUploadWrap">
-            <input
-              ref={fileInputRef}
-              id="file-upload-input"
-              className="fileUploadInput"
-              type="file"
-              onChange={handleImageChange}
-              accept="image/*"
-            />
-            <div className="drag-text">
-              <h3>
-                <img src={camera} alt="카메라" /> <br></br>클릭하여 이미지 추가
-              </h3>
+        </div>
+      ) : (
+        <div className="dignose-main-container">
+          <div className="introduce">
+            <img src={Dignose2} alt="농작물 이미지" />
+            <span className="title">농작물 병충해 판단 서비스란?</span>
+            <br />
+            <div className="introduceDetails">
+              작물 사진을 업로드하면 병을 신속하게 식별하여 농작물 건강을 돕는
+              서비스입니다.
             </div>
           </div>
-        )}
-      </div>
 
-      <button className="diagnosticButton" type="submit" onClick={dignosePlant}>
-        진단 받기
-      </button>
+          <select
+            name="selectPlant"
+            className="selectPlant"
+            onChange={handlePlantSelect}
+            value={selectedPlant}
+          >
+            {plantOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+
+          <div className="fileUpload">
+            {selectedImage && (
+              <div className="fileUploadContent">
+                <img
+                  className="fileUploadImage"
+                  src={selectedImage}
+                  alt="업로드된 이미지"
+                  onClick={handleImageClick}
+                />
+                <input
+                  ref={fileInputRef}
+                  id="file-upload-input"
+                  className="fileUploadInput"
+                  type="file"
+                  onChange={handleImageChange}
+                />
+              </div>
+            )}
+
+            {!selectedImage && (
+              <div className="imageUploadWrap">
+                <input
+                  ref={fileInputRef}
+                  id="file-upload-input"
+                  className="fileUploadInput"
+                  type="file"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+                <div className="drag-text">
+                  <h3>
+                    <img src={camera} alt="카메라" /> <br></br>클릭하여 이미지
+                    추가
+                  </h3>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <button
+            className="diagnosticButton"
+            type="submit"
+            onClick={dignosePlant}
+          >
+            진단 받기
+          </button>
+        </div>
+      )}
     </div>
   );
 };

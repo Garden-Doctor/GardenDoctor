@@ -4,6 +4,9 @@ import "../styles/sidebar.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import exit_src from "../images/exit.svg";
+import user_src from "../images/user.svg";
+
 const SideBar = ({ onClose }) => {
   const sideBarRef = useRef();
   const userId = useSelector((state) => state.user);
@@ -19,8 +22,12 @@ const SideBar = ({ onClose }) => {
           userId: userId,
         });
         console.log("myInfos", myInfos.data);
+        const url = myInfos.data.userImg;
+        let cleanedUrl = url.replace(/^"(.*)"$/, "$1");
+
+        console.log(cleanedUrl);
         setNickName(myInfos.data.nickName);
-        setUserImg(myInfos.data.userImg || ""); //null인 경우 방지
+        setUserImg(cleanedUrl); //null인 경우 방지
       } catch (error) {
         console.log("error", error);
       }
@@ -47,9 +54,14 @@ const SideBar = ({ onClose }) => {
     navigate("/imageAI");
   };
   const chatButton = () => {
-    navigate("/chatAI");
+    navigate("/chat");
   };
   const mypageButton = () => {
+    if (!userId) {
+      alert("로그인 해주세요");
+      navigate("/login");
+      return;
+    }
     navigate("/mypage");
   };
   const boardButton = () => {
@@ -65,10 +77,10 @@ const SideBar = ({ onClose }) => {
   return (
     <div className="sidebar-container" ref={sideBarRef}>
       <div className="sidebar_eixtbutton">
-        <img alt="나가기" src="/imgs/exit.svg" onClick={onClose} />
+        <img alt="나가기" src={exit_src} onClick={onClose} />
       </div>
       <div className="sidebar_top">
-        <img alt="사람" src={{ userImg } ? { userImg } : `/imgs/user.svg`} />
+        <img alt="사람" src={userImg ? userImg : user_src} />
         <p>{nickName}</p>
         <span onClick={mypageButton}>마이페이지</span>
       </div>

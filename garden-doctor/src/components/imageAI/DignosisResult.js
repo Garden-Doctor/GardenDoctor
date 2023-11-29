@@ -82,9 +82,11 @@ const DignosisResult = () => {
       <div className="input-image">
         {image && <img src={image} alt="입력한 이미지" />}
       </div>
-      <p>
-        이 작물은 {probabilitys}% {result}입니다.
-      </p>
+      {result !== "그외" && (
+        <p>
+          이 작물은 {probabilitys}% {result}입니다.
+        </p>
+      )}
       <div className="plantSolutions">
         <div className="explanation">{explanations}</div>
         <div className="solutionTitle">해결책</div>

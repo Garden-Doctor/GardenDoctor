@@ -1,10 +1,12 @@
 .writeBoard-container {
   width: 80%;
+  // height: 70%;
   padding: 20px;
 }
 
 .writeBoard-arrow {
-  width: 45px;
+  width: 10%;
+  max-width: 45px;
   height: width;
   position: absolute;
   top: 68px;
@@ -60,12 +62,16 @@
   justify-content: center;
   cursor: pointer;
   img {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
   }
   span {
     margin-top: 8px;
-    font-size: 0.8rem;
+    font-size: medium;
+    border-radius: 10%;
+    text-align: center;
+    background-color: rgb(106, 155, 32);
+    color: white;
   }
 }
 

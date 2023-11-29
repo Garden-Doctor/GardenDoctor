@@ -25,13 +25,18 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
-import { useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { MyPlants } from "./components/myPage/MyPlants";
 
 import MyPage from "./components/myPage/MyPage";
 import AddPlant from "./components/myPlants/AddPlant";
 import PlantDetail from "./components/myPlants/PlantDetail";
+
+import KakaoLogin from "./components/logIn/KakaoLogin";
+import axios from "axios";
+import MyPageEdit from "./components/myPage/MyPageEdit";
+import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
 
 function App() {
   return (
@@ -48,6 +53,10 @@ function App() {
             <Route path="/Board" element={<Board></Board>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="/signup" element={<Signup></Signup>}></Route>
+            <Route
+              path="/findIdPw"
+              element={<FindMyyIdPw></FindMyyIdPw>}
+            ></Route>
             <Route
               path="/writeBoard"
               element={<WriteBoard></WriteBoard>}
@@ -84,6 +93,9 @@ function App() {
             ></Route>
 
             <Route path="/myPage" element={<MyPage></MyPage>}></Route>
+
+            <Route path="/kakao/callback" element={<KakaoLogin />} />
+            <Route path="/myPageEdit" element={<MyPageEdit></MyPageEdit>} />
           </Routes>
         </div>
         <BottomBar />

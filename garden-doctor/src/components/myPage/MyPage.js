@@ -1,11 +1,12 @@
 import "../../styles/myPage/myPage.scss";
 import axios from "axios";
-import { useEffect, useId, useState } from "react";
+import { useEffect, userId, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const userId = useSelector((state) => state.user);
+  console.log("userId", userId);
   const [name, setName] = useState("");
   const [nickName, setNickName] = useState("");
   const [birth, setBirth] = useState("");
@@ -107,13 +108,19 @@ const MyPage = () => {
     navigate("/myPlants");
   };
 
+  const editButton = () => {
+    navigate("/mypageEdit");
+  };
+
   return (
     <div className="myPage-main-container">
       <div className="Title">마이페이지</div>
       <div className="myInfo">
         <div className="myInfoTop">
           <div className="nameInfo">{name}님의 정보</div>
-          <button className="editButton">수정</button>
+          <button className="editButton" onClick={editButton}>
+            수정
+          </button>
         </div>
         <div className="myInfoBottom">
           <img className="userImg" alt="프로필 이미지" src={userImg}></img>
