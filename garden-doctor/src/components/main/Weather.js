@@ -155,7 +155,7 @@ const Weather = () => {
 
   return (
     <div className="weather-container">
-      {weatherData && (
+      {weatherData ? (
         <div className="weather-container-inner">
           <div className="weather_left">
             <div>
@@ -177,6 +177,8 @@ const Weather = () => {
             </div>
           </div>
         </div>
+      ) : (
+        <div>날씨 정보를 불러오는 중입니다.</div>
       )}
     </div>
   );

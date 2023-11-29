@@ -30,15 +30,14 @@ a:active {
 
 .weather-container {
   width: $main-content-width;
-
+  height: 7em;
   border-radius: 10px;
   box-shadow: $box-shadow;
   background-color: $main-content-color;
   margin-top: 10px;
   &-inner {
     display: flex;
-    height: 7em;
-
+    height: 100%;
     .weather_left {
       display: flex;
       flex-direction: column;
