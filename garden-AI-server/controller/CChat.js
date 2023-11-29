@@ -122,13 +122,19 @@ const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
 const askQuestion = async (req, res) => {
   try {
     console.log(req.body);
-    const { question } = req.body;
+    const { question, userId } = req.body;
     const storeQ = await db.Chats.create({
       chatMessage: question,
+      userId,
     });
     console.log(storeQ);
     const response = await chain.call({
       query: question,
+    });
+    const storeA = await db.Chats.create({
+      chatMessage: response.text,
+      isAI: true,
+      userId,
     });
     res.send(response.text);
     console.log(response.text);
@@ -137,4 +143,17 @@ const askQuestion = async (req, res) => {
   }
 };
 
-export { askQuestion };
+const loadPrevChats = async (req, res) => {
+  try {
+    const { currentUser } = req.body;
+    const prevChat = await db.Chats.findAll({
+      where: { userId: currentUser },
+    });
+    console.log("result: ", prevChat);
+    res.send(prevChat);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { askQuestion, loadPrevChats };

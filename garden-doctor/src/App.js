@@ -27,9 +27,11 @@ import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
 import { createContext, useEffect, useState } from "react";
 
-import MyPlants from "./components/myPage/MyPlants";
+import { MyPlants } from "./components/myPage/MyPlants";
 
 import MyPage from "./components/myPage/MyPage";
+import AddPlant from "./components/myPlants/AddPlant";
+import PlantDetail from "./components/myPlants/PlantDetail";
 
 import KakaoLogin from "./components/logIn/KakaoLogin";
 import axios from "axios";
@@ -60,6 +62,10 @@ function App() {
               element={<WriteBoard></WriteBoard>}
             ></Route>
             <Route
+              path="/writeBoard/:userId/:myPlantId"
+              element={<WriteBoard></WriteBoard>}
+            ></Route>
+            <Route
               path="/boardDetail/:userId/:boardId"
               element={<BoardDetail></BoardDetail>}
             ></Route>
@@ -76,6 +82,15 @@ function App() {
             <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
 
             <Route path="/myPlants" element={<MyPlants></MyPlants>}></Route>
+            <Route
+              path="/myPlants/addPlant"
+              element={<AddPlant></AddPlant>}
+            ></Route>
+
+            <Route
+              path="/myPlants/plantDetail/:URLuserId/:plantId"
+              element={<PlantDetail></PlantDetail>}
+            ></Route>
 
             <Route path="/myPage" element={<MyPage></MyPage>}></Route>
 

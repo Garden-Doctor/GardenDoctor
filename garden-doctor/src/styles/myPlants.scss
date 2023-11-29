@@ -1,8 +1,25 @@
+@import "./utils.scss";
+
 $background-color: #e5f3df;
 
 .myPlant-container {
   background-color: $background-color;
-  // height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .myPlantbox-addPlant {
+    color: white;
+    background-color: $point-color;
+    align-self: flex-end;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 30%;
+    height: 40px;
+  }
+  .row {
+    width: 100%;
+  }
   .myPlant-box {
     padding: 0;
     margin: 10px;
@@ -33,11 +50,24 @@ $background-color: #e5f3df;
       margin-left: 40%;
       top: 20px;
     }
-    .myPlantBox-plantTemp {
+    .myPlantBox-plantNickname {
       position: absolute;
       margin-left: 40%;
       top: 45px;
     }
+    .myPlantBox-plantPlanted {
+      position: absolute;
+      margin-left: 15px;
+      top: 115px;
+    }
+    .myPlantBox-PostJournalButton {
+      position: absolute;
+      right: 10px;
+      top: 115px;
+      border: none;
+      background: none;
+    }
+
     .myPlantBox-line {
       margin-top: 110px;
       opacity: 0.6;

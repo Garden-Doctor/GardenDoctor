@@ -2,14 +2,45 @@ import React, { useEffect, useState, useRef } from "react";
 import "../../styles/chatAI/chat.scss";
 import SEND_icon from "../../imgs/chat-send.svg";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
   const [text, setText] = useState("");
   const [chat, setChat] = useState([]); // {ai: boolean, m:''}
+  const [chatHistory, setChatHistory] = useState([]);
   const messages = useRef();
+  const prevMessages = useRef();
   const inputMsg = useRef();
   const loading = useRef();
+  const userId = useSelector((state) => state.user);
+  console.log("로그인아이디", userId);
+  console.log("chatHistory:", chatHistory);
 
+  useEffect(() => {
+    const a = async () => {
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost:8001/chat/loadPrevChats",
+        data: {
+          currentUser: userId,
+        },
+      });
+      const prevChats = res.data;
+      console.log(prevChats);
+      const chatData = prevChats.map((c) => {
+        const prevChat = { ai: c.isAI, m: c.chatMessage };
+        return prevChat;
+      });
+      setChatHistory(chatData);
+
+      // console.log("retrieved data: ", res.data);
+      // const prevChat = { ai: res.data.isAI, m: res.data.chatMessage };
+      // setChat([...chat, prevChat]);
+
+      // console.log("prevChat받아온 후에 Chat: ", chat);
+    };
+    a();
+  }, []);
   //새 채팅이 나올 때 제일 아래로 스크롤
   useEffect(() => {
     inputMsg.current.value = "";
@@ -33,17 +64,19 @@ const Chat = () => {
     const lastChat = chat[chat.length - 1];
     console.log("lastChat : ", lastChat);
     if (!lastChat || lastChat.ai) return;
-    sendQuestion(lastChat.m);
+    sendQuestion(lastChat, userId);
     loading.current.style.display = "block";
   }, [chat]);
 
-  const sendQuestion = async (m) => {
-    console.log("sendQuestion: ", m);
+  const sendQuestion = async (lastChat, userId) => {
+    console.log("sendQuestion: ", lastChat);
     const res = await axios({
       method: "POST",
       url: "http://localhost:8001/chat/askQuestion",
       data: {
-        question: m,
+        question: lastChat.m,
+        isAI: false,
+        userId,
       },
     });
     if (res.data !== "") {
@@ -58,6 +91,7 @@ const Chat = () => {
   return (
     <div className="chat-background">
       <div className="chat-msgContainer">
+        <ChatList chatList={chatHistory}></ChatList>
         <ChatList chatList={chat} ref={messages}></ChatList>
         <span class="loader" ref={loading} style={{ display: "none" }}></span>
       </div>

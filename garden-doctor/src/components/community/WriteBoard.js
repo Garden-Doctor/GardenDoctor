@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../styles/writeBoard.scss";
 import camera from "../../images/camera.png";
@@ -14,6 +14,12 @@ const WriteBoard = () => {
   const username = useSelector((state) => state.user);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const { userId, myPlantId } = useParams();
+
+  useEffect(() => {
+    if (userId == null && myPlantId == null) return;
+    if (userId != username) navigate("/");
+  }, []);
 
   const uploadButton = async (e) => {
     e.preventDefault();
@@ -43,6 +49,7 @@ const WriteBoard = () => {
             title: boardTitle,
             text: boardText,
             img: result.data,
+            plant_id: myPlantId,
           },
         });
         console.log(res2);
@@ -99,7 +106,7 @@ const WriteBoard = () => {
           alt=""
           onClick={beforePage}
         />
-        <span className="writeBoard-topSpan">새 게시글 작성</span>
+        <span className="writeBoard-topSpan">새 글 작성</span>
         <form className="writeBoard-form" encType="multipart/form-data">
           {imageSelected ? (
             <div
