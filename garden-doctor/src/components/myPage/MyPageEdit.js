@@ -3,6 +3,10 @@ import "../../styles/myPage/myPageEdit.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import passwordImg from "../../images/password.svg";
+import IdImg from "../../images/id.svg";
+import BirthImg from "../../images/birth.svg";
+import PhoneImg from "../../images/phone.svg";
 
 const MyPageEdit = () => {
   const navigate = useNavigate();
@@ -19,6 +23,7 @@ const MyPageEdit = () => {
   const [loginType, setLoginType] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [telMessage, setTelMessage] = useState("");
 
   const [isNickNameAvailable, setIsNickNameAvailable] = useState(false);
   const [passwordPlag, setPasswordPlag] = useState(false);
@@ -41,7 +46,8 @@ const MyPageEdit = () => {
         setNickName(myInfos.data.nickName);
         setPrevNickName(myInfos.data.nickName);
         setBirth(myInfos.data.birth || "생일정보가 없습니다."); //null인 경우 방지
-        setTelNum(myInfos.data.telNum || "전화번호 정보가 없습니다."); //null인 경우 방지
+        setTelNum(myInfos.data.telNum || ""); //null인 경우 방지
+        setTelMessage(myInfos.data.telNum || "저장된 전화번호가 없습니다.");
         setUserImg(cleanedUrl || ""); //null인 경우 방지
         setLoginType(myInfos.data.loginType);
       } catch (error) {
@@ -238,11 +244,7 @@ const MyPageEdit = () => {
         </div>
         <div className="edit_top">
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
-            <h1 className="edit_id_input">{userId}</h1>
-          </div>
-          <div className="Box">
-            <img src="imgs/password.svg" className="idImg" />
+            <img src={passwordImg} className="idImg" />
             <input
               type="password"
               placeholder="비밀번호"
@@ -253,7 +255,7 @@ const MyPageEdit = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/password.svg" className="idImg" />
+            <img src={passwordImg} className="idImg" />
             <input
               type="password"
               placeholder="비밀번호 확인"
@@ -276,7 +278,7 @@ const MyPageEdit = () => {
 
         <div className="edit_bottom">
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={IdImg} className="idImg" />
             <input
               type="text"
               value={name}
@@ -286,7 +288,7 @@ const MyPageEdit = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={IdImg} className="idImg" />
             <input
               type="text"
               value={nickName}
@@ -303,7 +305,7 @@ const MyPageEdit = () => {
             </button>
           </div>
           <div className="Box">
-            <img src="imgs/birth.svg" className="idImg" />
+            <img src={BirthImg} className="idImg" />
             <input
               type="date"
               value={birth}
@@ -314,10 +316,12 @@ const MyPageEdit = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/phone.svg" className="idImg" />
+            <img src={PhoneImg} className="idImg" />
             <input type="text" value={telNum} onChange={handleChange} />
           </div>
         </div>
+        <br></br>
+        <div className="edit_check_box">{telMessage}</div>
 
         <button className="register_button" onClick={editButton}>
           수정하기
