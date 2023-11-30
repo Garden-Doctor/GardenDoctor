@@ -44,11 +44,12 @@ const uploadBoard = async (req, res) => {
 const postComment = async (req, res) => {
   try {
     console.log(req.body);
-    const { userId, commentText, boardId } = req.body;
+    const { userId, commentText, boardId, nickName } = req.body;
     const upload = await Comment.create({
       userId,
       commentText,
       boardId,
+      nickName,
     });
     console.log(upload);
     res.send(upload);
