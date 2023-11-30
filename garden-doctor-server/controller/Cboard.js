@@ -193,12 +193,12 @@ const myBoard = async (req, res) => {
         "createdAt",
         "updatedAt",
         "userId",
-        "birth",
       ],
     });
     console.log("myBoards", myBoards);
     res.status(200).send(myBoards);
   } catch (error) {
+    console.log("error", error);
     res.status(500).send({ message: "에러발생", error });
   }
 };
@@ -273,6 +273,7 @@ const findMyLikeBoards = async (req, res) => {
     console.log("좋아요한 게시글", findMyLikeBoard);
     res.status(200).send(findMyLikeBoard);
   } catch (error) {
+    console.log("error", error);
     res.status(500).send({ message: "에러 발생", error });
   }
 };
