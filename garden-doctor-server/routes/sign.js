@@ -27,4 +27,8 @@ router.post("/edit", controller.edit);
 
 router.post("/findId", controller.findId);
 
+router.post("/sendEmail", controller.sendEmail);
+
+router.post("/findPw", controller.findPw);
+
 module.exports = router;
