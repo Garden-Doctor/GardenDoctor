@@ -79,7 +79,7 @@ const Login = () => {
       <div className="pwBox">
         <img src={pw_src} className="pwImg" />
         <input
-          type="text"
+          type="password"
           placeholder="비밀번호"
           onChange={(e) => setPw(e.target.value)}
         />
