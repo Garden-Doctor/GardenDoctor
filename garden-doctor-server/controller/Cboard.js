@@ -271,8 +271,22 @@ const findMyLikeBoards = async (req, res) => {
         "userId",
       ],
     });
+    console.log("res", findMyLikeBoard);
+    console.log("userId", findMyLikeBoard[0].dataValues.userId);
+
+    const userId = findMyLikeBoard[0].dataValues.userId;
+    const findNickName = await User.findOne({
+      where: { userId },
+      attributes: ["nickName", "userImg"],
+    });
+
+    const combinedData = {
+      findMyLikeBoard: findMyLikeBoard,
+      findNickName: [findNickName],
+    };
     console.log("좋아요한 게시글", findMyLikeBoard);
-    res.status(200).send(findMyLikeBoard);
+    console.log("게시글 작성자 닉네임", findNickName);
+    res.status(200).send(combinedData);
   } catch (error) {
     console.log("error", error);
     res.status(500).send({ message: "에러 발생", error });
