@@ -23,6 +23,7 @@ const TopBar = () => {
 
   const handleMenuButtonClick = () => {
     setSideBarVisible(!isSideBarVisible);
+    console.log("메뉴 열림");
   };
 
   const handleCloseSideBar = () => {
@@ -86,29 +87,31 @@ const TopBar = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="topbar-container">
-        <div id="sidbar-container">
-          <img src={menu} id="menu" onClick={handleMenuButtonClick} />
+        <div>
+          <div id="sidbar-container">
+            <img src={menu} id="menu" onClick={handleMenuButtonClick} />
+          </div>
+          <div className="logo" onClick={logoButton}>
+            <img src={logo} id="logo-img" />
+          </div>
+          <div className="last">
+            {loading ? (
+              <div>loading...</div>
+            ) : isLogin ? (
+              <button onClick={logoutButton}>로그아웃</button>
+            ) : (
+              <>
+                <button onClick={loginButton}>로그인</button>
+                {/* <button onClick={signupButton}>회원가입</button> */}
+              </>
+            )}
+          </div>
         </div>
-        <div className="logo" onClick={logoButton}>
-          <img src={logo} id="logo-img" />
-        </div>
-
-        {loading ? (
-          <div>loading...</div>
-        ) : isLogin ? (
-          <button onClick={logoutButton}>로그아웃</button>
-        ) : (
-          <>
-            <button onClick={loginButton}>로그인</button>
-            {/* <button onClick={signupButton}>회원가입</button> */}
-          </>
-        )}
       </div>
-
-      {/* {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />} */}
-    </div>
+      {isSideBarVisible && <SideBar onClose={handleCloseSideBar} />}
+    </>
   );
 };
 

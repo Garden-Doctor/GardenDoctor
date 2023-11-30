@@ -30,7 +30,9 @@ const Dignore = () => {
         <p>
           <img src={dignose_src} />
         </p>
-        <p>사진을 통해 병충해를 간단하게 진단해주는 서비스</p>
+        <span>
+          사진을 업로드하면 간단하게 병충해 진단을 제공하는 서비스입니다
+        </span>
       </div>
     </div>
   );
@@ -50,7 +52,9 @@ const ChatAI = () => {
         <p>
           <img src={ai_src} />
         </p>
-        <p>작물을 키우면서 모르는 점을 질문하세요</p>
+        <span>
+          작물에 관한 모든 궁금증을 해결하는 똑똑한 AI 채팅 서비스입니다
+        </span>
       </div>
     </div>
   );
