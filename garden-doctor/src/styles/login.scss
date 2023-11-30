@@ -106,3 +106,8 @@ $pink-shadow: #ffe3e2;
     margin-bottom: 10px;
   }
 }
+.signupButton:hover,
+.findIdPwButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

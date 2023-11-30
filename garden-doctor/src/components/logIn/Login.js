@@ -93,8 +93,12 @@ const Login = () => {
         </button>
       </span>
       <div className="login_bottom">
-        <span onClick={signupButton}>회원가입</span>
-        <span onClick={findIdPwButton}>아이디 / 비밀번호 찾기</span>
+        <span onClick={signupButton} className="signupButton">
+          회원가입
+        </span>
+        <span onClick={findIdPwButton} className="findIdPwButton">
+          아이디 / 비밀번호 찾기
+        </span>
       </div>
     </div>
   );

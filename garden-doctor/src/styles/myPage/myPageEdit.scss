@@ -161,3 +161,15 @@
   margin-top: 10px;
   height: 1em;
 }
+.error-text {
+  color: red;
+}
+.signup_check_nickname,
+.signup_check_pw {
+  font-size: 0.9em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  height: 1em;
+}

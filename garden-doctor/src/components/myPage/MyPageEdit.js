@@ -19,7 +19,8 @@ const MyPageEdit = () => {
   const [userImg, setUserImg] = useState("");
   const [pw, setPw] = useState(null);
   const [checkPw, setCheckPw] = useState("");
-  const [checkMessage, setCheckMessage] = useState("");
+  const [checkPwMessage, setCheckPwMessage] = useState("");
+  const [nickNameMessage, setNickNameMessage] = useState("");
   const [loginType, setLoginType] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
@@ -47,7 +48,9 @@ const MyPageEdit = () => {
         setPrevNickName(myInfos.data.nickName);
         setBirth(myInfos.data.birth || "생일정보가 없습니다."); //null인 경우 방지
         setTelNum(myInfos.data.telNum || ""); //null인 경우 방지
-        setTelMessage(myInfos.data.telNum || "저장된 전화번호가 없습니다.");
+        if (myInfos.data.telNum == null && myInfos.data.telNum === "") {
+          setTelMessage("저장된 전화번호가 없습니다.");
+        }
         setUserImg(cleanedUrl || ""); //null인 경우 방지
         setLoginType(myInfos.data.loginType);
       } catch (error) {
@@ -70,18 +73,34 @@ const MyPageEdit = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleOutsideClick = (e) => {
+    const target = e.target;
+    if (target.className !== "edit_pwcheck_input") {
+      pwCheckButton();
+    }
+    if (target.className !== "edit_nickName_input") {
+      checkNickButton();
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [pw, checkPw, nickName]);
+
   // 비밀번호 일치 버튼
   const pwCheckButton = () => {
     if (pw !== null) {
       if (pw === checkPw) {
-        setCheckMessage("비밀번호가 일치합니다.");
+        setCheckPwMessage("비밀번호가 일치합니다.");
         setPasswordPlag(true);
       } else {
-        setCheckMessage("비밀번호가 서로 다릅니다.");
+        setCheckPwMessage("비밀번호가 서로 다릅니다.");
         setPasswordPlag(false);
       }
     } else if (pw === null) {
-      setCheckMessage("비밀번호를 입력해주세요.");
+      setCheckPwMessage("비밀번호를 입력해주세요.");
     }
   };
 
@@ -89,17 +108,14 @@ const MyPageEdit = () => {
     e.preventDefault();
 
     if (!pw) {
-      setCheckMessage("비밀번호를 입력해주세요.");
       return;
     }
 
     if (!passwordPlag) {
-      setCheckMessage("비밀번호 : 일치 확인을 눌러주세요");
       return;
     }
 
     if (!isNickNameAvailable) {
-      setCheckMessage("닉네임 : 중복 확인을 눌러주세요");
       return;
     }
 
@@ -175,21 +191,21 @@ const MyPageEdit = () => {
 
           // 응답을 확인하고 메시지에 따라 처리
           if (res.data.result === true) {
-            setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
+            setNickNameMessage("닉네임 : 사용 가능한 닉네임입니다.");
             setIsNickNameAvailable(true);
           } else {
-            setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
+            setNickNameMessage("닉네임 : 이미 사용중인 닉네임입니다.");
             setIsNickNameAvailable(false);
           }
         } catch (error) {
           console.error(error);
         }
       } else if (prevNickName === nickName) {
-        setCheckMessage("닉네임: 변경사항이 없습니다.");
+        setNickNameMessage("닉네임: 변경사항이 없습니다.");
         setIsNickNameAvailable(true);
       }
     } else if (nickName === null) {
-      setCheckMessage("닉네임을 입력해주세요.");
+      setNickNameMessage("닉네임을 입력해주세요.");
     }
   };
   //오늘 날짜 계산
@@ -264,17 +280,26 @@ const MyPageEdit = () => {
                 setCheckPw(e.target.value);
               }}
             />
-            <button
-              className="check_button"
-              type="button"
-              onClick={pwCheckButton}
-            >
-              일치 확인
-            </button>
           </div>
         </div>
         {/* ----- 중복 확인 멘트 ------ */}
-        <div className="edit_check_box">{checkMessage}</div>
+
+        {checkPwMessage && (
+          <div
+            className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}
+          >
+            {checkPwMessage}
+          </div>
+        )}
+        {nickNameMessage && (
+          <div
+            className={`signup_check_nickname ${
+              !isNickNameAvailable ? "error-text" : ""
+            }`}
+          >
+            {nickNameMessage}
+          </div>
+        )}
 
         <div className="edit_bottom">
           <div className="Box">
@@ -292,17 +317,11 @@ const MyPageEdit = () => {
             <input
               type="text"
               value={nickName}
+              className="edit_nickName_input"
               onChange={(e) => {
                 setNickName(e.target.value);
               }}
             />
-            <button
-              type="button"
-              className="check_button"
-              onClick={checkNickButton}
-            >
-              중복 확인
-            </button>
           </div>
           <div className="Box">
             <img src={BirthImg} className="idImg" />

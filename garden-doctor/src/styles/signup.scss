@@ -151,11 +151,17 @@
   display: none;
 }
 
-.signup_check_box {
+.signup_check_box,
+.signup_check_nickname,
+.signup_check_pw,
+.signup_check_id {
   font-size: 0.9em;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   height: 1em;
+}
+.error-text {
+  color: red;
 }
