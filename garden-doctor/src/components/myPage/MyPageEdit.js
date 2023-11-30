@@ -3,6 +3,10 @@ import "../../styles/myPage/myPageEdit.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import passwordImg from "../../images/password.svg";
+import IdImg from "../../images/id.svg";
+import BirthImg from "../../images/birth.svg";
+import PhoneImg from "../../images/phone.svg";
 
 const MyPageEdit = () => {
   const navigate = useNavigate();
@@ -15,10 +19,12 @@ const MyPageEdit = () => {
   const [userImg, setUserImg] = useState("");
   const [pw, setPw] = useState(null);
   const [checkPw, setCheckPw] = useState("");
-  const [checkMessage, setCheckMessage] = useState("");
+  const [checkPwMessage, setCheckPwMessage] = useState("");
+  const [nickNameMessage, setNickNameMessage] = useState("");
   const [loginType, setLoginType] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [telMessage, setTelMessage] = useState("");
 
   const [isNickNameAvailable, setIsNickNameAvailable] = useState(false);
   const [passwordPlag, setPasswordPlag] = useState(false);
@@ -41,7 +47,10 @@ const MyPageEdit = () => {
         setNickName(myInfos.data.nickName);
         setPrevNickName(myInfos.data.nickName);
         setBirth(myInfos.data.birth || "생일정보가 없습니다."); //null인 경우 방지
-        setTelNum(myInfos.data.telNum || "전화번호 정보가 없습니다."); //null인 경우 방지
+        setTelNum(myInfos.data.telNum || ""); //null인 경우 방지
+        if (myInfos.data.telNum == null && myInfos.data.telNum === "") {
+          setTelMessage("저장된 전화번호가 없습니다.");
+        }
         setUserImg(cleanedUrl || ""); //null인 경우 방지
         setLoginType(myInfos.data.loginType);
       } catch (error) {
@@ -64,18 +73,34 @@ const MyPageEdit = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleOutsideClick = (e) => {
+    const target = e.target;
+    if (target.className !== "edit_pwcheck_input") {
+      pwCheckButton();
+    }
+    if (target.className !== "edit_nickName_input") {
+      checkNickButton();
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [pw, checkPw, nickName]);
+
   // 비밀번호 일치 버튼
   const pwCheckButton = () => {
     if (pw !== null) {
       if (pw === checkPw) {
-        setCheckMessage("비밀번호가 일치합니다.");
+        setCheckPwMessage("비밀번호가 일치합니다.");
         setPasswordPlag(true);
       } else {
-        setCheckMessage("비밀번호가 서로 다릅니다.");
+        setCheckPwMessage("비밀번호가 서로 다릅니다.");
         setPasswordPlag(false);
       }
     } else if (pw === null) {
-      setCheckMessage("비밀번호를 입력해주세요.");
+      setCheckPwMessage("비밀번호를 입력해주세요.");
     }
   };
 
@@ -83,17 +108,14 @@ const MyPageEdit = () => {
     e.preventDefault();
 
     if (!pw) {
-      setCheckMessage("비밀번호를 입력해주세요.");
       return;
     }
 
     if (!passwordPlag) {
-      setCheckMessage("비밀번호 : 일치 확인을 눌러주세요");
       return;
     }
 
     if (!isNickNameAvailable) {
-      setCheckMessage("닉네임 : 중복 확인을 눌러주세요");
       return;
     }
 
@@ -169,21 +191,21 @@ const MyPageEdit = () => {
 
           // 응답을 확인하고 메시지에 따라 처리
           if (res.data.result === true) {
-            setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
+            setNickNameMessage("닉네임 : 사용 가능한 닉네임입니다.");
             setIsNickNameAvailable(true);
           } else {
-            setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
+            setNickNameMessage("닉네임 : 이미 사용중인 닉네임입니다.");
             setIsNickNameAvailable(false);
           }
         } catch (error) {
           console.error(error);
         }
       } else if (prevNickName === nickName) {
-        setCheckMessage("닉네임: 변경사항이 없습니다.");
+        setNickNameMessage("닉네임: 변경사항이 없습니다.");
         setIsNickNameAvailable(true);
       }
     } else if (nickName === null) {
-      setCheckMessage("닉네임을 입력해주세요.");
+      setNickNameMessage("닉네임을 입력해주세요.");
     }
   };
   //오늘 날짜 계산
@@ -238,11 +260,7 @@ const MyPageEdit = () => {
         </div>
         <div className="edit_top">
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
-            <h1 className="edit_id_input">{userId}</h1>
-          </div>
-          <div className="Box">
-            <img src="imgs/password.svg" className="idImg" />
+            <img src={passwordImg} className="idImg" />
             <input
               type="password"
               placeholder="비밀번호"
@@ -253,7 +271,7 @@ const MyPageEdit = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/password.svg" className="idImg" />
+            <img src={passwordImg} className="idImg" />
             <input
               type="password"
               placeholder="비밀번호 확인"
@@ -262,21 +280,30 @@ const MyPageEdit = () => {
                 setCheckPw(e.target.value);
               }}
             />
-            <button
-              className="check_button"
-              type="button"
-              onClick={pwCheckButton}
-            >
-              일치 확인
-            </button>
           </div>
         </div>
         {/* ----- 중복 확인 멘트 ------ */}
-        <div className="edit_check_box">{checkMessage}</div>
+
+        {checkPwMessage && (
+          <div
+            className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}
+          >
+            {checkPwMessage}
+          </div>
+        )}
+        {nickNameMessage && (
+          <div
+            className={`signup_check_nickname ${
+              !isNickNameAvailable ? "error-text" : ""
+            }`}
+          >
+            {nickNameMessage}
+          </div>
+        )}
 
         <div className="edit_bottom">
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={IdImg} className="idImg" />
             <input
               type="text"
               value={name}
@@ -286,24 +313,18 @@ const MyPageEdit = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/id.svg" className="idImg" />
+            <img src={IdImg} className="idImg" />
             <input
               type="text"
               value={nickName}
+              className="edit_nickName_input"
               onChange={(e) => {
                 setNickName(e.target.value);
               }}
             />
-            <button
-              type="button"
-              className="check_button"
-              onClick={checkNickButton}
-            >
-              중복 확인
-            </button>
           </div>
           <div className="Box">
-            <img src="imgs/birth.svg" className="idImg" />
+            <img src={BirthImg} className="idImg" />
             <input
               type="date"
               value={birth}
@@ -314,10 +335,12 @@ const MyPageEdit = () => {
             />
           </div>
           <div className="Box">
-            <img src="imgs/phone.svg" className="idImg" />
+            <img src={PhoneImg} className="idImg" />
             <input type="text" value={telNum} onChange={handleChange} />
           </div>
         </div>
+        <br></br>
+        <div className="edit_check_box">{telMessage}</div>
 
         <button className="register_button" onClick={editButton}>
           수정하기
