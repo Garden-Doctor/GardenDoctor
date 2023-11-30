@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/findMyIdPw.scss";
 
@@ -66,6 +66,22 @@ const FindMyId = () => {
       setCheck(false);
     }
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      const target = e.target;
+      if (target.className !== "signup_pwcheck_input") {
+        pwCheckButton();
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [newPw, pwCheck]);
+
   const pwCheckButton = () => {
     if (newPw !== null) {
       if (newPw === pwCheck) {
@@ -217,15 +233,15 @@ const FindMyId = () => {
               setPwCheck(e.target.value);
             }}
           />
-          <button
-            className="check_button"
-            type="button"
-            onClick={pwCheckButton}
-          >
-            일치 확인
-          </button>
         </div>
         <button onClick={findPw}>비밀번호 재설정 하기</button>
+        {checkMessage && (
+          <div
+            className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}
+          >
+            {checkMessage}
+          </div>
+        )}
         <div>{checkMessageFindPw}</div>
         {updateSuccess === true && <div>비밀번호 재설정 성공</div>}
         {updateSuccess === false && <div>재설정 실패</div>}
