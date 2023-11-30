@@ -83,7 +83,12 @@ const TodayBoard = () => {
 
   if (loading) {
     // 추가: 로딩 중일 때 로딩 화면을 보여줍니다.
-    return <div>로딩중이거나 좋아요한 게시글이 없습니다.</div>;
+    return (
+      <div className="todayboard-unvisible">
+        <div className="todayboard-unvisible-box"></div>
+        로딩중이거나 좋아요한 게시글이 없습니다.
+      </div>
+    );
   }
 
   return (
@@ -106,7 +111,7 @@ const TodayBoard = () => {
           />
         </>
       ) : (
-        <span>No data available</span>
+        <div>No data available</div>
       )}
     </div>
   );

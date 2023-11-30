@@ -16,7 +16,7 @@ const BottomBar = () => {
   const navigate = useNavigate();
   const reduxUserId = useSelector((state) => state.user);
 
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState("home");
 
   const homeButton = () => {
     navigate("/");
@@ -44,8 +44,8 @@ const BottomBar = () => {
   };
 
   return (
-    <>
-      <div className="BottomBar-container">
+    <div className="BottomBar-container">
+      <div className="BottomBar-container-inner">
         <span
           className={`BottomBar-homeButton ${
             selectedButton === "home" ? "selected" : ""
@@ -92,7 +92,7 @@ const BottomBar = () => {
           MY
         </span>
       </div>
-    </>
+    </div>
   );
 };
 
