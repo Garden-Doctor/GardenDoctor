@@ -6,6 +6,7 @@ export const LOGOUT = "LOGOUT";
 const initialState = {
   isLogIn: false,
   user: null,
+  nickname: null,
 };
 
 //리듀서 함수
@@ -16,12 +17,14 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         isLogIn: true,
         user: action.user,
+        nickname: action.nickname,
       };
     case LOGOUT:
       return {
         ...state,
         isLogIn: false,
         user: null,
+        nickname: null,
       };
     default:
       return state;

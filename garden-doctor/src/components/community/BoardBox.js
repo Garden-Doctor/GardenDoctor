@@ -10,6 +10,7 @@ const BoardBox = ({
   title,
   text,
   userId,
+  nickname,
   userImg,
   boardId,
   likeData,
@@ -47,7 +48,7 @@ const BoardBox = ({
   return (
     <div className="board-container" onClick={(e) => clickedBoard(e)}>
       <img className="boardBox-userImg" alt="userImg" src={userImg}></img>
-      <span className="boardBox-userName">{userId}</span>
+      <span className="boardBox-userName">{nickname}</span>
       <span className="boardBox-Dday">{formattedDate}</span> <br></br>
       <span className="boardBox-boardTitle">{title}</span>
       <br></br>

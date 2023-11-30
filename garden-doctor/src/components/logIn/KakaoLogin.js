@@ -8,6 +8,7 @@ const KakaoLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [kakaoID, setKakaoId] = useState(" ");
+  let userNickname = "";
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,6 +39,7 @@ const KakaoLogin = () => {
               "profile_image: ",
               response.data.properties.profile_image
             );
+            userNickname = response.data.properties.nickname;
 
             const userId = response.data.id;
             const nickname = response.data.properties.nickname;
@@ -63,7 +65,11 @@ const KakaoLogin = () => {
             );
 
             sessionStorage.setItem("token", loginKaKao.data.token);
-            dispatch({ type: LOGIN, user: loginKaKao.data.id });
+            dispatch({
+              type: LOGIN,
+              user: String(loginKaKao.data.id),
+              nickname: userNickname,
+            });
             console.log("userDataResponse", userDataResponse);
           }
 

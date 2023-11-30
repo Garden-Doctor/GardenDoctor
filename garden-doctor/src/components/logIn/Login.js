@@ -38,7 +38,7 @@ const Login = () => {
         console.log(data);
         alert("로그인 성공");
         sessionStorage.setItem("token", data.token);
-        dispatch({ type: LOGIN, user: data.id });
+        dispatch({ type: LOGIN, user: data.id, nickname: data.nickname });
         navigate("/");
       } else {
         console.log(data);

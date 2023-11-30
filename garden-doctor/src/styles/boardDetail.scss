@@ -177,6 +177,8 @@
   width: 95%;
   overflow: hidden;
   overflow-y: scroll;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
 }
 
 .BoardDetail-comments p {
