@@ -161,9 +161,13 @@ const FindMyId = () => {
             onChange={(e) => setBirthdate(e.target.value)}
           />
         </div>
-        <button onClick={handleFindId}>찾기</button>
-        {foundId && <p>찾은 아이디: {foundId}</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button className="findIdbutton" onClick={handleFindId}>
+          아이디 찾기
+        </button>
+        <div className="findIDmessage">
+          {foundId && <p>찾은 아이디: {foundId}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
       </div>
       <div className="findMyPw">
         <h3>비밀번호 재설정</h3>
@@ -234,7 +238,9 @@ const FindMyId = () => {
             }}
           />
         </div>
-        <button onClick={findPw}>비밀번호 재설정 하기</button>
+        <button className="changePWbutton" onClick={findPw}>
+          비밀번호 재설정
+        </button>
         {checkMessage && (
           <div
             className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}

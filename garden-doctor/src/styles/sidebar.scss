@@ -60,12 +60,6 @@
   }
 }
 
-@media (min-width: 451px) and (max-width: 699px) {
-  .sidebar-container {
-    width: calc(350px + (700px - 350px) * ((100vw - 350px) / (699 - 350)));
-  }
-}
-
 /* 1024px 이상의 화면 크기에 대한 스타일 */
 @media (min-width: 1024px) {
   .sidebar-container {
