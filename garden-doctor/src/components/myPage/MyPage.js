@@ -91,7 +91,7 @@ const MyPage = () => {
     };
     myPlant();
   }, [userId]);
-  
+
   const navigate = useNavigate();
   const boardsCountButton = () => {
     sessionStorage.setItem("selectedTab", "my-boards"); //내 게시글 선택한 채로 이동
@@ -117,7 +117,9 @@ const MyPage = () => {
       <div className="Title">마이페이지</div>
       <div className="myInfo">
         <div className="myInfoTop">
-          <div className="nameInfo">{name}님의 정보</div>
+          <div className="nameInfo">
+            <span className="nameSpan">{name} </span>님의 정보
+          </div>
           <button className="editButton" onClick={editButton}>
             수정
           </button>
@@ -126,8 +128,8 @@ const MyPage = () => {
           <img className="userImg" alt="프로필 이미지" src={userImg}></img>
           <div className="myInfoRight">
             <div className="nickName">닉네임: {nickName}</div>
-            <div className="birth">{birth}</div>
-            <div className="telNum">{telNum}</div>
+            <div className="birth">생년월일: {birth}</div>
+            <div className="telNum">전화번호: {telNum}</div>
           </div>
         </div>
       </div>
@@ -143,7 +145,7 @@ const MyPage = () => {
           </button>
         </div>
         <div className="myBoards">
-          <div className="myBoardsText">내 게시글</div>
+          <div className="myBoardsText">게시글</div>
           <button
             className="boardsCount"
             type="button"
@@ -153,7 +155,7 @@ const MyPage = () => {
           </button>
         </div>
         <div className="myLikes">
-          <div className="myLikesText">좋아요한 게시글</div>
+          <div className="myLikesText">좋아요</div>
           <button
             className="likesCount"
             type="button"
