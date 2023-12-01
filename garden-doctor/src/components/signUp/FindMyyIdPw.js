@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/findMyIdPw.scss";
 
+import id_src from "../../images/id.svg";
+import birth_src from "../../images/birth.svg";
+import email_src from "../../images/email.svg";
+import pw_src from "../../images/pw.svg";
+import verification_src from "../../images/verification.svg";
+import ChangePW from "./ChangePW";
+
 const FindMyId = () => {
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
@@ -44,6 +51,7 @@ const FindMyId = () => {
       setFoundId(""); // 에러가 발생했을 때는 찾은 아이디를 초기화
     }
   };
+
   const sendEmail = async () => {
     try {
       const response = await axios.post(
@@ -66,21 +74,6 @@ const FindMyId = () => {
       setCheck(false);
     }
   };
-
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      const target = e.target;
-      if (target.className !== "signup_pwcheck_input") {
-        pwCheckButton();
-      }
-    };
-
-    document.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, [newPw, pwCheck]);
 
   const pwCheckButton = () => {
     if (newPw !== null) {
@@ -136,30 +129,39 @@ const FindMyId = () => {
 
   return (
     <div>
-      <div className="findMyId">
+      <div className="findMyIDPW-container">
         <h3>아이디 찾기</h3>
-        <div className="textId">
-          <input
-            type="text"
-            placeholder="이름"
-            className="IdNameInput"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="닉네임"
-            className="IdNicknameInput"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-          />
-          <input
-            type="date"
-            placeholder="생년월일"
-            className="IdBirthInput"
-            value={birthdate}
-            onChange={(e) => setBirthdate(e.target.value)}
-          />
+        <div className="findMyIDPW-container-findID">
+          <div className="Box">
+            <img src={id_src} className="idImg" />
+            <input
+              type="text"
+              placeholder="이름"
+              className="IdNameInput"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="Box">
+            <img src={id_src} className="idImg" />
+            <input
+              type="text"
+              placeholder="닉네임"
+              className="IdNicknameInput"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </div>
+          <div className="Box">
+            <img src={birth_src} className="idImg" />
+            <input
+              type="date"
+              placeholder="생년월일"
+              className="IdBirthInput lastBox"
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
+            />
+          </div>
         </div>
         <button className="findIdbutton" onClick={handleFindId}>
           아이디 찾기
@@ -168,89 +170,7 @@ const FindMyId = () => {
           {foundId && <p>찾은 아이디: {foundId}</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
         </div>
-      </div>
-      <div className="findMyPw">
-        <h3>비밀번호 재설정</h3>
-        <div className="textPw">
-          <input
-            type="text"
-            placeholder="이름"
-            value={pwName}
-            className="PwNameInput"
-            onChange={(e) => setPwName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="아이디"
-            value={pwId}
-            className="PwIdInput"
-            onChange={(e) => setPwId(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="닉네임"
-            className="PwNickNameInput"
-            value={pwNickname}
-            onChange={(e) => setPwNickname(e.target.value)}
-          />
-          <input
-            type="date"
-            placeholder="생년월일"
-            className="PwBirthInput"
-            value={pwBirthdate}
-            onChange={(e) => setPwBirthdate(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="이메일"
-            className="PwEmaileInput"
-            value={pwEmail}
-            onChange={(e) => setPwEmail(e.target.value)}
-          />
-          <button onClick={sendEmail}>인증번호 받기</button>
-          <div>{sendMaileMessage}</div>
-          <input
-            type="text"
-            placeholder="인증번호"
-            className="PwNumberInput"
-            value={certificationNumber}
-            onChange={(e) => setCertificationNumber(e.target.value)}
-          />
-          <button onClick={checkNumber}>인증번호 확인</button>
-          {check === true && <div>인증 성공 </div>}
-          {check === false && <div>인증 실패 </div>}
-          <input
-            type="password"
-            placeholder="비밀번호"
-            className="signup_pw_input"
-            value={newPw}
-            onChange={(e) => {
-              setNewPw(e.target.value);
-            }}
-          />
-          <input
-            type="password"
-            placeholder="비밀번호 확인"
-            className="signup_pwcheck_input"
-            value={pwCheck}
-            onChange={(e) => {
-              setPwCheck(e.target.value);
-            }}
-          />
-        </div>
-        <button className="changePWbutton" onClick={findPw}>
-          비밀번호 재설정
-        </button>
-        {checkMessage && (
-          <div
-            className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}
-          >
-            {checkMessage}
-          </div>
-        )}
-        <div>{checkMessageFindPw}</div>
-        {updateSuccess === true && <div>비밀번호 재설정 성공</div>}
-        {updateSuccess === false && <div>재설정 실패</div>}
+        <ChangePW />
       </div>
     </div>
   );
