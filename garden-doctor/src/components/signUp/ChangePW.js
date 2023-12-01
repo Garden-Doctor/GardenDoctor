@@ -7,15 +7,8 @@ import birth_src from "../../images/birth.svg";
 import email_src from "../../images/email.svg";
 import pw_src from "../../images/pw.svg";
 import verification_src from "../../images/verification.svg";
-import ChangePW from "./ChangePW";
 
-const FindMyId = () => {
-  const [name, setName] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [foundId, setFoundId] = useState("");
-  const [error, setError] = useState(null);
-
+const ChangePW = () => {
   const [pwName, setPwName] = useState("");
   const [pwEmail, setPwEmail] = useState("");
   const [pwId, setPwId] = useState("");
@@ -33,24 +26,20 @@ const FindMyId = () => {
   const [checkMessageFindPw, setCheckMessageFindPw] = useState("");
   const [sendMaileMessage, setSendMaileMessage] = useState("");
 
-  const handleFindId = async () => {
-    try {
-      // 서버에 요청을 보내서 아이디 찾기
-      const response = await axios.post("http://localhost:8000/sign/findId", {
-        name,
-        nickname,
-        birth: birthdate,
-      });
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      const target = e.target;
+      if (target.className !== "signup_pwcheck_input") {
+        pwCheckButton();
+      }
+    };
 
-      // 찾은 아이디를 상태에 업데이트
-      setFoundId(response.data.foundId);
-      setError(null); // 에러가 있었다면 초기화
-    } catch (error) {
-      console.error("Error finding ID:", error);
-      setError("아이디를 찾는 중에 오류가 발생했습니다.");
-      setFoundId(""); // 에러가 발생했을 때는 찾은 아이디를 초기화
-    }
-  };
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [newPw, pwCheck]);
 
   const sendEmail = async () => {
     try {
@@ -128,18 +117,28 @@ const FindMyId = () => {
   };
 
   return (
-    <div>
-      <div className="findMyIDPW-container">
-        <h3>아이디 찾기</h3>
-        <div className="findMyIDPW-container-findID">
+    <div className="chagePW-container">
+      <h3>비밀번호 재설정</h3>
+      <div className="findMyIDPW-container-findPW">
+        <div className="textPw">
           <div className="Box">
             <img src={id_src} className="idImg" />
             <input
               type="text"
               placeholder="이름"
-              className="IdNameInput"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={pwName}
+              className="PwNameInput"
+              onChange={(e) => setPwName(e.target.value)}
+            />
+          </div>
+          <div className="Box">
+            <img src={id_src} className="idImg" />
+            <input
+              type="text"
+              placeholder="아이디"
+              value={pwId}
+              className="PwIdInput"
+              onChange={(e) => setPwId(e.target.value)}
             />
           </div>
           <div className="Box">
@@ -147,9 +146,9 @@ const FindMyId = () => {
             <input
               type="text"
               placeholder="닉네임"
-              className="IdNicknameInput"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              className="PwNickNameInput"
+              value={pwNickname}
+              onChange={(e) => setPwNickname(e.target.value)}
             />
           </div>
           <div className="Box">
@@ -157,23 +156,81 @@ const FindMyId = () => {
             <input
               type="date"
               placeholder="생년월일"
-              className="IdBirthInput lastBox"
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
+              className="PwBirthInput"
+              value={pwBirthdate}
+              onChange={(e) => setPwBirthdate(e.target.value)}
+            />
+          </div>
+          <div className="Box">
+            <img src={email_src} className="idImg" />
+            <input
+              type="text"
+              placeholder="이메일"
+              className="PwEmaileInput"
+              value={pwEmail}
+              onChange={(e) => setPwEmail(e.target.value)}
+            />
+            <button onClick={sendEmail} className="check_button">
+              전송
+            </button>
+          </div>
+          <div className="sendmailmessage">{sendMaileMessage}</div>
+          <div className="Box">
+            <img src={verification_src} className="idImg" />
+            <input
+              type="text"
+              placeholder="인증번호"
+              className="PwNumberInput"
+              value={certificationNumber}
+              onChange={(e) => setCertificationNumber(e.target.value)}
+            />
+            <button onClick={checkNumber} className="check_button">
+              확인
+            </button>
+          </div>
+          <div className="checkID_message">
+            {check === true && <div>인증 성공 </div>}
+            {check === false && <div>인증 실패 </div>}
+          </div>
+          <div className="Box">
+            <img src={pw_src} className="idImg" />
+            <input
+              type="password"
+              placeholder="비밀번호"
+              className="signup_pw_input"
+              value={newPw}
+              onChange={(e) => {
+                setNewPw(e.target.value);
+              }}
+            />
+          </div>
+          <div className="Box">
+            <img src={pw_src} className="idImg" />
+            <input
+              type="password"
+              placeholder="비밀번호 확인"
+              className="signup_pwcheck_input lastBox"
+              value={pwCheck}
+              onChange={(e) => {
+                setPwCheck(e.target.value);
+              }}
             />
           </div>
         </div>
-        <button className="findIdbutton" onClick={handleFindId}>
-          아이디 찾기
-        </button>
-        <div className="findIDmessage">
-          {foundId && <p>찾은 아이디: {foundId}</p>}
-          {error && <p style={{ color: "red" }}>{error}</p>}
-        </div>
-        <ChangePW />
       </div>
+      <button className="changePWbutton findIdbutton" onClick={findPw}>
+        비밀번호 재설정
+      </button>
+      {checkMessage && (
+        <div className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}>
+          {checkMessage}
+        </div>
+      )}
+      <div>{checkMessageFindPw}</div>
+      {updateSuccess === true && <div>비밀번호 재설정 성공</div>}
+      {updateSuccess === false && <div>재설정 실패</div>}
     </div>
   );
 };
 
-export default FindMyId;
+export default ChangePW;

@@ -1,41 +1,50 @@
 @import "./utils.scss";
 
-.findMyId {
-  font-family: $font-content;
+.findMyIDPW-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  font-family: $font-content;
+  margin-top: 40px;
+  padding-bottom: 50px;
   h3 {
-    font-weight: 700;
+    font-weight: 600;
   }
-  .textId {
-    border: solid 1px black;
+
+  // 아이디 찾기 부분
+  .findMyIDPW-container-findID {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    border: solid 1px black;
     border-radius: 5px;
-  }
-  input {
-    position: relative;
-    padding: 8px 35px;
-    height: 30px;
-    width: 100%;
-    z-index: 0;
-    border: none;
-    padding: 10px 30px;
-  }
-  .IdNameInput {
-    border-bottom: solid 1px black;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-  }
-  .IdNicknameInput {
-    border-bottom: solid 1px black;
-  }
-  .IdBirthInput {
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+    .Box {
+      display: flex;
+      align-items: center;
+      .idImg {
+        position: absolute;
+        margin-left: 10px;
+        z-index: 1;
+        width: 20px;
+      }
+      input {
+        position: relative;
+        padding: 8px 35px;
+        height: 35px;
+        width: 100%;
+        z-index: 0;
+      }
+    }
+    input {
+      border: none;
+      border-bottom: solid 1px black;
+      padding: 10px 30px;
+    }
+    .lastBox {
+      border-bottom: none;
+    }
   }
   .findIdbutton {
     position: relative;
@@ -43,11 +52,13 @@
     font-size: 1em;
     font-family: "M PLUS 1", sans-serif;
     font-weight: 600;
-    width: 243px;
+    width: 255px;
     height: 35px;
+    margin-bottom: 10px;
+
     margin: 0 auto;
     color: white;
-    margin: 20px 10px 10px;
+    margin: 20px 0px;
     border-radius: 6px;
     text-align: center;
     transition: top 0.01s linear;
@@ -61,84 +72,65 @@
   .findIdbutton:active {
     top: 9px;
   }
-}
 
-.findMyPw {
-  font-family: $font-content;
-  margin-top: 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 50px;
-  h3 {
-    font-weight: 700;
-  }
-  .textPw {
-    border: solid 1px black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 5px;
-  }
-  input {
-    position: relative;
-    padding: 8px 35px;
-    height: 30px;
+  // 아이디 체크 후 인증 메시지
+  .findIDmessage {
     width: 100%;
-    z-index: 0;
-    border: none;
-    padding: 10px 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .PwNameInput {
-    border-bottom: solid 1px black;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-  }
-  .PwIdInput {
-    border-bottom: solid 1px black;
-  }
-  .PwNickNameInput {
-    border-bottom: solid 1px black;
-  }
-  .PwBirthInput {
-    border-bottom: solid 1px black;
-  }
-  .PwEmaileInput {
-    border-bottom: solid 1px black;
-  }
-  .PwNumberInput {
-    border-bottom: solid 1px black;
-    border-top: solid 1px black;
-  }
-  .signup_pw_input {
-    border-bottom: solid 1px black;
-    border-top: solid 1px black;
-  }
-  .signup_pwcheck_input {
-    border-bottom: solid 1px black;
-  }
-  .changePWbutton {
-    position: relative;
-    display: inline-block;
-    font-size: 1em;
-    font-family: "M PLUS 1", sans-serif;
-    font-weight: 600;
-    width: 243px;
-    height: 35px;
-    margin: 0 auto;
-    color: white;
-    margin: 20px 10px 10px;
-    border-radius: 6px;
+
+  .chagePW-container {
     text-align: center;
-    transition: top 0.01s linear;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-    background-color: #82c8a0;
-    box-shadow: 0 0 0 1px #82c8a0 inset,
-      0 0 0 1px rgba(255, 255, 255, 0.15) inset,
-      0 4px 0 0 rgba(126, 194, 155, 0.7), 0 8px 0 1px rgba(0, 0, 0, 0.4),
-      0 4px 4px 1px rgba(0, 0, 0, 0.5);
-  }
-  .changePWbutton:active {
-    top: 9px;
+    // 비밀번호 재설정 부분
+    .findMyIDPW-container-findPW {
+      display: flex;
+      flex-direction: column;
+      border: solid 1px black;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+
+      .sendmailmessage {
+        background-color: red;
+        width: 100%;
+      }
+      .textPw {
+        .Box {
+          display: flex;
+          align-items: center;
+          .idImg {
+            position: absolute;
+            margin-left: 10px;
+            z-index: 1;
+            width: 20px;
+          }
+          input {
+            position: relative;
+            padding: 8px 35px;
+            height: 35px;
+            width: 100%;
+            z-index: 0;
+          }
+          .check_button {
+            font-size: 12px;
+            position: absolute;
+            margin-left: 260px;
+            z-index: 1;
+            border-radius: 5px;
+          }
+        }
+        input {
+          border: none;
+          border-bottom: solid 1px black;
+          padding: 10px 30px;
+        }
+        .lastBox {
+          border-bottom: none;
+        }
+      }
+    }
   }
 }
