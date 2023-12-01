@@ -8,6 +8,7 @@ import sendImage from "../../images/send-image.png";
 import redLike from "../../images/redLike.png";
 import rightArrow from "../../images/rightArrow.png";
 import leftArrow from "../../images/leftArrow.png";
+import Heart from "react-animated-heart";
 
 const BoardDetail = () => {
   const { userId, boardId } = useParams();
@@ -26,6 +27,7 @@ const BoardDetail = () => {
   const reduxUserId = useSelector((state) => state.user);
   const reduxUserNickname = useSelector((state) => state.nickname);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isClick, setClick] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +65,7 @@ const BoardDetail = () => {
         const isLikedByUser = likeResponse.data.some(
           (like) => like.userId == reduxUserId
         );
+        setClick(isLikedByUser ? true : false);
         setIsLiked(isLikedByUser);
         setLikeImage(isLikedByUser ? redLike : likeIcon);
 
@@ -159,12 +162,14 @@ const BoardDetail = () => {
           { data: { userId: reduxUserId } }
         );
         setIsLiked(false);
+        setClick(false);
         setLikeImage(likeIcon);
       } else {
         await axios.post(`http://localhost:8000/board/postLike/${boardId}`, {
           userId: reduxUserId,
         });
         setIsLiked(true);
+        setClick(false);
         setLikeImage(redLike);
       }
     } catch (error) {
@@ -232,9 +237,10 @@ const BoardDetail = () => {
               alt="BoardImage"
             />
           </div>
-          <img
+          <Heart
             className="BoardDetail-likeImg"
             alt="좋아요"
+            isClick={isClick}
             src={likeImage}
             onClick={likeButtonClick}
           />
