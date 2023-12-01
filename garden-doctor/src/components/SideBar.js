@@ -4,10 +4,14 @@ import "../styles/sidebar.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import { useSelectedButton } from "../components/SelectedButtonContext";
+
 import exit_src from "../images/exit.svg";
 import user_src from "../images/user.svg";
 
 const SideBar = ({ onClose }) => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const sideBarRef = useRef();
   const userId = useSelector((state) => state.user);
   const [nickName, setNickName] = useState("");
@@ -50,28 +54,34 @@ const SideBar = ({ onClose }) => {
 
   const navigate = useNavigate();
 
-  const dignoseButton = () => {
-    navigate("/imageAI");
+  const dignoseButton = async () => {
+    await navigate("/imageAI");
+    setSelectedButton("home");
   };
-  const chatButton = () => {
-    navigate("/chat");
+  const chatButton = async () => {
+    await navigate("/chat");
+    setSelectedButton("chat");
   };
-  const mypageButton = () => {
+  const mypageButton = async () => {
     if (!userId) {
       alert("로그인 해주세요");
-      navigate("/login");
+      await navigate("/login");
+      setSelectedButton("my");
       return;
     }
     navigate("/mypage");
   };
-  const boardButton = () => {
-    navigate("/board");
+  const boardButton = async () => {
+    await navigate("/board");
+    setSelectedButton("board");
   };
-  const myplantButton = () => {
-    navigate("/myplant");
+  const myplantButton = async () => {
+    await navigate("/myplant");
+    setSelectedButton("my");
   };
-  const myboardButton = () => {
-    navigate("/myBoardS");
+  const myboardButton = async () => {
+    await navigate("/myBoardS");
+    setSelectedButton("my");
   };
 
   return (

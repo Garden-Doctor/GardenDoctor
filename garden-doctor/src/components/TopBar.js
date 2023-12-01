@@ -9,7 +9,11 @@ import "../styles/topbar.scss";
 import axios from "axios";
 import SideBar from "./SideBar";
 
+import { useSelectedButton } from "../components/SelectedButtonContext";
+
 const TopBar = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const isLogin = useSelector((state) => state.isLogIn);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user);
@@ -56,16 +60,19 @@ const TopBar = () => {
   const navigate = useNavigate();
   const logoButton = () => {
     navigate("/");
+    setSelectedButton("home");
   };
 
   const loginButton = () => {
     navigate("/login");
+    setSelectedButton("home");
   };
 
   const Rest_api_key = process.env.REACT_APP_KAKAO_INIT_KEY;
   const redirect_uri = process.env.REACT_APP_KAKAO_LOGOUT_REDIRECT_URI;
 
   const logoutButton = async () => {
+    setSelectedButton("home");
     const findLoginType = await axios.post(
       "http://localhost:8000/sign/findLoginType",
       {
@@ -80,10 +87,6 @@ const TopBar = () => {
     sessionStorage.removeItem("token");
     alert("로그아웃 되었습니다.");
     navigate("/");
-  };
-
-  const signupButton = () => {
-    navigate("/signup");
   };
 
   return (

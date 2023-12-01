@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { useSelectedButton } from "../components/SelectedButtonContext";
 
 import "../styles/bottombar.scss";
-import { useSelector } from "react-redux";
+
 import home from "../images/home.svg";
 import home_selected from "../images/home_selected.svg";
 import board from "../images/board.svg";
@@ -16,30 +19,35 @@ const BottomBar = () => {
   const navigate = useNavigate();
   const reduxUserId = useSelector((state) => state.user);
 
-  const [selectedButton, setSelectedButton] = useState("home");
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
+  useEffect(() => {
+    // 페이지 이동 시 selectedButton 초기화
+    setSelectedButton("home");
+  }, [navigate]); // navigate가 변경될 때마다 useEffect 실행
 
   const homeButton = () => {
     navigate("/");
     setSelectedButton("home");
   };
 
-  const boardButton = () => {
-    navigate("/board");
+  const boardButton = async () => {
+    await navigate("/board");
     setSelectedButton("board");
   };
 
-  const chatButton = () => {
-    navigate("/chat");
+  const chatButton = async () => {
+    await navigate("/chat");
     setSelectedButton("chat");
   };
 
-  const myButton = () => {
+  const myButton = async () => {
     if (!reduxUserId) {
       alert("로그인 해주세요");
       navigate("/login");
       return;
     }
-    navigate("/mypage");
+    await navigate("/mypage");
     setSelectedButton("my");
   };
 

@@ -38,67 +38,71 @@ import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
 import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
 
+import { SelectedButtonProvider } from "./components/SelectedButtonContext";
+
 function App() {
   return (
     <>
       <BrowserRouter>
-        <TopBar />
-        <div className="app-container">
-          {/* Max Min 값 정해두기 */}
-          <Routes>
-            <Route path="/" element={<Main></Main>}></Route>
+        <SelectedButtonProvider>
+          <TopBar />
+          <div className="app-container">
+            {/* Max Min 값 정해두기 */}
+            <Routes>
+              <Route path="/" element={<Main></Main>}></Route>
 
-            <Route path="/" element={<Home></Home>}></Route>
-            <Route path="/chat" element={<Chat></Chat>}></Route>
-            <Route path="/Board" element={<Board></Board>}></Route>
-            <Route path="/login" element={<Login></Login>}></Route>
-            <Route path="/signup" element={<Signup></Signup>}></Route>
-            <Route
-              path="/findIdPw"
-              element={<FindMyyIdPw></FindMyyIdPw>}
-            ></Route>
-            <Route
-              path="/writeBoard"
-              element={<WriteBoard></WriteBoard>}
-            ></Route>
-            <Route
-              path="/writeBoard/:userId/:myPlantId"
-              element={<WriteBoard></WriteBoard>}
-            ></Route>
-            <Route
-              path="/boardDetail/:userId/:boardId"
-              element={<BoardDetail></BoardDetail>}
-            ></Route>
-            <Route
-              path="/editBoard/:userId/:boardId"
-              element={<EditBoard></EditBoard>}
-            ></Route>
-            <Route path="*" element={<NotFound></NotFound>}></Route>
-            <Route path="/imageAI" element={<Dignose></Dignose>}></Route>
-            <Route
-              path="/diagnosisResult"
-              element={<DignoseResult></DignoseResult>}
-            ></Route>
-            <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
+              <Route path="/" element={<Home></Home>}></Route>
+              <Route path="/chat" element={<Chat></Chat>}></Route>
+              <Route path="/Board" element={<Board></Board>}></Route>
+              <Route path="/login" element={<Login></Login>}></Route>
+              <Route path="/signup" element={<Signup></Signup>}></Route>
+              <Route
+                path="/findIdPw"
+                element={<FindMyyIdPw></FindMyyIdPw>}
+              ></Route>
+              <Route
+                path="/writeBoard"
+                element={<WriteBoard></WriteBoard>}
+              ></Route>
+              <Route
+                path="/writeBoard/:userId/:myPlantId"
+                element={<WriteBoard></WriteBoard>}
+              ></Route>
+              <Route
+                path="/boardDetail/:userId/:boardId"
+                element={<BoardDetail></BoardDetail>}
+              ></Route>
+              <Route
+                path="/editBoard/:userId/:boardId"
+                element={<EditBoard></EditBoard>}
+              ></Route>
+              <Route path="*" element={<NotFound></NotFound>}></Route>
+              <Route path="/imageAI" element={<Dignose></Dignose>}></Route>
+              <Route
+                path="/diagnosisResult"
+                element={<DignoseResult></DignoseResult>}
+              ></Route>
+              <Route path="/myBoards" element={<MyBoards></MyBoards>}></Route>
 
-            <Route path="/myPlants" element={<MyPlants></MyPlants>}></Route>
-            <Route
-              path="/myPlants/addPlant"
-              element={<AddPlant></AddPlant>}
-            ></Route>
+              <Route path="/myPlants" element={<MyPlants></MyPlants>}></Route>
+              <Route
+                path="/myPlants/addPlant"
+                element={<AddPlant></AddPlant>}
+              ></Route>
 
-            <Route
-              path="/myPlants/plantDetail/:URLuserId/:plantId"
-              element={<PlantDetail></PlantDetail>}
-            ></Route>
+              <Route
+                path="/myPlants/plantDetail/:URLuserId/:plantId"
+                element={<PlantDetail></PlantDetail>}
+              ></Route>
 
-            <Route path="/myPage" element={<MyPage></MyPage>}></Route>
+              <Route path="/myPage" element={<MyPage></MyPage>}></Route>
 
-            <Route path="/kakao/callback" element={<KakaoLogin />} />
-            <Route path="/myPageEdit" element={<MyPageEdit></MyPageEdit>} />
-          </Routes>
-        </div>
-        <BottomBar />
+              <Route path="/kakao/callback" element={<KakaoLogin />} />
+              <Route path="/myPageEdit" element={<MyPageEdit></MyPageEdit>} />
+            </Routes>
+          </div>
+          <BottomBar />
+        </SelectedButtonProvider>
       </BrowserRouter>
     </>
   );
