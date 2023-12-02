@@ -16,6 +16,7 @@ const AddPlant = () => {
   const [selectedPlant, setSelectedPlant] = useState("");
   const [plantDate, setPlantDate] = useState(new Date());
   const [checkMessage, setCheckMessage] = useState("");
+  console.log(selectedPlant);
 
   const username = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const AddPlant = () => {
       const file = imgRef.current.files[0];
       formData.append("file", file);
     }
-    if (!plantNickname) {
+    if (!selectedPlant || selectedPlant === "작물 선택하기") {
       setCheckMessage("식물 종류를 선택해주세요");
       return;
     }

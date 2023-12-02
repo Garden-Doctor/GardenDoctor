@@ -26,9 +26,9 @@ const Chat = () => {
         },
       });
       const prevChats = res.data;
-      console.log(prevChats);
+      console.log("prevChats", prevChats);
       const chatData = prevChats.map((c) => {
-        const prevChat = { ai: c.isAI, m: c.chatMessage };
+        const prevChat = { ai: c.is_ai, m: c.chat_message };
         return prevChat;
       });
       setChatHistory(chatData);
