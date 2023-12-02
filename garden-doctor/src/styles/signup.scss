@@ -1,6 +1,7 @@
 @import "./utils.scss";
 
 .signup_container {
+  padding-top: 50px;
   // margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -8,7 +9,8 @@
   align-items: center;
   font-family: $font-content;
   h1 {
-    font-weight: 600;
+    font-weight: 500;
+    margin-bottom: 20px;
   }
   .signup_form {
     width: 270px;
@@ -30,8 +32,8 @@
         }
         input {
           position: relative;
-          padding: 8px 35px;
-          height: 30px;
+          padding: 8px 40px;
+          height: 40px;
           width: 100%;
           z-index: 0;
         }
@@ -55,7 +57,7 @@
       flex-direction: column;
       border: solid 1px black;
       border-radius: 5px;
-      margin-top: 10px;
+      margin-top: 30px;
       overflow: hidden;
       .Box {
         display: flex;
@@ -69,8 +71,8 @@
         }
         input {
           position: relative;
-          padding: 8px 35px;
-          height: 30px;
+          padding: 8px 40px;
+          height: 40px;
           width: 100%;
           z-index: 0;
         }
@@ -151,11 +153,17 @@
   display: none;
 }
 
-.signup_check_box {
+.signup_check_box,
+.signup_check_nickname,
+.signup_check_pw,
+.signup_check_id {
   font-size: 0.9em;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   height: 1em;
+}
+.error-text {
+  color: red;
 }

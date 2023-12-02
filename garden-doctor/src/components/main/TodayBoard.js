@@ -10,6 +10,7 @@ const TodayBoard = () => {
   const [mostLikedBoards, setMostLikedBoards] = useState([]);
   const [userData, setUserData] = useState(null);
   const [boardData, setBoardData] = useState(null);
+  const [nickname, setNickname] = useState();
   const [commentData, setCommentData] = useState(null);
   const [likeData, setLikeData] = useState(null);
   const [loading, setLoading] = useState(true); // 추가: 로딩 상태 관리
@@ -60,6 +61,7 @@ const TodayBoard = () => {
         setLikeData(likeResponse.data);
         setCommentData(commentResponse.data);
         setUserData(cleanedUrl);
+        setNickname(userResponse.data.nickName);
 
         // 클라이언트의 userId가 이미 좋아요를 눌렀는지 여부 확인
         const isLikedByUser = likeResponse.data.some(
@@ -81,7 +83,12 @@ const TodayBoard = () => {
 
   if (loading) {
     // 추가: 로딩 중일 때 로딩 화면을 보여줍니다.
-    return <div>로딩중이거나 좋아요한 게시글이 없습니다.</div>;
+    return (
+      <div className="todayboard-unvisible">
+        <div className="todayboard-unvisible-box"></div>
+        로딩중이거나 좋아요한 게시글이 없습니다.
+      </div>
+    );
   }
 
   return (
@@ -94,6 +101,7 @@ const TodayBoard = () => {
             imgSrc={mostLikedBoards.img}
             title={mostLikedBoards.title}
             userId={mostLikedBoards.userId}
+            nickname={nickname}
             userImg={userData}
             boardId={mostLikedBoards.boardId}
             likeData={likeData}
@@ -103,7 +111,7 @@ const TodayBoard = () => {
           />
         </>
       ) : (
-        <span>No data available</span>
+        <div>No data available</div>
       )}
     </div>
   );

@@ -38,7 +38,7 @@ const Login = () => {
         console.log(data);
         alert("로그인 성공");
         sessionStorage.setItem("token", data.token);
-        dispatch({ type: LOGIN, user: data.id });
+        dispatch({ type: LOGIN, user: data.id, nickname: data.nickname });
         navigate("/");
       } else {
         console.log(data);
@@ -79,7 +79,7 @@ const Login = () => {
       <div className="pwBox">
         <img src={pw_src} className="pwImg" />
         <input
-          type="text"
+          type="password"
           placeholder="비밀번호"
           onChange={(e) => setPw(e.target.value)}
         />
@@ -93,8 +93,12 @@ const Login = () => {
         </button>
       </span>
       <div className="login_bottom">
-        <span onClick={signupButton}>회원가입</span>
-        <span onClick={findIdPwButton}>아이디 / 비밀번호 찾기</span>
+        <span onClick={signupButton} className="signupButton">
+          회원가입
+        </span>
+        <span onClick={findIdPwButton} className="findIdPwButton">
+          아이디 / 비밀번호 찾기
+        </span>
       </div>
     </div>
   );

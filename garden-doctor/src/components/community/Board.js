@@ -229,11 +229,13 @@ const Board = () => {
           );
 
           const url = userImgRes.data.userImg;
+          const nickname = userImgRes.data.nickName;
           let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
 
           return {
             ...board,
             userImg: cleanedUrl,
+            nickname: nickname, // 닉네임 추가
           };
         });
 
@@ -333,7 +335,7 @@ const Board = () => {
   // 검색어를 기반으로 게시물을 필터링하는 함수
   const filteredBoards = boards.filter(
     (board) =>
-      board.userId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      board.nickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
       board.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -370,6 +372,7 @@ const Board = () => {
               text={item.text}
               title={item.title}
               userId={item.userId}
+              nickname={item.nickname}
               userImg={item.userImg}
               boardId={item.boardId}
               likeData={likeData && likeData[item.boardId]}

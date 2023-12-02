@@ -4,7 +4,7 @@ import axios from "axios";
 
 import id_src from "../../images/id.svg";
 import pw_src from "../../images/pw.svg";
-import user_src from "../../images/user.svg";
+import user_src from "../../images/user.png";
 import birth_src from "../../images/birth.svg";
 import phone_src from "../../images/phone.svg";
 
@@ -25,7 +25,10 @@ const Signup = () => {
   const [isNickNameAvailable, setIsNickNameAvailable] = useState(false);
   const [passwordPlag, setPasswordPlag] = useState(false);
 
+  const [checkIdMessage, setCheckIdMessage] = useState("");
   const [checkMessage, setCheckMessage] = useState("");
+  const [checkPwMessage, setCheckPwMessage] = useState("");
+  const [checkNicknameMessage, setCheckNicknameMessage] = useState("");
 
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
@@ -56,17 +59,14 @@ const Signup = () => {
 
     // ID NickName 체크
     if (!isIdAvailable) {
-      setCheckMessage("아이디 : 중복 확인을 눌러주세요");
       return;
     }
 
     if (!passwordPlag) {
-      setCheckMessage("비밀번호 : 일치 확인을 눌러주세요");
       return;
     }
 
     if (!isNickNameAvailable) {
-      setCheckMessage("닉네임 : 중복 확인을 눌러주세요");
       return;
     }
 
@@ -109,8 +109,8 @@ const Signup = () => {
     }
   };
 
-  // 아이디 중복 확인 버튼
-  const checkIdButton = async () => {
+  // 아이디 중복 확인 버튼(실시간 유효성 검사 및 중복 검사)
+  const checkIdAvailability = async () => {
     console.log("id", id);
     if (id !== null) {
       try {
@@ -123,10 +123,10 @@ const Signup = () => {
         // 응답을 확인하고 메시지에 따라 처리
         // 사용 가능할때
         if (res.data.result === true) {
-          setCheckMessage("아이디 : 사용 가능한 아이디입니다.");
+          setCheckIdMessage("아이디 : 사용 가능한 아이디입니다.");
           setIsIdAvailable(true);
         } else {
-          setCheckMessage("아이디 : 이미 사용중인 아이디입니다.");
+          setCheckIdMessage("아이디 : 이미 사용중인 아이디입니다.");
           setIsIdAvailable(false);
         }
       } catch (error) {
@@ -137,18 +137,56 @@ const Signup = () => {
     }
   };
 
+  //아이디 입력 필드에서 값이 변경될 때마다 실행되는 함수
+  const handleIdChange = (e) => {
+    const inputValue = e.target.value;
+    setId(inputValue);
+  };
+  //다른 영역을 클릭했을 때 실행되는 함수
+  const handleOutsideClick = (e) => {
+    const target = e.target;
+    //아이디 입력 필드가 아닌 다른 곳을 클릭했을 때
+    if (target.className !== "signup_id_input") {
+      if (id && id.trim().length > 0) {
+        checkIdAvailability();
+      }
+    }
+    if (target.className !== "signup_pwcheck_input") {
+      if (pw && pw.trim().length > 0) {
+        pwCheckButton();
+      }
+    }
+    if (target.className !== "") {
+      if (nickName && nickName.trim().length > 0) {
+        checkNickButton();
+      }
+    }
+  };
+
+  useEffect(() => {
+    //document 객체에 클릭 이벤트 리스너 추가
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      //컴포넌트 언마운트 시 이벤트 리스너 제거
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [id, pw, checkPw, nickName]); //id 값 변경시 마다 useEffect 실행
+
   // 비밀번호 일치 버튼
   const pwCheckButton = () => {
-    if (pw !== null) {
+    if (pw !== null && checkPw !== null) {
+      // 비밀번호와 확인 비밀번호가 null이 아닌지 확인
       if (pw === checkPw) {
-        setCheckMessage("비밀번호가 일치합니다.");
+        // 비밀번호와 확인 비밀번호가 일치하는지 확인
+        setCheckPwMessage("비밀번호가 일치합니다.");
         setPasswordPlag(true);
       } else {
-        setCheckMessage("비밀번호가 서로 다릅니다.");
+        setCheckPwMessage("비밀번호가 서로 다릅니다.");
         setPasswordPlag(false);
       }
-    } else if (pw === null) {
-      setCheckMessage("비밀번호를 입력해주세요.");
+    } else {
+      setCheckPwMessage("비밀번호를 입력해주세요.");
+      setPasswordPlag(false);
     }
   };
 
@@ -164,10 +202,10 @@ const Signup = () => {
 
         // 응답을 확인하고 메시지에 따라 처리
         if (res.data.result === true) {
-          setCheckMessage("닉네임 : 사용 가능한 닉네임입니다.");
+          setCheckNicknameMessage("닉네임 : 사용 가능한 닉네임입니다.");
           setIsNickNameAvailable(true);
         } else {
-          setCheckMessage("닉네임 : 이미 사용중인 닉네임입니다.");
+          setCheckNicknameMessage("닉네임 : 이미 사용중인 닉네임입니다.");
           setIsNickNameAvailable(false);
         }
       } catch (error) {
@@ -227,18 +265,9 @@ const Signup = () => {
             <input
               type="text"
               placeholder="아이디"
-              onChange={(e) => {
-                setId(e.target.value);
-              }}
+              onChange={handleIdChange}
               className="signup_id_input"
             />
-            <button
-              type="button"
-              className="check_button"
-              onClick={checkIdButton}
-            >
-              중복 확인
-            </button>
           </div>
           <div className="Box">
             <img src={pw_src} className="idImg" />
@@ -261,18 +290,34 @@ const Signup = () => {
                 setCheckPw(e.target.value);
               }}
             />
-            <button
-              className="check_button"
-              type="button"
-              onClick={pwCheckButton}
-            >
-              일치 확인
-            </button>
           </div>
         </div>
 
         {/* ----- 중복 확인 멘트 ------ */}
-        <div className="signup_check_box">{checkMessage}</div>
+        {checkMessage && <div className="signup_check_box">{checkMessage}</div>}
+        {checkIdMessage && (
+          <div
+            className={`signup_check_id ${!isIdAvailable ? "error-text" : ""}`}
+          >
+            {checkIdMessage}
+          </div>
+        )}
+        {checkPwMessage && (
+          <div
+            className={`signup_check_pw ${!passwordPlag ? "error-text" : ""}`}
+          >
+            {checkPwMessage}
+          </div>
+        )}
+        {checkNicknameMessage && (
+          <div
+            className={`signup_check_nickname ${
+              !isNickNameAvailable ? "error-text" : ""
+            }`}
+          >
+            {checkNicknameMessage}
+          </div>
+        )}
 
         <div className="signup_bottom">
           <div className="Box">
@@ -294,13 +339,6 @@ const Signup = () => {
                 setNickName(e.target.value);
               }}
             />
-            <button
-              type="button"
-              className="check_button"
-              onClick={checkNickButton}
-            >
-              중복 확인
-            </button>
           </div>
           <div className="Box">
             <img src={birth_src} className="idImg" />

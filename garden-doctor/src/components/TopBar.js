@@ -9,7 +9,11 @@ import "../styles/topbar.scss";
 import axios from "axios";
 import SideBar from "./SideBar";
 
+import { useSelectedButton } from "../components/SelectedButtonContext";
+
 const TopBar = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const isLogin = useSelector((state) => state.isLogIn);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user);
@@ -23,6 +27,7 @@ const TopBar = () => {
 
   const handleMenuButtonClick = () => {
     setSideBarVisible(!isSideBarVisible);
+    console.log("메뉴 열림");
   };
 
   const handleCloseSideBar = () => {
@@ -55,16 +60,19 @@ const TopBar = () => {
   const navigate = useNavigate();
   const logoButton = () => {
     navigate("/");
+    setSelectedButton("home");
   };
 
   const loginButton = () => {
     navigate("/login");
+    setSelectedButton("home");
   };
 
   const Rest_api_key = process.env.REACT_APP_KAKAO_INIT_KEY;
   const redirect_uri = process.env.REACT_APP_KAKAO_LOGOUT_REDIRECT_URI;
 
   const logoutButton = async () => {
+    setSelectedButton("home");
     const findLoginType = await axios.post(
       "http://localhost:8000/sign/findLoginType",
       {
@@ -81,34 +89,32 @@ const TopBar = () => {
     navigate("/");
   };
 
-  const signupButton = () => {
-    navigate("/signup");
-  };
-
   return (
-    <div>
+    <>
       <div className="topbar-container">
-        <div id="sidbar-container">
-          <img src={menu} id="menu" onClick={handleMenuButtonClick} />
+        <div>
+          <div id="sidbar-container">
+            <img src={menu} id="menu" onClick={handleMenuButtonClick} />
+          </div>
+          <div className="logo" onClick={logoButton}>
+            <img src={logo} id="logo-img" />
+          </div>
+          <div className="last">
+            {loading ? (
+              <div>loading...</div>
+            ) : isLogin ? (
+              <button onClick={logoutButton}>로그아웃</button>
+            ) : (
+              <>
+                <button onClick={loginButton}>로그인</button>
+                {/* <button onClick={signupButton}>회원가입</button> */}
+              </>
+            )}
+          </div>
         </div>
-        <div className="logo" onClick={logoButton}>
-          <img src={logo} id="logo-img" />
-        </div>
-
-        {loading ? (
-          <div>loading...</div>
-        ) : isLogin ? (
-          <button onClick={logoutButton}>로그아웃</button>
-        ) : (
-          <>
-            <button onClick={loginButton}>로그인</button>
-            {/* <button onClick={signupButton}>회원가입</button> */}
-          </>
-        )}
       </div>
-
-      {/* {isSidebarVisible && <SideBar ref={sidebarRef} onClose={closeSidebar} />} */}
-    </div>
+      {isSideBarVisible && <SideBar onClose={handleCloseSideBar} />}
+    </>
   );
 };
 

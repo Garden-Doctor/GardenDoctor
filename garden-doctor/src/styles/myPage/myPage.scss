@@ -38,12 +38,15 @@ $color: rgb(229, 243, 223);
 
 .nameInfo {
   margin: 0 auto 0 10%;
+  font-size: 25px;
+}
+.nameSpan {
+  font-weight: bold;
 }
 
 .editButton {
   margin-right: 10%;
-  border-color: #fffff000;
-  background-color: #fffff000;
+
   cursor: pointer;
 }
 
@@ -60,7 +63,7 @@ $color: rgb(229, 243, 223);
   width: 100px; /* 이미지 너비 설정 */
   height: 100px; /* 이미지 높이 설정 */
   border-radius: 50%; /* 이미지를 동그랗게 만듦 */
-  margin-left: 5%;
+  margin-left: 10%;
   margin-right: 25%;
 }
 
@@ -117,4 +120,41 @@ $color: rgb(229, 243, 223);
   background-color: #3cb362;
   color: #ffffff;
   border-radius: 5px;
+}
+
+.editButton {
+  background-color: #bafacf;
+  border: none;
+  width: 60px;
+  height: 30px;
+  border-radius: 5px;
+}
+.editButton:hover {
+  background-color: #3cb362;
+}
+
+@media screen and (max-width: 745px) and (min-height: 660px) {
+  .userImg {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-left: 0; /* 마진 제거 */
+    margin-right: 0; /* 마진 제거 */
+  }
+  .myInfoBottom {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px; /* 원하는 간격 설정 */
+  }
+  .myInfoRight {
+    margin-right: 0;
+  }
+  .nameInfo {
+    font-size: 15px;
+  }
+  .myInfoTop {
+    max-width: 50%;
+    min-width: 230px;
+  }
 }

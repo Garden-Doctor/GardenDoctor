@@ -8,9 +8,11 @@ import sendImage from "../../images/send-image.png";
 import redLike from "../../images/redLike.png";
 import rightArrow from "../../images/rightArrow.png";
 import leftArrow from "../../images/leftArrow.png";
+import Heart from "react-animated-heart";
 
 const BoardDetail = () => {
   const { userId, boardId } = useParams();
+  const [nickname, setNickname] = useState();
   const [userData, setUserData] = useState(null);
   const [boardData, setBoardData] = useState(null);
   const [likeData, setLikeData] = useState(null);
@@ -23,7 +25,9 @@ const BoardDetail = () => {
   const commentsDivRef = useRef();
   const navigate = useNavigate();
   const reduxUserId = useSelector((state) => state.user);
+  const reduxUserNickname = useSelector((state) => state.nickname);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isClick, setClick] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +55,7 @@ const BoardDetail = () => {
         let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
         console.log(cleanedUrl);
 
+        setNickname(userResponse.data.nickName);
         setBoardData(boardResponse.data);
         setLikeData(likeResponse.data);
         setCommentData(commentResponse.data);
@@ -60,6 +65,7 @@ const BoardDetail = () => {
         const isLikedByUser = likeResponse.data.some(
           (like) => like.userId == reduxUserId
         );
+        setClick(isLikedByUser ? true : false);
         setIsLiked(isLikedByUser);
         setLikeImage(isLikedByUser ? redLike : likeIcon);
 
@@ -130,6 +136,7 @@ const BoardDetail = () => {
           commentText,
           userId: reduxUserId,
           boardId,
+          nickName: reduxUserNickname,
         },
       });
       return res;
@@ -155,12 +162,14 @@ const BoardDetail = () => {
           { data: { userId: reduxUserId } }
         );
         setIsLiked(false);
+        setClick(false);
         setLikeImage(likeIcon);
       } else {
         await axios.post(`http://localhost:8000/board/postLike/${boardId}`, {
           userId: reduxUserId,
         });
         setIsLiked(true);
+        setClick(false);
         setLikeImage(redLike);
       }
     } catch (error) {
@@ -191,7 +200,7 @@ const BoardDetail = () => {
       <div className="large-container">
         <div className="BoardDetail-container">
           <img className="BoardDetail-userImg" src={userData} alt="프로필" />
-          <span className="BoardDetail-userName">{boardData.userId}</span>
+          <span className="BoardDetail-userName">{nickname}</span>
           {showEditDeleteButtons && (
             <>
               <button className="BoardDetail-editButton" onClick={handleEdit}>
@@ -228,9 +237,10 @@ const BoardDetail = () => {
               alt="BoardImage"
             />
           </div>
-          <img
+          <Heart
             className="BoardDetail-likeImg"
             alt="좋아요"
+            isClick={isClick}
             src={likeImage}
             onClick={likeButtonClick}
           />
@@ -252,7 +262,7 @@ const BoardDetail = () => {
               <p key={index}>
                 {/* Assuming you have an image for comments, adjust the path accordingly */}
                 <span className="BoardDetail-commentUserName">
-                  {comment.userId}:{" "}
+                  {comment.nickName}:{" "}
                 </span>
                 <span>{comment.commentText}</span>
               </p>

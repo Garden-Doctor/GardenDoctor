@@ -14,33 +14,23 @@ const Weather = () => {
   const [sky, setSky] = useState(null);
 
   useEffect(() => {
-    // 접속 시 위치 정보 담기
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          // console.log(latitude, longitude);
           setCurrentLocation({ latitude, longitude });
-          console.log("currentLocation", currentLocation);
         },
         (error) => {
           console.error("Error getting current location:", error.message);
         }
       );
     }
-
-    // 현재 날짜와 시간 가져오기
-    const intervalId = setInterval(() => {
-      const now = new Date();
-      setCurrentDateTime(now);
-    }, 1000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     // 현재 위치가 설정되면 서버에 날씨 정보 요청
     if (currentLocation) {
+      console.log("currentLocation", currentLocation);
       fetchWeatherData();
       fetchLocationData();
     }
@@ -95,6 +85,12 @@ const Weather = () => {
       console.error("Error fetching weather data:", error);
     }
   };
+
+  useEffect(() => {
+    if (weatherData) {
+      console.log("weatherData", weatherData);
+    }
+  }, [weatherData]);
 
   const getWeatherImage = () => {
     switch (sky) {

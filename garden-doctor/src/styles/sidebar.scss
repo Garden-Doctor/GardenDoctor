@@ -5,10 +5,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 60%; // 이것도 수정필요할듯
   height: 91%; // 이거 그냥 적당히 하단바보다 위에 있게 한거임 수정필요함
   background-color: white;
   box-shadow: -5px 0 5px rgba(213, 213, 213, 0.5);
+  width: 350px;
   .sidebar_eixtbutton {
     display: flex;
     flex-direction: row-reverse;
@@ -50,5 +50,19 @@
     .sidebar_border_inner {
       border-top: solid 1px rgb(156, 156, 156);
     }
+  }
+}
+
+/* 450px 미만의 화면 크기에 대한 스타일 */
+@media (max-width: 450px) {
+  .sidebar-container {
+    width: 350px;
+  }
+}
+
+/* 1024px 이상의 화면 크기에 대한 스타일 */
+@media (min-width: 1024px) {
+  .sidebar-container {
+    width: 700px;
   }
 }

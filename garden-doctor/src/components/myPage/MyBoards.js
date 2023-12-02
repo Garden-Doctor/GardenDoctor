@@ -27,6 +27,23 @@ const MyBoards = () => {
           axios.post("http://localhost:8000/board/myBoards/comment"),
           axios.post("http://localhost:8000/board/myBoards/like"),
         ]);
+        for (const board of boardRes.data) {
+          try {
+            const userImgRes = await axios.post(
+              "http://localhost:8000/sign/myInfo",
+              {
+                userId: board.userId,
+              }
+            );
+            const url = userImgRes.data.userImg;
+            const nickName = userImgRes.data.nickName;
+            board.nickName = nickName;
+            let cleanedUrl = url?.replace(/^"(.*)"$/, "$1");
+            board.userImg = cleanedUrl;
+          } catch (error) {
+            console.log("error", error);
+          }
+        }
         const sortedBoards = boardRes.data.sort((a, b) => {
           const dateA = new Date(a.createdAt);
           const dateB = new Date(b.createdAt);
@@ -95,21 +112,38 @@ const MyBoards = () => {
               ),
               axios.post("http://localhost:8000/board/myBoards/comment"),
             ]);
-
+            console.log("boardRes", boardRes.data);
             // 중복 체크를 통해 중복된 데이터 제외하고 추가
-            const filteredBoards = boardRes.data.filter(
-              (newBoard) =>
-                !updatedBoards.some(
-                  (board) => board.boardId === newBoard.boardId
-                )
-            );
-            updatedBoards.push(...filteredBoards);
-
+            // const filteredBoards = boardRes.data.filter(
+            //   (newBoard) =>
+            //     !updatedBoards.some(
+            //       (board) => board.boardId === newBoard.boardId
+            //     )
+            // );
+            const { findMyLikeBoard, findNickName } = boardRes.data;
+            console.log("findNickName", findNickName);
+            const combinedData = {
+              ...findMyLikeBoard,
+              ...findNickName,
+            };
+            // updatedBoards.push(combinedData);
+            const updatedBoardData = findMyLikeBoard.map((board, index) => {
+              const nickname = findNickName[index]?.nickName || null;
+              const userImg = findNickName[index]?.userImg || null;
+              return {
+                ...board,
+                nickname,
+                userImg,
+              };
+            });
+            console.log("updatedBoards", updatedBoardData);
+            updatedBoards.push(...updatedBoardData);
             const groupedCommentData = groupCommentsByBoardId(commentRes.data);
             Object.assign(updatedCommentData, groupedCommentData);
 
             const groupedLikeData = groupLikesByBoardId(likeRes.data);
             Object.assign(updatedLikeData, groupedLikeData);
+            setBoards(updatedBoards);
           } catch (error) {
             console.log("error", error);
           }
@@ -176,35 +210,45 @@ const MyBoards = () => {
         </button>
       </div>
       {showMyboards &&
-        boards.map((item, index) => (
-          <BoardBox
-            key={item.boardId}
-            imgSrc={item.img}
-            title={item.title}
-            text={item.text}
-            userId={item.userId}
-            boardId={item.boardId}
-            likeData={likeData && likeData[item.boardId]}
-            commentData={commentData && commentData[item.boardId]}
-            day={item.createdAt}
-            navigate={navigate}
-          />
-        ))}
+        boards.map((item, index) => {
+          console.log(`BoardBox for 'My Boards' - Item content:`, item); // Item 내용 확인
+          return (
+            <BoardBox
+              key={item.boardId}
+              imgSrc={item.img}
+              title={item.title}
+              text={item.text}
+              userId={item.userId}
+              userImg={item.userImg}
+              nickname={item.nickName}
+              boardId={item.boardId}
+              likeData={likeData && likeData[item.boardId]}
+              commentData={commentData && commentData[item.boardId]}
+              day={item.createdAt}
+              navigate={navigate}
+            />
+          );
+        })}
       {showlikeBoards &&
-        boards.map((item, index) => (
-          <BoardBox
-            key={item.boardId}
-            imgSrc={item.img}
-            title={item.title}
-            text={item.text}
-            userId={item.userId}
-            boardId={item.boardId}
-            likeData={likeData && likeData[item.boardId]}
-            commentData={commentData && commentData[item.boardId]}
-            day={item.createdAt}
-            navigate={navigate}
-          />
-        ))}
+        boards.map((item, index) => {
+          console.log(`BoardBox for Liked Boards`, item); // Item 내용 확인
+          return (
+            <BoardBox
+              key={item.boardId}
+              imgSrc={item.img}
+              title={item.title}
+              text={item.text}
+              userId={item.userId}
+              userImg={item.userImg}
+              nickname={item.nickname}
+              boardId={item.boardId}
+              likeData={likeData && likeData[item.boardId]}
+              commentData={commentData && commentData[item.boardId]}
+              day={item.createdAt}
+              navigate={navigate}
+            />
+          );
+        })}
     </div>
   );
 };
