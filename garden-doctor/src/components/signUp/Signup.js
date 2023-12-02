@@ -4,7 +4,7 @@ import axios from "axios";
 
 import id_src from "../../images/id.svg";
 import pw_src from "../../images/pw.svg";
-import user_src from "../../images/user.svg";
+import user_src from "../../images/user.png";
 import birth_src from "../../images/birth.svg";
 import phone_src from "../../images/phone.svg";
 
