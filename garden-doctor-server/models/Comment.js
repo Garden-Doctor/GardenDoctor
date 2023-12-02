@@ -13,6 +13,10 @@ const Model = (sequelize) => {
       type: DataTypes.STRING(300),
       allowNull: false,
     },
+    nickName: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+    },
   });
 };
 

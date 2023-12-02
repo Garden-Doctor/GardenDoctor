@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const dotenv = require("dotenv");
 const querystring = require("querystring");
+const nodemailer = require("nodemailer");
 
 const bcryptPassword = (password) => {
   return bcrypt.hashSync(password, saltNumber);
@@ -121,7 +122,12 @@ const login = async (req, res) => {
         const compare = comparePassword(pw, result.dataValues.pw);
         const { id } = req.body;
         const token = jwt.sign({ id }, SECRET);
-        res.send({ result: compare, token: token, id: id });
+        res.send({
+          result: compare,
+          token: token,
+          id: id,
+          nickname: result.dataValues.nickName,
+        });
       } else {
         res.send({ result: false });
       }
@@ -313,6 +319,61 @@ const findId = async (req, res) => {
   }
 };
 
+//transporter 생성
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASS,
+  },
+});
+
+const sendEmail = async (req, res) => {
+  const { pwEmail } = req.body;
+  const payload = Math.floor(100000 + Math.random() * 900000) + "";
+  const mailOptions = {
+    from: process.env.NODEMAILER_USER,
+    to: pwEmail, //받는 사람 이메일 주소
+    subject: "가든닥터 인증 메일",
+    text: `안녕하세요. 가든닥터를 이용해주셔서 감사합니다. 가든닥터 인정 번호는 ${payload}입니다. 3분이내로 입력해주세요.`,
+  };
+
+  try {
+    //이메일 전송
+    const info = await transporter.sendMail(mailOptions);
+    console.log("이메일 전송: ", info.response);
+    res.status(200).json({ payload: payload });
+  } catch (error) {
+    console.log("이메일 전송 오류: ", error);
+    res.status(500).send("이메일 전송 중 오류가 발생했습니다.");
+  }
+};
+
+const findPw = async (req, res) => {
+  const { pwName, pwId, pwNickname, pwBirthdate, newPw } = req.body;
+  console.log("받아온것", req.body);
+  const jwtPw = bcryptPassword(newPw);
+
+  try {
+    const setNewPw = await User.update(
+      {
+        pw: jwtPw,
+      },
+      {
+        where: {
+          name: pwName,
+          userId: pwId,
+          nickName: pwNickname,
+          birth: pwBirthdate,
+        },
+      }
+    );
+    res.status(200).send({ message: "비밀번호가 업데이트 되었습니다." });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   signup,
   checkId,
@@ -328,4 +389,6 @@ module.exports = {
   findLoginType,
   edit,
   findId,
+  sendEmail,
+  findPw,
 };
