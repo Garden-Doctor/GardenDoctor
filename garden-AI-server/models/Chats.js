@@ -3,21 +3,20 @@ import DataTypes from "sequelize";
 const Chats = (sequelize) => {
   return sequelize.define("Chats", {
     //컬럼 정의
-    messageId: {
+    chat_id: {
       type: DataTypes.INTEGER,
       allowNull: false, //NOT NULL
       primaryKey: true,
       autoIncrement: true,
     },
-    chatMessage: {
+    chat_message: {
       type: DataTypes.STRING(1000),
       allowNull: false,
     },
-    isAI: {
+    is_ai: {
       type: DataTypes.BOOLEAN,
       allowNul: false,
-
-    }
+    },
   });
 };
 

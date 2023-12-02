@@ -124,7 +124,7 @@ const askQuestion = async (req, res) => {
     console.log(req.body);
     const { question, userId } = req.body;
     const storeQ = await db.Chats.create({
-      chatMessage: question,
+      chat_message: question,
       userId,
     });
     console.log(storeQ);
@@ -132,8 +132,8 @@ const askQuestion = async (req, res) => {
       query: question,
     });
     const storeA = await db.Chats.create({
-      chatMessage: response.text,
-      isAI: true,
+      chat_message: response.text,
+      is_ai: true,
       userId,
     });
     res.send(response.text);

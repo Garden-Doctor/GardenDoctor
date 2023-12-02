@@ -79,3 +79,41 @@ $background-color: #e5f3df;
     }
   }
 }
+
+.plantDetail-row {
+  justify-content: center;
+}
+.plantDetail-midTitle {
+  align-self: flex-start;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.plantDetail-imgContainer {
+  display: flex;
+  overflow-x: auto;
+}
+
+.plantDetail-imgBox {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 3px;
+}
+.plantDetail-img {
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10%;
+}
+
+.timeline-icon {
+  background-color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Make sure the icon takes the full height of the timeline element */
+}
