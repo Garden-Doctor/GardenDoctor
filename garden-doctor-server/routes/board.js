@@ -40,4 +40,6 @@ router.post("/myBoards/findMyLikeBoards", controller.findMyLikeBoards);
 
 router.get("/getMostLikedBoards", controller.getMostLikedBoards);
 
+router.post("/getPlantBoard", controller.getPlantBoard);
+
 module.exports = router;

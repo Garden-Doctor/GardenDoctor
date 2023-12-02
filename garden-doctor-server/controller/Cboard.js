@@ -315,6 +315,20 @@ const getMostLikedBoards = async (req, res) => {
   }
 };
 
+const getPlantBoard = async (req, res) => {
+  const { user_id, myPlant_id } = req.body;
+  console.log("plantuserId", user_id, myPlant_id);
+  try {
+    const myPlantBoards = await Board.findAll({
+      where: { userId: user_id, plant_id: myPlant_id },
+    });
+    console.log("myBoards", myPlantBoards);
+    res.status(200).send(myPlantBoards);
+  } catch (error) {
+    res.status(500).send({ message: "에러발생", error });
+  }
+};
+
 module.exports = {
   getBoards,
   uploadBoard,
@@ -336,4 +350,5 @@ module.exports = {
   findMyPlant,
   findMyLikeBoards,
   getMostLikedBoards,
+  getPlantBoard,
 };
