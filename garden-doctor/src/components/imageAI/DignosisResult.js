@@ -44,7 +44,7 @@ const DignosisResult = () => {
         console.log(maxProbabilityItem.disease);
         //axios를 사용하여 서버로 데이터 보냄.
         axios
-          .post("http://localhost:8000/dignosisResult", {
+          .post(`${process.env.REACT_APP_SERVER_URL}/dignosisResult`, {
             result: maxProbabilityItem.disease,
           })
           .then((response) => {
