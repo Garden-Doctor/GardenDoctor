@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   PageTitle,
   PlantImg,
@@ -30,7 +30,7 @@ const PlantDetail = () => {
   const [myPlant, setMyPlant] = useState();
   const [plantBoards, setPlantBoards] = useState([]);
   const [expandedStates, setExpandedStates] = useState([]);
-
+  const location = useLocation();
   const navigate = useNavigate();
   console.log("url", URLuserId, plantId);
   console.log("plant Boards", plantBoards, " ", plantDetail);

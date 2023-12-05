@@ -204,8 +204,10 @@ const Board = () => {
   const [likeData, setLikeData] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
   const username = useSelector((state) => state.user);
+  const nickName = useSelector((state) => state.nickname);
 
   useEffect(() => {
+    console.log(nickName);
     const fetchData = async () => {
       try {
         const [boardRes, commentRes, likeRes] = await Promise.all([
@@ -305,6 +307,7 @@ const Board = () => {
           commentText,
           userId: username,
           boardId: e.target.value,
+          nickName: nickName,
         }
       );
 

@@ -37,25 +37,37 @@ const TopBar = () => {
   // //SideBar 관련
 
   useEffect(() => {
-    const jwtToken = sessionStorage.getItem("token");
+    const fetchData = async () => {
+      try {
+        const jwtToken = sessionStorage.getItem("token");
 
-    if (jwtToken) {
-      axios
-        .post("http://localhost:8000/sign/verify", { token: jwtToken })
-        .then((response) => {
+        if (jwtToken) {
+          const response = await axios.post(
+            "http://localhost:8000/sign/verify",
+            { token: jwtToken }
+          );
           const user = response.data.user.id;
-          dispatch({ type: LOGIN, user: user });
-        })
-        .catch((error) => {
+
+          const userResponse = await axios.post(
+            "http://localhost:8000/sign/myInfo",
+            { userId: user }
+          );
+          const nickName = userResponse.data.nickName;
+
+          dispatch({ type: LOGIN, user: user, nickname: nickName });
+        } else {
           dispatch({ type: LOGOUT });
-          console.error("JWT verification error:", error);
-        });
-      setLoading(false);
-    } else {
-      dispatch({ type: LOGOUT });
-      setLoading(false);
-    }
-  }, []);
+        }
+      } catch (error) {
+        dispatch({ type: LOGOUT });
+        console.error("JWT verification error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // 빈 배열을 전달하여 마운트될 때 한 번만 실행되도록 설정
 
   const navigate = useNavigate();
   const logoButton = () => {
