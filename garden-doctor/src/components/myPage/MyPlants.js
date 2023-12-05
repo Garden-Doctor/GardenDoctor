@@ -10,7 +10,6 @@ import "../../styles/myPlants.scss";
 
 const MyPlants = () => {
   const userId = useSelector((state) => state.user);
-
   const [myPlants, setMyPlants] = useState([]);
   const navigate = useNavigate();
 

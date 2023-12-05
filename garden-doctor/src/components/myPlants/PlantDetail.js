@@ -12,6 +12,7 @@ import {
   PlantNickname,
   PlantPlanted,
 } from "../myPage/MyPlants";
+import BoardWrite from "../../images/boardWrite.png";
 import POST_icon from "../../imgs/post.png";
 import "../../styles/myPlants.scss";
 import {
@@ -80,8 +81,23 @@ const PlantDetail = () => {
   const moveToPlantDetail = (userId, boardId) => {
     navigate(`/boardDetail/${userId}/${boardId}`);
   };
+
+  const writeButton = () => {
+    if (!userId) {
+      alert("로그인 해주세요.");
+      navigate("/login");
+    } else {
+      navigate(`/writeBoard/${userId}/${plantId}`);
+    }
+  };
   return (
     <>
+      <img
+        className="boardWriteButton"
+        src={BoardWrite}
+        alt=""
+        onClick={writeButton}
+      />
       <Container className="myPlant-container">
         <Row xs={1} md={2} className="plantDetail-row">
           {myPlant && (
@@ -144,7 +160,10 @@ const PlantDetail = () => {
                   <h2 className="vertical-timeline-element-title">
                     {board.title}
                   </h2>
-                  <p onClick={(e) => toggleTextExpanded(e, i)}>
+                  <p
+                    className="timeline-content"
+                    onClick={(e) => toggleTextExpanded(e, i)}
+                  >
                     {expandedStates[i]
                       ? board.text
                       : board.text.length > 50
