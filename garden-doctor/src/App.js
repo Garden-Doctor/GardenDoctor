@@ -1,4 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { useEffect } from "react";
 
 import NotFound from "./components/NotFound";
 
@@ -25,7 +26,7 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 import { MyPlants } from "./components/myPage/MyPlants";
 
@@ -38,9 +39,28 @@ import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
 import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
 
-import { SelectedButtonProvider } from "./components/SelectedButtonContext";
+import {
+  SelectedButtonProvider,
+  useSelectedButton,
+} from "./components/SelectedButtonContext";
 
 function App() {
+  const { setSelectedButton } = useSelectedButton();
+
+  useEffect(() => {
+    const pathname = window.location.pathname;
+
+    // 여기에 경로에 따른 로직 추가
+    if (pathname.startsWith("/board")) {
+      setSelectedButton("board");
+    } else if (pathname.startsWith("/myPage")) {
+      setSelectedButton("my");
+    } else if (pathname.startsWith("/chat")) {
+      // 다른 경로에 따른 로직 추가
+      setSelectedButton("chat");
+    }
+  }, [setSelectedButton]);
+
   return (
     <>
       <BrowserRouter>

@@ -26,14 +26,14 @@ import "react-vertical-timeline-component/style.min.css";
 
 const PlantDetail = () => {
   const userId = useSelector((state) => state.user);
-  const { URLuserId, plantId } = useParams();
+  const { plantDetail, URLuserId, plantId } = useParams();
   const [myPlant, setMyPlant] = useState();
   const [plantBoards, setPlantBoards] = useState([]);
   const [expandedStates, setExpandedStates] = useState([]);
 
   const navigate = useNavigate();
   console.log("url", URLuserId, plantId);
-  console.log("plant Boards", plantBoards);
+  console.log("plant Boards", plantBoards, " ", plantDetail);
 
   useEffect(() => {
     const getMyPlant = async () => {
