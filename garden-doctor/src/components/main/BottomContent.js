@@ -26,13 +26,13 @@ const Dignore = () => {
   return (
     <div className="dignose-container" onClick={dignoseClick}>
       <div className="inner-container">
-        <p>병충해 사진 진단</p>
+        <div className="inner-container-left">
+          <span className="tt">병충해 사진 진단</span>
+          <span>사진 업로드 시 병충해 진단</span>
+        </div>
         <p>
           <img src={dignose_src} />
         </p>
-        <span>
-          사진을 업로드하면 간단하게 병충해 진단을 제공하는 서비스입니다
-        </span>
       </div>
     </div>
   );
@@ -48,13 +48,13 @@ const ChatAI = () => {
   return (
     <div className="chatAI-container" onClick={ChatAIClick}>
       <div className="inner-container">
-        <p>AI 도우미</p>
+        <div className="inner-container-left">
+          <span className="tt">AI 도우미</span>
+          <span>작물 관련 질문에 답해주는 채팅봇</span>
+        </div>
         <p>
           <img src={ai_src} />
         </p>
-        <span>
-          작물에 관한 모든 궁금증을 해결하는 똑똑한 AI 채팅 서비스입니다
-        </span>
       </div>
     </div>
   );

@@ -5,7 +5,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/myPage/myBoard.scss";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const MyBoards = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const userId = useSelector((state) => state.user);
   const [boards, setBoards] = useState([]);
   const [commentData, setCommentData] = useState(null);
