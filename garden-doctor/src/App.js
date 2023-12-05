@@ -48,6 +48,7 @@ function App() {
           <TopBar />
           <div className="app-container">
             {/* Max Min 값 정해두기 */}
+
             <Routes>
               <Route path="/" element={<Main></Main>}></Route>
 

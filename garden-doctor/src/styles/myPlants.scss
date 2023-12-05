@@ -117,3 +117,7 @@ $background-color: #e5f3df;
   justify-content: center;
   height: 100%; /* Make sure the icon takes the full height of the timeline element */
 }
+
+.timeline-content {
+  white-space: pre-wrap;
+}
