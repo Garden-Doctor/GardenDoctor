@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   PageTitle,
   PlantImg,
@@ -26,13 +26,13 @@ import "react-vertical-timeline-component/style.min.css";
 
 const PlantDetail = () => {
   const userId = useSelector((state) => state.user);
-  const { URLuserId, plantId } = useParams();
+  const { plantDetail, URLuserId, plantId } = useParams();
   const [myPlant, setMyPlant] = useState();
   const [plantBoards, setPlantBoards] = useState([]);
   const [expandedStates, setExpandedStates] = useState([]);
-
+  const location = useLocation();
   const navigate = useNavigate();
-  console.log("url", URLuserId, plantId);
+  console.log("useLocation", location);
   console.log("plant Boards", plantBoards);
 
   useEffect(() => {

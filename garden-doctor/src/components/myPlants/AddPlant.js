@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-//import "../../styles/writeBoard.scss";
 import camera from "../../images/camera.png";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import "../../styles/myPlants.scss";
 import { PageTitle } from "../myPage/MyPlants";
 import plantOptions from "../imageAI/PlantOptions";
+import tomato from "../../images/tomato.png";
 
 const AddPlant = () => {
   const [plantNickname, setPlantNickname] = useState("");
@@ -30,18 +30,24 @@ const AddPlant = () => {
 
   const saveImgFile = () => {
     const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImgFile(reader.result);
-    };
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImgFile(reader.result);
+      };
+    }
   };
 
   const uploadButton = async (e) => {
     e.preventDefault();
+    console.log(imgRef.current);
     const formData = new FormData();
     if (imgRef.current && imgRef.current.files.length > 0) {
       const file = imgRef.current.files[0];
+      formData.append("file", file);
+    } else {
+      const file = tomato;
       formData.append("file", file);
     }
     if (!selectedPlant || selectedPlant === "작물 선택하기") {
@@ -88,7 +94,7 @@ const AddPlant = () => {
       <form className="writeBoard-form" encType="multipart/form-data">
         <div className="signup_img">
           <div className="profile_box">
-            <img src={imgFile ? imgFile : `/imgs/user.svg`} alt="식물 이미지" />
+            <img src={imgFile ? imgFile : tomato} alt="식물 이미지" />
           </div>
           <label className="signup-profileImg-label" htmlFor="profileImg">
             식물 이미지 추가
@@ -108,7 +114,7 @@ const AddPlant = () => {
           <br />
           <select
             name="selectPlant"
-            className="selectPlant"
+            className="selectMyPlant"
             onChange={handlePlantSelect}
             value={selectedPlant}
           >
