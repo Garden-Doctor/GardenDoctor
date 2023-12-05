@@ -23,9 +23,12 @@ const MyPage = () => {
   useEffect(() => {
     const myInfo = async () => {
       try {
-        const myInfos = await axios.post("http://localhost:8000/sign/myInfo", {
-          userId: userId,
-        });
+        const myInfos = await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/sign/myInfo`,
+          {
+            userId: userId,
+          }
+        );
         console.log("myInfos", myInfos.data);
         const url = myInfos.data.userImg;
         let cleanedUrl = url.replace(/^"(.*)"$/, "$1");
@@ -47,7 +50,7 @@ const MyPage = () => {
     const myBoard = async () => {
       try {
         const myBoards = await axios.post(
-          "http://localhost:8000/board/myBoards",
+          `${process.env.REACT_APP_SERVER_URL}/board/myBoards`,
           {
             userId: userId,
           }
@@ -65,7 +68,7 @@ const MyPage = () => {
     const myLike = async () => {
       try {
         const myLikes = await axios.post(
-          "http://localhost:8000/board/myBoards/findMyLike",
+          `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLike`,
           {
             userId: userId,
           }
@@ -83,7 +86,7 @@ const MyPage = () => {
     const myPlant = async () => {
       try {
         const myPlants = await axios.post(
-          "http://localhost:8000/board/myBoards/findMyPlant",
+          `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyPlant`,
           {
             userId: userId,
           }

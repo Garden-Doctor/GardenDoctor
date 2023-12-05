@@ -19,7 +19,7 @@ const KakaoLogin = () => {
 
         if (code) {
           const res = await axios.post(
-            `http://localhost:8000/sign/kakaoLogin`,
+            `${process.env.REACT_APP_SERVER_URL}/sign/kakaoLogin`,
             { code }
           );
           console.log("res", res);
@@ -48,7 +48,7 @@ const KakaoLogin = () => {
             setKakaoId(userId);
 
             const userDataResponse = await axios.post(
-              "http://localhost:8000/sign/kakaoUserData",
+              `${process.env.REACT_APP_SERVER_URL}/sign/kakaoUserData`,
               {
                 userId,
                 name: nickname,
@@ -58,7 +58,7 @@ const KakaoLogin = () => {
             );
 
             const loginKaKao = await axios.post(
-              "http://localhost:8000/sign/makeToken",
+              `${process.env.REACT_APP_SERVER_URL}/sign/makeToken`,
               {
                 userId,
               }

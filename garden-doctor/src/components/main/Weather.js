@@ -38,10 +38,13 @@ const Weather = () => {
 
   const fetchLocationData = async () => {
     try {
-      const res = await axios.post("http://localhost:8000/weather/location", {
-        lat: currentLocation.latitude,
-        lng: currentLocation.longitude,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/weather/location`,
+        {
+          lat: currentLocation.latitude,
+          lng: currentLocation.longitude,
+        }
+      );
       const locationData = res.data;
       setLocation(locationData);
     } catch (error) {
@@ -51,12 +54,15 @@ const Weather = () => {
 
   const fetchWeatherData = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/weather", {
-        currentdate: getCurrentDate(),
-        currenttime: getCurrentTime(),
-        inputx: currentLocation.latitude,
-        inputy: currentLocation.longitude,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/weather`,
+        {
+          currentdate: getCurrentDate(),
+          currenttime: getCurrentTime(),
+          inputx: currentLocation.latitude,
+          inputy: currentLocation.longitude,
+        }
+      );
 
       const data = response.data;
       console.log("날씨", data);

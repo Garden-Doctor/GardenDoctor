@@ -25,7 +25,7 @@ const Login = () => {
     const login = async () => {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/sign/login",
+        url: `${process.env.REACT_APP_SERVER_URL}/sign/login`,
         data: {
           id: id,
           pw: pw,

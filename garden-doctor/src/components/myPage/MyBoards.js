@@ -25,16 +25,18 @@ const MyBoards = () => {
     const myboards = async () => {
       try {
         const [boardRes, commentRes, likeRes] = await Promise.all([
-          axios.post(`http://localhost:8000/board/myBoards`, {
+          axios.post(`${process.env.REACT_APP_SERVER_URL}/board/myBoards`, {
             userId: userId,
           }),
-          axios.post("http://localhost:8000/board/myBoards/comment"),
-          axios.post("http://localhost:8000/board/myBoards/like"),
+          axios.post(
+            `${process.env.REACT_APP_SERVER_URL}/board/myBoards/comment`
+          ),
+          axios.post(`${process.env.REACT_APP_SERVER_URL}/board/myBoards/like`),
         ]);
         for (const board of boardRes.data) {
           try {
             const userImgRes = await axios.post(
-              "http://localhost:8000/sign/myInfo",
+              `${process.env.REACT_APP_SERVER_URL}/sign/myInfo`,
               {
                 userId: board.userId,
               }
@@ -95,9 +97,12 @@ const MyBoards = () => {
     const likeboards = async () => {
       try {
         const [likeRes] = await Promise.all([
-          axios.post(`http://localhost:8000/board/myBoards/findMyLike`, {
-            userId: userId,
-          }),
+          axios.post(
+            `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLike`,
+            {
+              userId: userId,
+            }
+          ),
         ]);
 
         const boardIds = likeRes.data.map((board) => board.boardId);
@@ -111,10 +116,12 @@ const MyBoards = () => {
           try {
             const [boardRes, commentRes] = await Promise.all([
               axios.post(
-                "http://localhost:8000/board/myBoards/findMyLikeBoards",
+                `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLikeBoards`,
                 { boardId: boardId }
               ),
-              axios.post("http://localhost:8000/board/myBoards/comment"),
+              axios.post(
+                `${process.env.REACT_APP_SERVER_URL}/board/myBoards/comment`
+              ),
             ]);
             console.log("boardRes", boardRes.data);
             // 중복 체크를 통해 중복된 데이터 제외하고 추가
