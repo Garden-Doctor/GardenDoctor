@@ -1,6 +1,6 @@
 import "../../styles/myPage/myPage.scss";
 import axios from "axios";
-import { useEffect, userId, useState } from "react";
+import { useEffect, userId, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +19,9 @@ const MyPage = () => {
   const [boardsCount, setBoardsCount] = useState("0");
   const [likesCount, setLikesCount] = useState("0");
   const [plantsCount, setPlantsCount] = useState("0");
+  const plantsCountButtonRef = useRef(null);
+  const boardsCountButtonRef = useRef(null);
+  const likesCountButtonRef = useRef(null);
 
   useEffect(() => {
     const myInfo = async () => {
@@ -120,6 +123,23 @@ const MyPage = () => {
     setSelectedButton("my");
   };
 
+  const myPlantsTextClick = () => {
+    if (plantsCountButtonRef.current) {
+      plantsCountButtonRef.current.click();
+    }
+  };
+  const myBoardsTextClick = () => {
+    if (boardsCountButtonRef.current) {
+      boardsCountButtonRef.current.click();
+    }
+  };
+
+  const myLikesTextClick = () => {
+    if (likesCountButtonRef.current) {
+      likesCountButtonRef.current.click();
+    }
+  };
+
   return (
     <div className="myPage-main-container">
       <div className="Title">마이페이지</div>
@@ -142,9 +162,10 @@ const MyPage = () => {
         </div>
       </div>
       <div className="myInfoBoards">
-        <div className="myPlants">
+        <div className="myPlants" onClick={myPlantsTextClick}>
           <div className="myPlantsText">내 작물</div>
           <button
+            ref={plantsCountButtonRef}
             className="plantsCount"
             type="button"
             onClick={plantsCountButton}
@@ -152,9 +173,10 @@ const MyPage = () => {
             {plantsCount}
           </button>
         </div>
-        <div className="myBoards">
+        <div className="myBoards" onClick={myBoardsTextClick}>
           <div className="myBoardsText">게시글</div>
           <button
+            ref={boardsCountButtonRef}
             className="boardsCount"
             type="button"
             onClick={boardsCountButton}
@@ -162,9 +184,10 @@ const MyPage = () => {
             {boardsCount}
           </button>
         </div>
-        <div className="myLikes">
+        <div className="myLikes" onClick={myLikesTextClick}>
           <div className="myLikesText">좋아요</div>
           <button
+            ref={likesCountButtonRef}
             className="likesCount"
             type="button"
             onClick={likesCountButton}

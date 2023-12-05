@@ -27,6 +27,7 @@ const BoardDetail = () => {
   const [likeImage, setLikeImage] = useState(likeIcon);
   const [scrollBottom, setScrollBottom] = useState(true);
   const commentsDivRef = useRef();
+  const commentsDivRef2 = useRef();
   const navigate = useNavigate();
   const reduxUserId = useSelector((state) => state.user);
   const reduxUserNickname = useSelector((state) => state.nickname);
@@ -85,12 +86,12 @@ const BoardDetail = () => {
   }, [boardId, reduxUserId, isLiked, userId]);
 
   useEffect(() => {
-    if (commentsDivRef.current) {
+    if (commentsDivRef2.current) {
       // commentsDivRef.current이 정의되어 있는지 확인
-      commentsDivRef.current.scrollTop = commentsDivRef.current.scrollHeight;
+      commentsDivRef2.current.scrollTop = commentsDivRef2.current.scrollHeight;
       setScrollBottom(false);
     }
-  }, [commentData, scrollBottom]);
+  }, [scrollBottom]);
 
   if (loading) {
     // 추가: 로딩 중일 때 로딩 화면을 보여줍니다.
@@ -149,7 +150,7 @@ const BoardDetail = () => {
     postComment().then((res) => {
       const newComment = res.data; // 서버가 새 댓글을 포함한 데이터로 응답한다고 가정합니다.
       setCommentData((prevComments) => [...prevComments, newComment]);
-      setScrollBottom(true);
+      setScrollBottom(!scrollBottom);
     });
   };
 
@@ -203,90 +204,95 @@ const BoardDetail = () => {
   return (
     <div className="main-container">
       <div className="large-container">
-        <div className="BoardDetail-container">
-          <img className="BoardDetail-userImg" src={userData} alt="프로필" />
-          <span className="BoardDetail-userName">{nickname}</span>
-          {showEditDeleteButtons && (
-            <>
-              <button className="BoardDetail-editButton" onClick={handleEdit}>
-                수정
-              </button>
-              <button
-                className="BoardDetail-deleteButton"
-                onClick={handleDelete}
-              >
-                삭제
-              </button>
-            </>
-          )}
-          {boardData.img.length > 1 && (
-            <>
-              <button
-                className="BoardDetail-prevButton"
-                onClick={handlePrevImage}
-              >
-                <img src={leftArrow} alt="previmg" />
-              </button>
-              <button
-                className="BoardDetail-nextButton"
-                onClick={handleNextImage}
-              >
-                <img src={rightArrow} alt="nextimg" />
-              </button>
-            </>
-          )}
-          <div className="BoardDetail-boardImgContainer">
-            <img
-              className="BoardDetail-boardImg"
-              src={boardData.img[currentImageIndex]}
-              alt="BoardImage"
+        <div className="BoardDetail-container" ref={commentsDivRef2}>
+          <div className="BoardDetail-scroll">
+            <img className="BoardDetail-userImg" src={userData} alt="프로필" />
+            <span className="BoardDetail-userName">{nickname}</span>
+            {showEditDeleteButtons && (
+              <>
+                <button className="BoardDetail-editButton" onClick={handleEdit}>
+                  수정
+                </button>
+                <button
+                  className="BoardDetail-deleteButton"
+                  onClick={handleDelete}
+                >
+                  삭제
+                </button>
+              </>
+            )}
+            {boardData.img.length > 1 && (
+              <>
+                <button
+                  className="BoardDetail-prevButton"
+                  onClick={handlePrevImage}
+                >
+                  <img src={leftArrow} alt="previmg" />
+                </button>
+                <button
+                  className="BoardDetail-nextButton"
+                  onClick={handleNextImage}
+                >
+                  <img src={rightArrow} alt="nextimg" />
+                </button>
+              </>
+            )}
+            <div className="BoardDetail-boardImgContainer">
+              <img
+                className="BoardDetail-boardImg"
+                src={boardData.img[currentImageIndex]}
+                alt="BoardImage"
+              />
+            </div>
+            <Heart
+              className="BoardDetail-likeImg"
+              alt="좋아요"
+              isClick={isClick}
+              src={likeImage}
+              onClick={likeButtonClick}
             />
-          </div>
-          <Heart
-            className="BoardDetail-likeImg"
-            alt="좋아요"
-            isClick={isClick}
-            src={likeImage}
-            onClick={likeButtonClick}
-          />
-          <span className="BoardDetail-likeNum">{likeData.length}</span>
-          <span className="BoardDetail-boardText">
-            {boardData.text.split("\n").map((line, index) => (
-              <span key={index}>
-                {line}
-                <br />
+            <span className="BoardDetail-likeNum">{likeData.length}</span>
+            <div className="BoardDetail-textComment">
+              <span className="BoardDetail-boardText">
+                {boardData.text.split("\n").map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
               </span>
-            ))}
-          </span>
-          <span className="BoardDetail-commentNum">
-            댓글 {commentData.length}
-          </span>
-          <div className="BoardDetail-comments" ref={commentsDivRef}>
-            {/* Map over commentData and render each comment */}
-            {commentData.map((comment, index) => (
-              <p key={index}>
-                {/* Assuming you have an image for comments, adjust the path accordingly */}
-                <span className="BoardDetail-commentUserName">
-                  {comment.nickName}:{" "}
-                </span>
-                <span>{comment.commentText}</span>
-              </p>
-            ))}
-          </div>
-          <div className="BoardDetail-commentInput">
-            <input
-              type="text"
-              placeholder="댓글 작성"
-              value={commentInputs}
-              onChange={(e) => {
-                const newCommentInput = e.target.value; // 단일 문자열로 변경
-                setCommentInputs(newCommentInput);
-              }}
-              onKeyDown={handleEnterKey}
-            />
-            <button onClick={(e) => postCommentButton(e)} value={boardId}>
-              <img src={sendImage} alt="" />
-            </button>
+              <div className="BoardDetail-line"></div>
+              <div className="BoardDetail-commentNum">
+                댓글 {commentData.length}
+              </div>
+              <div className="BoardDetail-comments" ref={commentsDivRef}>
+                {/* Map over commentData and render each comment */}
+                {commentData.map((comment, index) => (
+                  <p key={index}>
+                    {/* Assuming you have an image for comments, adjust the path accordingly */}
+                    <span className="BoardDetail-commentUserName">
+                      {comment.nickName}:{" "}
+                    </span>
+                    <span>{comment.commentText}</span>
+                  </p>
+                ))}
+              </div>
+              <div className="BoardDetail-commentInput">
+                <input
+                  type="text"
+                  placeholder="댓글 작성"
+                  value={commentInputs}
+                  onChange={(e) => {
+                    const newCommentInput = e.target.value; // 단일 문자열로 변경
+                    setCommentInputs(newCommentInput);
+                  }}
+                  onKeyDown={handleEnterKey}
+                />
+                <button onClick={(e) => postCommentButton(e)} value={boardId}>
+                  <img src={sendImage} alt="" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

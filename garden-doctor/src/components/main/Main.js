@@ -2,6 +2,7 @@ import React from "react";
 
 import "../../styles/main.scss";
 import Weather from "./Weather";
+import Weather2 from "./Weather2";
 import TodayBoard from "./TodayBoard";
 
 import ChatAI from "./ChatAI";
@@ -15,7 +16,7 @@ const Main = () => {
   return (
     <>
       <div className="main-container">
-        <Weather></Weather>
+        <Weather2></Weather2>
         <TodayBoard></TodayBoard>
         <BottomContent />
       </div>

@@ -26,7 +26,7 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import { MyPlants } from "./components/myPage/MyPlants";
 
@@ -38,6 +38,8 @@ import KakaoLogin from "./components/logIn/KakaoLogin";
 import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
 import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
+
+import { SelectedButtonProvider } from "./components/SelectedButtonContext";
 
 function App() {
   return (

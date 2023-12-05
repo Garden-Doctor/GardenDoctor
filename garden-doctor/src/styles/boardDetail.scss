@@ -10,6 +10,9 @@
 .BoardDetail-boardText::-webkit-scrollbar {
   display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
+.BoardDetail-scroll::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
 //////
 
 .BoardDetail-container {
@@ -26,6 +29,18 @@
   position: relative;
   overflow: visible;
   overflow-y: scroll;
+}
+
+.BoardDetail-scroll {
+  height: 530px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.BoardDetail-textComment {
+  width: 90%;
+  position: absolute;
+  top: 350px;
 }
 
 .BoardDetail-userImg {
@@ -151,36 +166,32 @@
 }
 
 .BoardDetail-boardText {
-  position: absolute;
-  top: 350px;
-  left: 20px;
-  height: 50px;
   width: 95%;
   font-weight: 600;
-  overflow: hidden;
-  overflow-y: scroll;
+  left: 20px;
+  position: relative;
+}
+
+.BoardDetail-line {
 }
 
 .BoardDetail-commentNum {
-  position: absolute;
-  top: 400px;
-  left: 15px;
   height: 30px;
   font-style: oblique;
-  font-size: 10px;
+  font-size: 15px;
   color: #858585;
+  width: 100%;
+  display: contents;
+  border: solid;
 }
 
 .BoardDetail-comments {
-  position: absolute;
-  top: 415px;
-  left: 20px;
-  height: 90px;
   width: 95%;
-  overflow: hidden;
-  overflow-y: scroll;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 3%;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.5);
+  left: 20px;
+  position: relative;
+  margin-bottom: 10px;
+  padding-bottom: 1px;
 }
 
 .BoardDetail-comments p {
@@ -199,9 +210,11 @@
 }
 
 .BoardDetail-commentInput {
+  position: relative;
+  left: 3%;
   display: flex;
-  margin-top: 505px;
   height: 30px;
+  margin-bottom: 10px;
 
   input {
     flex: 1;
