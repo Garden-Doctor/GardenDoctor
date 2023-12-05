@@ -6,7 +6,11 @@ import "../../styles/writeBoard.scss";
 import arrowRight from "../../images/arrow-right.png";
 import camera from "../../images/camera.png";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const EditBoard = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const { userId, boardId } = useParams();
   const [boardData, setBoardData] = useState(null);
   const [prevImageNum, setPrevImageNum] = useState("");
@@ -21,6 +25,7 @@ const EditBoard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setSelectedButton("board");
       try {
         console.log("Fetching data...");
         const boardResponse = await axios.get(

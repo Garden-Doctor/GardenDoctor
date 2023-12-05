@@ -1,4 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { SelectedButtonProvider } from "./components/SelectedButtonContext";
 
 import NotFound from "./components/NotFound";
 
@@ -37,8 +38,6 @@ import KakaoLogin from "./components/logIn/KakaoLogin";
 import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
 import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
-
-import { SelectedButtonProvider } from "./components/SelectedButtonContext";
 
 function App() {
   return (

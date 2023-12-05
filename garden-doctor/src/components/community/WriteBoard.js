@@ -5,7 +5,11 @@ import { useSelector } from "react-redux";
 import "../../styles/writeBoard.scss";
 import camera from "../../images/camera.png";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const WriteBoard = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const [boardText, setBoardText] = useState("");
   const [boardTitle, setBoardTitle] = useState("");
   const [prevImageNum, setPrevImageNum] = useState("");
@@ -56,7 +60,8 @@ const WriteBoard = () => {
       });
       console.log("res", res);
       alert("게시글 생성 완료!");
-      navigate("/board");
+      setSelectedButton("board");
+      await navigate("/board");
     } catch (error) {
       console.log(error);
     }
@@ -79,8 +84,9 @@ const WriteBoard = () => {
     reader.readAsDataURL(file);
   };
 
-  const beforePage = () => {
-    navigate("/board");
+  const beforePage = async () => {
+    await navigate("/board");
+    setSelectedButton("board");
   };
 
   const handleTextareaChange = (e) => {
