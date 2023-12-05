@@ -80,7 +80,7 @@ const SideBar = ({ onClose }) => {
     setSelectedButton("my");
   };
   const myboardButton = async () => {
-    await navigate("/myBoardS");
+    await navigate("/myBoards");
     setSelectedButton("my");
   };
 

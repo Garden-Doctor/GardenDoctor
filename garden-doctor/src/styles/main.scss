@@ -154,21 +154,33 @@ a:active {
 
   border-radius: 10px;
   .inner-container {
+    width: 100%;
+    padding-left: 30px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin: 10px;
-    text-align: center;
+    margin: 20px;
     p {
       margin: 0;
-      font-size: 1rem;
+      width: 30%;
+      display: flex;
+      flex-direction: row-reverse;
+      margin-right: 30px;
+      img {
+        width: 4.5em;
+      }
     }
-    span {
-      font-size: 0.9rem;
-    }
-    img {
-      width: 2.5em;
-      margin: 5px 0;
+    &-left {
+      display: flex;
+      width: 60%;
+      flex-direction: column;
+      .tt {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+      span {
+        margin-top: 10px;
+        font-size: 1rem;
+      }
     }
   }
 }
@@ -184,40 +196,55 @@ a:active {
   box-shadow: $box-shadow;
 
   border-radius: 10px;
-  p {
-    margin: 0;
-    padding: 0;
-  }
   .inner-container {
+    width: 100%;
+    padding-left: 30px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin: 10px;
-    text-align: center;
+    margin: 20px;
     p {
       margin: 0;
-      font-size: 1rem;
+      width: 30%;
+      display: flex;
+      flex-direction: row-reverse;
+      margin-right: 30px;
+      img {
+        width: 4.5em;
+      }
     }
-    span {
-      font-size: 0.9rem;
-    }
-    img {
-      width: 2.5em;
-      margin-top: 5px;
-      margin-bottom: 7px;
+    &-left {
+      display: flex;
+      width: 60%;
+      flex-direction: column;
+      .tt {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+      span {
+        margin-top: 10px;
+        font-size: 1rem;
+      }
     }
   }
 }
 
-@media screen and (min-width: 360px) and (max-width: 470px) {
+@media screen and (min-width: 360px) and (max-width: 450px) {
   .dignose-container {
     .inner-container {
-      height: 15vh;
+      &-left {
+        span {
+          font-size: 0.9rem;
+        }
+      }
     }
   }
   .chatAI-container {
     .inner-container {
-      height: 15vh;
+      &-left {
+        span {
+          font-size: 0.8rem;
+        }
+      }
     }
   }
 }

@@ -4,7 +4,11 @@ import { useEffect, userId, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const MyPage = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const userId = useSelector((state) => state.user);
   console.log("userId", userId);
   const [name, setName] = useState("");
@@ -93,23 +97,27 @@ const MyPage = () => {
   }, [userId]);
 
   const navigate = useNavigate();
-  const boardsCountButton = () => {
+  const boardsCountButton = async () => {
     sessionStorage.setItem("selectedTab", "my-boards"); //내 게시글 선택한 채로 이동
-    navigate("/myBoards");
+    await navigate("/myBoards");
+    setSelectedButton("my");
   };
 
-  const likesCountButton = () => {
+  const likesCountButton = async () => {
     sessionStorage.setItem("selectedTab", "like-boards");
-    navigate("/myBoards");
+    await navigate("/myBoards");
+    setSelectedButton("my");
   };
 
-  const plantsCountButton = () => {
+  const plantsCountButton = async () => {
     sessionStorage.setItem("selectedTab", "my-plants");
-    navigate("/myPlants");
+    await navigate("/myPlants");
+    setSelectedButton("my");
   };
 
-  const editButton = () => {
-    navigate("/mypageEdit");
+  const editButton = async () => {
+    await navigate("/mypageEdit");
+    setSelectedButton("my");
   };
 
   return (

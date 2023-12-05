@@ -7,10 +7,12 @@ import SIMULATION_SRC from "../imgs/simulation.svg";
 import DIGNOSE_SRC from "../imgs/dignose.svg";
 import Dignose from "./imageAI/Dignose";
 import { useNavigate } from "react-router-dom";
+import SideBar from "./SideBar2";
 
 const Main = () => {
   return (
     <div className="main-container">
+      <SideBar />
       <div className="content01">
         <div className="content01-simulation">
           <img src={SIMULATION_SRC} />

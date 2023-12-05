@@ -9,6 +9,7 @@ $pink-border: #b18597;
 $pink-shadow: #ffe3e2;
 
 .login-container {
+  padding-top: 100px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -65,7 +66,7 @@ $pink-shadow: #ffe3e2;
     .loginbutton {
       position: relative;
       display: inline-block;
-      font-size: 1em;
+      font-size: 1.2em;
       font-family: "M PLUS 1", sans-serif;
       font-weight: 600;
       width: 270px;
