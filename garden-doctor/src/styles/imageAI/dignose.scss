@@ -82,6 +82,9 @@ $color: rgb(229, 243, 223);
   text-align: center;
   position: relative;
   outline: rgb(77, 77, 77) solid 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fileUploadInput {
@@ -103,7 +106,8 @@ $color: rgb(229, 243, 223);
 
 .imageUploadWrap,
 .imageUploadWrap:hover {
-  padding-bottom: 40%;
+  justify-content: center;
+  align-items: center;
 }
 
 .drag-text {
@@ -111,10 +115,21 @@ $color: rgb(229, 243, 223);
 }
 
 .fileUploadImage {
-  height: 100%;
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  /* 360px 이상 1024px 미만일 때 */
+  @media screen and (min-width: 360px) and (max-width: 1024px) {
+    width: calc(200px + 2 * ((100vw - 360px) / 14));
+    height: calc(200px + 2 * ((100vw - 360px) / 14));
+  }
+
+  /* 1024px 이상일 때 */
+  @media screen and (min-width: 1024px) {
+    width: 300px;
+    height: 300px;
+  }
   margin: auto;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .diagnosticButton {
