@@ -45,22 +45,6 @@ import {
 } from "./components/SelectedButtonContext";
 
 function App() {
-  const { setSelectedButton } = useSelectedButton();
-
-  useEffect(() => {
-    const pathname = window.location.pathname;
-
-    // 여기에 경로에 따른 로직 추가
-    if (pathname.startsWith("/board")) {
-      setSelectedButton("board");
-    } else if (pathname.startsWith("/myPage")) {
-      setSelectedButton("my");
-    } else if (pathname.startsWith("/chat")) {
-      // 다른 경로에 따른 로직 추가
-      setSelectedButton("chat");
-    }
-  }, [setSelectedButton]);
-
   return (
     <>
       <BrowserRouter>

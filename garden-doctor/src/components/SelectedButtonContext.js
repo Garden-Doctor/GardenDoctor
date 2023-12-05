@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState } from "react";
 const SelectedButtonContext = createContext();
 
 export const SelectedButtonProvider = ({ children }) => {
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState("home");
 
   return (
     <SelectedButtonContext.Provider
