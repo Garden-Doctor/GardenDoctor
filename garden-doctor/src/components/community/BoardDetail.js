@@ -10,7 +10,11 @@ import rightArrow from "../../images/rightArrow.png";
 import leftArrow from "../../images/leftArrow.png";
 import Heart from "react-animated-heart";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const BoardDetail = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const { userId, boardId } = useParams();
   const [nickname, setNickname] = useState();
   const [userData, setUserData] = useState(null);
@@ -32,14 +36,21 @@ const BoardDetail = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setSelectedButton("board");
       try {
         console.log("Fetching data...");
         const [boardResponse, likeResponse, commentResponse, userResponse] =
           await Promise.all([
-            axios.get(`http://localhost:8000/board/getBoard/${boardId}`),
-            axios.get(`http://localhost:8000/board/getLike/${boardId}`),
-            axios.get(`http://localhost:8000/board/getComment/${boardId}`),
-            axios.post("http://localhost:8000/sign/myInfo", {
+            axios.get(
+              `${process.env.REACT_APP_SERVER_URL}/board/getBoard/${boardId}`
+            ),
+            axios.get(
+              `${process.env.REACT_APP_SERVER_URL}/board/getLike/${boardId}`
+            ),
+            axios.get(
+              `${process.env.REACT_APP_SERVER_URL}/board/getComment/${boardId}`
+            ),
+            axios.post(`${process.env.REACT_APP_SERVER_URL}/sign/myInfo`, {
               userId,
             }),
           ]);
@@ -101,7 +112,9 @@ const BoardDetail = () => {
     if (confirmDelete) {
       // If the user confirms, send a request to delete the board
       axios
-        .delete(`http://localhost:8000/board/deleteBoard/${boardId}`)
+        .delete(
+          `${process.env.REACT_APP_SERVER_URL}/board/deleteBoard/${boardId}`
+        )
         .then(() => {
           // After successful deletion, navigate back to the board list
           alert("게시글이 삭제되었습니다.");
@@ -132,7 +145,7 @@ const BoardDetail = () => {
     const postComment = async () => {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/board/postComment",
+        url: `${process.env.REACT_APP_SERVER_URL}/board/postComment`,
         data: {
           commentText,
           userId: reduxUserId,
@@ -159,16 +172,19 @@ const BoardDetail = () => {
     try {
       if (isLiked) {
         await axios.delete(
-          `http://localhost:8000/board/deleteLike/${boardId}`,
+          `${process.env.REACT_APP_SERVER_URL}/board/deleteLike/${boardId}`,
           { data: { userId: reduxUserId } }
         );
         setIsLiked(false);
         setClick(false);
         setLikeImage(likeIcon);
       } else {
-        await axios.post(`http://localhost:8000/board/postLike/${boardId}`, {
-          userId: reduxUserId,
-        });
+        await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/board/postLike/${boardId}`,
+          {
+            userId: reduxUserId,
+          }
+        );
         setIsLiked(true);
         setClick(false);
         setLikeImage(redLike);

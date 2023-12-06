@@ -8,6 +8,7 @@
   width: 10%;
   max-width: 45px;
   position: absolute;
+  top: 20px;
   cursor: pointer;
 }
 
@@ -112,9 +113,31 @@
   font-weight: bold;
   transition: background-color 0.3s;
   width: 20%;
+  min-width: 60px;
   margin-left: 80%;
 
   &:hover {
     background-color: #00b309;
+  }
+}
+
+@media (max-width: 400px) {
+  .writeBoard-uploadButton {
+    background-color: #155f2e;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: 20%;
+    min-width: 60px;
+    margin-left: 75%;
+
+    &:hover {
+      background-color: #00b309;
+    }
   }
 }

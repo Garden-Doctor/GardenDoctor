@@ -5,7 +5,11 @@ import { useSelector } from "react-redux";
 import "../../styles/writeBoard.scss";
 import camera from "../../images/camera.png";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const WriteBoard = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const [boardText, setBoardText] = useState("");
   const [boardTitle, setBoardTitle] = useState("");
   const [prevImageNum, setPrevImageNum] = useState("");
@@ -34,7 +38,7 @@ const WriteBoard = () => {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/upload",
+        url: `${process.env.REACT_APP_SERVER_URL}/upload`,
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -43,7 +47,7 @@ const WriteBoard = () => {
         console.log(result.data);
         const res2 = axios({
           method: "POST",
-          url: "http://localhost:8000/board/uploadBoard",
+          url: `${process.env.REACT_APP_SERVER_URL}/board/uploadBoard`,
           data: {
             userId: username,
             title: boardTitle,
@@ -56,7 +60,8 @@ const WriteBoard = () => {
       });
       console.log("res", res);
       alert("게시글 생성 완료!");
-      navigate("/board");
+      setSelectedButton("board");
+      await navigate("/board");
     } catch (error) {
       console.log(error);
     }
@@ -79,8 +84,9 @@ const WriteBoard = () => {
     reader.readAsDataURL(file);
   };
 
-  const beforePage = () => {
-    navigate("/board");
+  const beforePage = async () => {
+    await navigate("/board");
+    setSelectedButton("board");
   };
 
   const handleTextareaChange = (e) => {

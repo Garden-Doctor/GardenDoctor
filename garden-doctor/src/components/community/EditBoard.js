@@ -6,7 +6,11 @@ import "../../styles/writeBoard.scss";
 import arrowRight from "../../images/arrow-right.png";
 import camera from "../../images/camera.png";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const EditBoard = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const { userId, boardId } = useParams();
   const [boardData, setBoardData] = useState(null);
   const [prevImageNum, setPrevImageNum] = useState("");
@@ -21,10 +25,11 @@ const EditBoard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setSelectedButton("board");
       try {
         console.log("Fetching data...");
         const boardResponse = await axios.get(
-          `http://localhost:8000/board/getBoard/${boardId}`
+          `${process.env.REACT_APP_SERVER_URL}/board/getBoard/${boardId}`
         );
         console.log("Data fetched:", boardResponse);
         setBoardData(boardResponse.data);
@@ -49,7 +54,7 @@ const EditBoard = () => {
       try {
         const res = axios({
           method: "PATCH",
-          url: `http://localhost:8000/board/updateBoard/${boardId}`,
+          url: `${process.env.REACT_APP_SERVER_URL}/board/updateBoard/${boardId}`,
           data: {
             userId: username,
             title: boardTitle,
@@ -74,7 +79,7 @@ const EditBoard = () => {
       try {
         const res = await axios({
           method: "POST",
-          url: "http://localhost:8000/upload",
+          url: `${process.env.REACT_APP_SERVER_URL}/upload`,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -83,7 +88,7 @@ const EditBoard = () => {
           console.log(result.data);
           const res2 = axios({
             method: "PATCH",
-            url: `http://localhost:8000/board/updateBoard/${boardId}`,
+            url: `${process.env.REACT_APP_SERVER_URL}/board/updateBoard/${boardId}`,
             data: {
               userId: username,
               title: boardTitle,

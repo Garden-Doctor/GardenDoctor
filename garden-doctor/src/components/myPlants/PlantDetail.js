@@ -39,7 +39,7 @@ const PlantDetail = () => {
     const getMyPlant = async () => {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/myPlants/plantDetail",
+        url: `${process.env.REACT_APP_SERVER_URL}/myPlants/plantDetail`,
         data: { user_id: URLuserId, myPlant_id: plantId },
       });
       setMyPlant(res.data);
@@ -48,7 +48,7 @@ const PlantDetail = () => {
     const getPlantBoard = async () => {
       const res2 = await axios({
         method: "POST",
-        url: "http://localhost:8000/board/getPlantBoard",
+        url: `${process.env.REACT_APP_SERVER_URL}/board/getPlantBoard`,
         data: { user_id: URLuserId, myPlant_id: plantId },
       });
       setPlantBoards(res2.data);

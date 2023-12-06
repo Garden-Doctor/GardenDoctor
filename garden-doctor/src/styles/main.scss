@@ -59,7 +59,6 @@ a:active {
     }
     .weather_right {
       display: flex;
-      width: 50%;
       justify-content: center;
       align-items: center;
 
@@ -84,7 +83,13 @@ a:active {
       }
     }
   }
+  .weather-container-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
+
 @media screen and (min-width: 360px) and (max-width: 450px) {
   .weather_left {
     font-size: 0.78rem;
@@ -92,12 +97,15 @@ a:active {
       font-size: 0.8rem;
     }
   }
-  .weather_right_left {
-    margin-left: 0;
-    margin-right: 10px;
-    img {
-      width: 40px;
-      height: 40px;
+  .weather_right {
+    width: 60%;
+    .weather_right_left {
+      margin-left: 0;
+      margin-right: 10px;
+      img {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
   .todayTemp {
@@ -109,12 +117,15 @@ a:active {
   .currentTemp {
     font-size: 2rem;
   }
-  .weather_right_left {
-    img {
-      width: 80px;
-      height: 80px;
+  .weather_right {
+    width: 50%;
+    .weather_right_left {
+      img {
+        width: 80px;
+        height: 80px;
+      }
+      margin-right: 20px;
     }
-    margin-right: 20px;
   }
 }
 

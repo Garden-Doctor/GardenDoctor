@@ -81,7 +81,7 @@ const Signup = () => {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/upload/single",
+        url: `${process.env.REACT_APP_SERVER_URL}/upload/single`,
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -90,7 +90,7 @@ const Signup = () => {
         console.log(result.data);
         const res2 = axios({
           method: "POST",
-          url: "http://localhost:8000/sign/signup",
+          url: `${process.env.REACT_APP_SERVER_URL}/sign/signup`,
           data: {
             id,
             pw,
@@ -116,7 +116,7 @@ const Signup = () => {
       try {
         const res = await axios({
           method: "POST",
-          url: "http://localhost:8000/sign/signup/checkid",
+          url: `${process.env.REACT_APP_SERVER_URL}/sign/signup/checkid`,
           data: { id },
         });
 
@@ -196,7 +196,7 @@ const Signup = () => {
       try {
         const res = await axios({
           method: "POST",
-          url: "http://localhost:8000/sign/signup/checknickname",
+          url: `${process.env.REACT_APP_SERVER_URL}/sign/signup/checknickname`,
           data: { nickName },
         });
 

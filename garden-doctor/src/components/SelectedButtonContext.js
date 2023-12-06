@@ -1,12 +1,15 @@
 // SelectedButtonContext.js
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const SelectedButtonContext = createContext();
 
 export const SelectedButtonProvider = ({ children }) => {
   const [selectedButton, setSelectedButton] = useState("home");
 
+  useEffect(() => {
+    console.log("selectedButton", selectedButton);
+  }, [selectedButton]);
   return (
     <SelectedButtonContext.Provider
       value={{ selectedButton, setSelectedButton }}
@@ -17,5 +20,11 @@ export const SelectedButtonProvider = ({ children }) => {
 };
 
 export const useSelectedButton = () => {
-  return useContext(SelectedButtonContext);
+  const context = useContext(SelectedButtonContext);
+  if (!context) {
+    throw new Error(
+      "useSelectedButton must be used within a SelectedButtonProvider"
+    );
+  }
+  return context;
 };

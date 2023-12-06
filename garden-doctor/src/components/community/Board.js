@@ -195,8 +195,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import BoardBox from "./BoardBox";
 import BoardWrite from "../../images/boardWrite.png";
+import { useSelectedButton } from "../SelectedButtonContext";
+import boardImg from "../../images/boardImg.png";
 
 const Board = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const [loading, setLoading] = useState(true);
   const [boards, setBoards] = useState([]);
   const [commentInputs, setCommentInputs] = useState([]);
@@ -207,13 +211,16 @@ const Board = () => {
   const nickName = useSelector((state) => state.nickname);
 
   useEffect(() => {
+    const URL = process.env.SERVER_URL;
     console.log(nickName);
+    console.log(URL);
+    console.log(process.env.SERVER_URL);
     const fetchData = async () => {
       try {
         const [boardRes, commentRes, likeRes] = await Promise.all([
-          axios.get("http://localhost:8000/board/getBoards"),
-          axios.get("http://localhost:8000/board/getComments"),
-          axios.get("http://localhost:8000/board/getLikes"),
+          axios.get(`${process.env.REACT_APP_SERVER_URL}/board/getBoards`),
+          axios.get(`${process.env.REACT_APP_SERVER_URL}/board/getComments`),
+          axios.get(`${process.env.REACT_APP_SERVER_URL}/board/getLikes`),
         ]);
 
         const sortedBoards = boardRes.data.sort((a, b) => {
@@ -224,7 +231,7 @@ const Board = () => {
 
         const boardsWithUserImg = sortedBoards.map(async (board) => {
           const userImgRes = await axios.post(
-            "http://localhost:8000/sign/myInfo",
+            `${process.env.REACT_APP_SERVER_URL}/sign/myInfo`,
             {
               userId: board.userId,
             }
@@ -288,12 +295,13 @@ const Board = () => {
 
   const navigate = useNavigate();
 
-  const writeButton = () => {
+  const writeButton = async () => {
     if (!username) {
       alert("로그인 해주세요.");
-      navigate("/login");
+      await navigate("/login");
     } else {
-      navigate("/writeBoard");
+      setSelectedButton("board");
+      await navigate("/writeBoard");
     }
   };
 
@@ -302,7 +310,7 @@ const Board = () => {
       const commentText = commentInputs[index];
 
       const postCommentRes = await axios.post(
-        "http://localhost:8000/board/postComment",
+        `${process.env.REACT_APP_SERVER_URL}/board/postComment`,
         {
           commentText,
           userId: username,
@@ -350,6 +358,10 @@ const Board = () => {
         alt=""
         onClick={writeButton}
       />
+      <div className="boardImg">
+        <img src={boardImg} alt="" />
+        소통의 정원
+      </div>
       <div className="searchInput">
         <input
           type="text"

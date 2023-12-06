@@ -17,7 +17,7 @@ const MyPlants = () => {
     const getMyPlants = async () => {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/myPlants",
+        url: `${process.env.REACT_APP_SERVER_URL}/myPlants`,
         data: { user_id: userId },
       });
       setMyPlants(res.data);

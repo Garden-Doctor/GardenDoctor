@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Radio } from "react-loader-spinner";
 import axios from "axios";
 import manyclouds from "../../images/구름많음.svg";
 import cloudy from "../../images/cloudy.svg";
@@ -12,7 +13,7 @@ const Weather2 = () => {
   const [currentDateTime, setCurrentDateTime] = useState(null);
   const [location, setLocation] = useState(null);
   const [sky, setSky] = useState(null);
-  ////////////////////////////////////////////////
+  //////////////////////////////////////////////////////
   const [temp, setTemp] = useState("");
   const [maxTemp, setMaxTemp] = useState("");
   const [minTemp, setMinTemp] = useState("");
@@ -45,6 +46,7 @@ const Weather2 = () => {
         currentLocation.longitude,
         weatherApiKey
       );
+      fetchLocationData();
     }
   }, [currentLocation]);
 
@@ -54,9 +56,9 @@ const Weather2 = () => {
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api}&lang=kr&units=metric
         `
       );
-      setTemp(res.data.main.temp);
-      setMaxTemp(res.data.main.temp_max);
-      setMinTemp(res.data.main.temp_min);
+      setTemp(parseInt(res.data.main.temp, 10));
+      setMaxTemp(parseInt(res.data.main.temp_max, 10));
+      setMinTemp(parseInt(res.data.main.temp_min, 10));
       setTempDesc(res.data.weather[0].description);
       setIconNum(res.data.weather[0].icon);
     } catch (error) {
@@ -64,76 +66,17 @@ const Weather2 = () => {
     }
   };
 
-  const fetchWeatherData = async () => {
+  const fetchLocationData = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/weather", {
-        currentdate: getCurrentDate(),
-        currenttime: getCurrentTime(),
-        inputx: currentLocation.latitude,
-        inputy: currentLocation.longitude,
+      const res = await axios.post("http://localhost:8000/weather/location", {
+        lat: currentLocation.latitude,
+        lng: currentLocation.longitude,
       });
-
-      const data = response.data;
-      console.log("날씨", data);
-      console.log("날씨", data.SKY);
-
-      setWeatherData(data);
-
-      if (data.PTY == 0) {
-        switch (data.SKY) {
-          case "1":
-            setSky("맑음");
-            break;
-          case "3":
-            setSky("구름많음");
-            break;
-          case "4":
-            setSky("흐림");
-            break;
-        }
-      } else {
-        setSky("비");
-      }
-
-      console.log("", sky);
+      const locationData = res.data;
+      setLocation(locationData);
     } catch (error) {
-      console.error("Error fetching weather data:", error);
+      console.error(error);
     }
-  };
-
-  useEffect(() => {
-    if (weatherData) {
-      console.log("weatherData", weatherData);
-    }
-  }, [weatherData]);
-
-  const getWeatherImage = () => {
-    switch (sky) {
-      case "맑음":
-        return sunny;
-      case "구름많음":
-        return manyclouds;
-      case "흐림":
-        return cloudy;
-      case "비":
-        return rainy;
-      default:
-        return ""; // 실제 파일 경로로 바꾸세요
-    }
-  };
-
-  const getCurrentDate = () => {
-    if (currentDateTime) {
-      const year = currentDateTime.getFullYear();
-      const month = currentDateTime.getMonth() + 1;
-      const day = currentDateTime.getDate();
-
-      return `${year}${month < 10 ? "0" + month : month}${
-        day < 10 ? "0" + day : day
-      }`;
-    }
-
-    return "";
   };
 
   const viewedCurrentDate = () => {
@@ -155,18 +98,9 @@ const Weather2 = () => {
     return "";
   };
 
-  // 분 단위 버리고 정시만 담게
-  const getCurrentTime = () => {
-    if (currentDateTime) {
-      const hours = currentDateTime.getHours();
-      return `${hours < 10 ? "0" + hours : hours}00`;
-    }
-    return "";
-  };
-
   return (
     <div className="weather-container">
-      {weatherData ? (
+      {location ? (
         <div className="weather-container-inner">
           <div className="weather_left">
             <div>
@@ -177,19 +111,33 @@ const Weather2 = () => {
           </div>
           <div className="weather_right">
             <span className="weather_right_left">
-              <img src={getWeatherImage()} alt={`날씨: ${sky}`} />
+              <img
+                src={`https://openweathermap.org/img/wn/${iconNum}@2x.png`}
+                alt={`날씨: ${sky}`}
+              />
             </span>
             <div className="weather_right_right">
-              <span className="currentTemp">{weatherData.TMP}°C</span>
+              <span className="currentTemp">{temp}°C</span>
               <span className="todayTemp">
-                <span className="red">{weatherData.TMX}°</span>/
-                <span className="blue">{weatherData.TMN}°</span>
+                <span className="red">{maxTemp}°</span>/
+                <span className="blue">{minTemp}°</span>
               </span>
             </div>
           </div>
         </div>
       ) : (
-        <div>날씨 정보를 불러오는 중입니다.</div>
+        <div className="weather-container-inner">
+          <Radio
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="radio-loading"
+            wrapperStyle={{}}
+            wrapperClass="radio-wrapper"
+            colors={["#51E5FF", "#7DE2D1", "#FF7E6B"]}
+          />
+          날씨 정보를 불러오는 중입니다.
+        </div>
       )}
     </div>
   );
