@@ -39,8 +39,6 @@ import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
 import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
 
-import { SelectedButtonProvider } from "./components/SelectedButtonContext";
-
 function App() {
   return (
     <>

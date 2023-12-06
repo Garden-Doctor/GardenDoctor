@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Audio } from "react-loader-spinner";
+import { Radio } from "react-loader-spinner";
 import axios from "axios";
 import manyclouds from "../../images/구름많음.svg";
 import cloudy from "../../images/cloudy.svg";
@@ -56,9 +56,9 @@ const Weather2 = () => {
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api}&lang=kr&units=metric
         `
       );
-      setTemp(res.data.main.temp);
-      setMaxTemp(res.data.main.temp_max);
-      setMinTemp(res.data.main.temp_min);
+      setTemp(parseInt(res.data.main.temp, 10));
+      setMaxTemp(parseInt(res.data.main.temp_max, 10));
+      setMinTemp(parseInt(res.data.main.temp_min, 10));
       setTempDesc(res.data.weather[0].description);
       setIconNum(res.data.weather[0].icon);
     } catch (error) {
@@ -126,15 +126,15 @@ const Weather2 = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <Audio
+        <div className="weather-container-inner">
+          <Radio
+            visible={true}
             height="80"
             width="80"
-            radius="9"
-            color="green"
-            ariaLabel="three-dots-loading"
-            wrapperStyle
-            wrapperClass
+            ariaLabel="radio-loading"
+            wrapperStyle={{}}
+            wrapperClass="radio-wrapper"
+            colors={["#51E5FF", "#7DE2D1", "#FF7E6B"]}
           />
           날씨 정보를 불러오는 중입니다.
         </div>
