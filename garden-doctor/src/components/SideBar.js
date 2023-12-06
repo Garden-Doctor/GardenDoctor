@@ -102,7 +102,9 @@ const SideBar = ({ onClose }) => {
         <span onClick={mypageButton}>마이페이지</span>
       </div>
       <div className="sidebar_menu">
-        <span onClick={dignoseButton}>병충해 진단</span>
+        <span onClick={dignoseButton} className="sidebar_border_inner_first">
+          병충해 진단
+        </span>
         <span onClick={chatButton} className="sidebar_border_inner">
           AI 도우미
         </span>

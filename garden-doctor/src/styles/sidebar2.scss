@@ -1,3 +1,4 @@
+@import "./utils.scss";
 /*
 Sidebar wrapper styles
 Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
@@ -9,19 +10,55 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: #0b2b12;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
 
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
-  fill: #373a47;
+  fill: #0b2b12;
 }
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: #b8b7ad;
+  font-family: $font-content;
+  .sidebar_top {
+    margin-left: 60px;
+    margin-bottom: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .mypage_button {
+      border: solid 1px white;
+      border-radius: 10px;
+      padding: 2px 5px;
+      color: rgb(223, 223, 223);
+    }
+    p {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      span {
+        margin: 0;
+      }
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 80px;
+    }
+  }
+
+  span {
+    color: rgb(253, 246, 232);
+    text-decoration: none;
+    margin-bottom: 25px;
+    font-size: 20px;
+  }
+  color: #b8b6ad;
   padding: 0.8em;
 }
 
@@ -33,4 +70,62 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Styling of overlay */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+
+$initialTop: 20px;
+$initialLeft: 80px;
+$transitionDuration: 0.1s;
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 30px;
+  height: 24px;
+
+  top: $initialTop;
+  left: $initialLeft;
+
+  @media (min-width: 1024px) {
+    top: 20px;
+    left: calc(#{$initialLeft} + ((100vw - 1024px) / 2));
+  }
+
+  @media (max-width: 1023px) and (min-width: 850px) {
+    top: 20px;
+    left: 80px;
+  }
+  @media (max-width: 849px) and (min-width: 560px) {
+    top: 20px;
+    left: 60px;
+  }
+  @media (max-width: 560px) and (min-width: 360px) {
+    top: 20px;
+    left: 50px;
+  }
+
+  @media (max-width: 359px) {
+    top: 20px;
+    left: 30px;
+  }
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: #06130a;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
 }

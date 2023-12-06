@@ -50,6 +50,10 @@
     .sidebar_border_inner {
       border-top: solid 1px rgb(156, 156, 156);
     }
+    .sidebar_border_inner:hover,
+    .sidebar_border_inner_first:hover {
+      cursor: pointer;
+    }
   }
 }
 
