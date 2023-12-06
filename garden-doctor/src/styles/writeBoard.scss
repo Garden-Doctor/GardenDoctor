@@ -7,9 +7,7 @@
 .writeBoard-arrow {
   width: 10%;
   max-width: 45px;
-  height: width;
   position: absolute;
-  top: 68px;
   cursor: pointer;
 }
 
@@ -106,7 +104,7 @@
 .writeBoard-uploadButton {
   background-color: #155f2e;
   color: #fff;
-  padding: 10px;
+  padding: 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
