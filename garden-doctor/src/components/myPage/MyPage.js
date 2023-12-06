@@ -195,7 +195,7 @@ const MyPage = () => {
             type="button"
             onClick={likesCountButton}
           >
-            {likesCount}
+            {likesCount - 1}
           </button>
         </div>
       </div>
