@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/imageAI/dignose.scss";
 import Dignose2 from "../../imgs/dignose2.svg";
@@ -13,12 +13,43 @@ const Dignose = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedPlant, setSelectedPlant] = useState("");
   const [loading, setLoading] = useState(false); //react-spinner을 위한 상태관리
+
+  const [initialRender, setInitialRender] = useState(true);
+  const [reloadCount, setReloadCount] = useState(0);
+
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (reloadCount <= 1) {
+  //     // Reload the page if reloadCount is less than 2
+  //     window.location.reload();
+  //     setReloadCount((prevCount) => prevCount + 1);
+  //     const ImageUrl = sessionStorage.getItem("selectedImageUrl");
+  //     sessionStorage.removeItem("selectedImageUrl");
+  //     console.log("reloadCount", reloadCount);
+  //   }
+  // }, [reloadCount]);
+
+  // const refreshOnRender = () => {
+  //   window.location.reload();
+  // };
+  // useEffect(() => {
+  //   refreshOnRender();
+  // }, []);
 
   const handlePlantSelect = (e) => {
     setSelectedPlant(e.target.value);
   };
+  useEffect(() => {
+    if (
+      window.performance &&
+      window.performance.navigation.type !==
+        window.performance.navigation.TYPE_RELOAD
+    ) {
+      window.location.reload();
+    }
+  }, []);
 
   const dignosePlant = async () => {
     let URL;
@@ -63,45 +94,14 @@ const Dignose = () => {
       case "tomato":
         URL = "https://teachablemachine.withgoogle.com/models/KM_U4mSw6/";
         break;
-      // case "potato":
-      //   URL = "";
-      //   break;
-      // case "greenOnion":
-      //   URL = "";
-      //   break;
-      // case "radish":
-      //   URL = "";
-      //   break;
-      // case "onion":
-      //   URL = "";
-      //   break;
-      // case "carrot":
-      //   URL = "";
-      //   break;
-      // case "bean":
-      //   URL = "";
-      //   break;
-      // case "sesame":
-      //   URL = "";
-      //   break;
-      // case "sweetPotato":
-      //   URL = "";
-      //   break;
-      // case "napaCabbage":
-      //   URL = "";
-      //   break;
-      // case "pumpkin":
-      //   URL = "";
-      //   break;
-      // case "cabbage":
-      //   URL = "";
-      // break;
+
       default:
         console.log("해당하는 URL이 없습니다.");
         break;
     }
     //URL에 따라 예측하기
     if (URL) {
+      console.log("URL", URL);
       const modelURL = URL + "model.json";
       const metadataURL = URL + "metadata.json";
 
@@ -112,6 +112,7 @@ const Dignose = () => {
       //이미지 예측 실행
       const result = await predict();
       const image = selectedImage;
+      console.log("image", image);
       sessionStorage.setItem("selectedImageUrl", image);
       setLoading(false);
       navigate(`/diagnosisResult?result=${result}`);
@@ -124,6 +125,7 @@ const Dignose = () => {
     //예측 로직 수행
     const image = new Image();
     image.src = selectedImage;
+    console.log("ascacselectedImage", selectedImage);
     const prediction = await model.predict(image, false);
     let predictions = "";
     console.log("predict");
@@ -135,6 +137,7 @@ const Dignose = () => {
         prediction[i].probability.toFixed(2) +
         "<br>";
     }
+    console.log("predictions", predictions);
 
     return predictions;
   }
@@ -145,6 +148,7 @@ const Dignose = () => {
 
       reader.onload = function (e) {
         setSelectedImage(e.target.result);
+        console.log("selectedImage", selectedImage);
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -152,12 +156,18 @@ const Dignose = () => {
   };
 
   const handleImageClick = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const resetImage = () => {
     document.getElementById("fileUploadInput").value = "";
     setSelectedImage(null);
+  };
+
+  const refresh = () => {
+    window.location.reload();
   };
 
   return (
@@ -177,7 +187,13 @@ const Dignose = () => {
             <br />
             <div className="introduceDetails">
               작물 사진을 업로드하면 병을 신속하게 식별하여 농작물 건강을 돕는
-              서비스입니다.
+              서비스입니다. 시작하기를 클릭해주세요.
+            </div>
+            <br></br>
+            <div>
+              <button className="refreshButton" onClick={refresh}>
+                시작하기
+              </button>
             </div>
           </div>
 
@@ -195,7 +211,7 @@ const Dignose = () => {
           </select>
 
           <div className="fileUpload">
-            {selectedImage && (
+            {selectedImage ? (
               <div className="fileUploadContent">
                 <img
                   className="fileUploadImage"
@@ -203,17 +219,8 @@ const Dignose = () => {
                   alt="업로드된 이미지"
                   onClick={handleImageClick}
                 />
-                <input
-                  ref={fileInputRef}
-                  id="file-upload-input"
-                  className="fileUploadInput"
-                  type="file"
-                  onChange={handleImageChange}
-                />
               </div>
-            )}
-
-            {!selectedImage && (
+            ) : (
               <div className="imageUploadWrap">
                 <input
                   ref={fileInputRef}

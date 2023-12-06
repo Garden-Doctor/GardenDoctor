@@ -72,8 +72,13 @@ const DignosisResult = () => {
   const chatButton = () => {
     navigate("/chat");
   };
+
+  const refreshAndNavigate = (newPath) => {
+    window.location.href = window.location.origin + newPath;
+  };
+
   const imageAIButton = () => {
-    navigate("/imageAI");
+    refreshAndNavigate("/imageAI");
   };
 
   return (

@@ -54,8 +54,12 @@ const SideBar = ({ onClose }) => {
 
   const navigate = useNavigate();
 
+  const refreshAndNavigate = (newPath) => {
+    window.location.href = window.location.origin + newPath;
+  };
+
   const dignoseButton = async () => {
-    await navigate("/imageAI");
+    await refreshAndNavigate("/imageAI");
     setSelectedButton("home");
   };
   const chatButton = async () => {

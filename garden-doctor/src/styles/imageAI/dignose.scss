@@ -12,6 +12,7 @@ $color: rgb(229, 243, 223);
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 10%;
 }
 
 .introduceDetails {
@@ -150,4 +151,13 @@ $color: rgb(229, 243, 223);
   text-align: center;
   padding: 20px;
   border-radius: 10px;
+}
+
+.refreshButton {
+  background-color: #3cb362;
+  border-radius: 15px;
+  width: 20%;
+  color: white;
+  border: none;
+  height: 5vh;
 }
