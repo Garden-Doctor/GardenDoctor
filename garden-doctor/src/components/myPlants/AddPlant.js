@@ -58,7 +58,7 @@ const AddPlant = () => {
     try {
       const res1 = await axios({
         method: "POST",
-        url: "http://localhost:8000/upload/single",
+        url: `${process.env.REACT_APP_SERVER_URL}/upload/single`,
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -66,7 +66,7 @@ const AddPlant = () => {
       });
       const res2 = await axios({
         method: "POST",
-        url: "http://localhost:8000/myPlants/addPlant",
+        url: `${process.env.REACT_APP_SERVER_URL}/myPlants/addPlant`,
         data: {
           user_id: username,
           plant_nickname: plantNickname,

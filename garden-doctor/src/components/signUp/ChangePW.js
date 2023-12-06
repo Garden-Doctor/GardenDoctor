@@ -66,7 +66,7 @@ const ChangePW = () => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:8000/sign/sendEmail",
+        `${process.env.REACT_APP_SERVER_URL}/sign/sendEmail`,
         {
           pwEmail,
         }
@@ -134,13 +134,16 @@ const ChangePW = () => {
       //   return;
       // }
       try {
-        const response = await axios.post("http://localhost:8000/sign/findPw", {
-          pwName,
-          pwId,
-          pwNickname,
-          pwBirthdate,
-          newPw,
-        });
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/sign/findPw`,
+          {
+            pwName,
+            pwId,
+            pwNickname,
+            pwBirthdate,
+            newPw,
+          }
+        );
         console.log("response", response);
         setUpdateSuccess(true);
         navigate("/login");
