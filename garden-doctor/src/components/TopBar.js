@@ -10,6 +10,7 @@ import axios from "axios";
 import SideBar from "./SideBar";
 
 import { useSelectedButton } from "../components/SelectedButtonContext";
+import SideBar2 from "./SideBar2";
 
 const TopBar = () => {
   const { selectedButton, setSelectedButton } = useSelectedButton();
@@ -106,7 +107,7 @@ const TopBar = () => {
       <div className="topbar-container">
         <div>
           <div id="sidbar-container">
-            <img src={menu} id="menu" onClick={handleMenuButtonClick} />
+            {/* <img src={menu} id="menu" onClick={handleMenuButtonClick} /> */}
           </div>
           <div className="logo" onClick={logoButton}>
             <img src={logo} id="logo-img" />
@@ -125,6 +126,7 @@ const TopBar = () => {
           </div>
         </div>
       </div>
+      <SideBar2 />
       {isSideBarVisible && <SideBar onClose={handleCloseSideBar} />}
     </>
   );

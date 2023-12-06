@@ -3,22 +3,25 @@ import { useNavigate } from "react-router-dom";
 import "../styles/sidebar2.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { slide as Menu } from "react-burger-menu";
+import { bubble as Menu } from "react-burger-menu";
 
 import { useSelectedButton } from "../components/SelectedButtonContext";
 
 import exit_src from "../images/exit.svg";
 import user_src from "../images/user.svg";
 
-const SideBar = () => {
+const SideBar2 = () => {
   const { selectedButton, setSelectedButton } = useSelectedButton();
 
-  const sideBarRef = useRef();
   const userId = useSelector((state) => state.user);
   const [nickName, setNickName] = useState("");
   const [userImg, setUserImg] = useState("");
 
-  console.log("userid", userId);
+  const navigate = useNavigate();
+
+  const refreshAndNavigate = (newPath) => {
+    window.location.href = window.location.origin + newPath;
+  };
 
   useEffect(() => {
     const myInfo = async () => {
@@ -40,49 +43,81 @@ const SideBar = () => {
     myInfo();
   }, [userId]);
 
+  const handleOnOpen = () => {};
+
   const showSettings = (event) => {
     event.preventDefault();
     // ...
     // Your logic for showSettings
   };
 
-  const closeAllMenusOnEsc = (e) => {
-    e = e || window.event;
-
-    if (e.key === "Escape" || e.keyCode === 27) {
-      this.setState({ areMenusOpen: false });
-    }
-  };
   var isMenuOpen = function (state) {
     return state.isOpen;
+  };
+  const dignoseButton = async () => {
+    await refreshAndNavigate("/imageAI");
+    setSelectedButton("home");
+  };
+  const chatButton = async () => {
+    await navigate("/chat");
+    setSelectedButton("chat");
+  };
+  const mypageButton = async () => {
+    if (!userId) {
+      alert("로그인 해주세요");
+      await navigate("/login");
+      setSelectedButton("my");
+      return;
+    }
+    refreshAndNavigate("/mypage");
+  };
+  const boardButton = async () => {
+    await navigate("/board");
+    setSelectedButton("board");
+  };
+  const myplantButton = async () => {
+    await navigate("/myPlants");
+    setSelectedButton("my");
+  };
+  const myboardButton = async () => {
+    await navigate("/myBoards");
+    setSelectedButton("my");
   };
 
   return (
     <Menu
-      onOpen={handleOnOpen}
+      // onOpen={handleOnOpen}
       onStateChange={isMenuOpen}
-      customOnKeyDown={closeAllMenusOnEsc}
     >
-      <a id="dignose" className="menu-item" href="/">
+      <div className="sidebar_top">
+        <img alt="사람" src={userImg ? userImg : user_src} />
+        <p>
+          <span>{nickName}님</span>
+          <sapn>환영합니다.</sapn>
+        </p>
+        <span onClick={mypageButton} className="mypage_button">
+          마이페이지
+        </span>
+      </div>
+
+      <span onClick={dignoseButton} className="menu-item" href="/">
         병충해 진단
-      </a>
-      <a id="dignose" className="menu-item" href="/chat">
+      </span>
+      <span onClick={chatButton} className="menu-item" href="/chat">
         AI 도우미
-      </a>
-      <a id="dignose" className="menu-item" href="/board">
+      </span>
+      <span onClick={boardButton} className="menu-item" href="/board">
         소통의 정원
-      </a>
-      <a id="dignose" className="menu-item" href="/myplant">
+      </span>
+      <span onClick={myplantButton} className="menu-item" href="/myplant">
         내 작물
-      </a>
-      <a id="dignose" className="menu-item" href="/myBoards">
+      </span>
+      <span onClick={myboardButton} className="menu-item" href="/myBoards">
         내 게시글
-      </a>
-      <a onClick={this.showSettings} className="menu-item--small" href="">
-        Settings
-      </a>
+      </span>
+      <a onClick={showSettings} className="menu-item--small" href=""></a>
     </Menu>
   );
 };
 
-export default SideBar;
+export default SideBar2;

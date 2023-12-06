@@ -86,7 +86,18 @@
   margin-left: 5px;
   top: 45px;
   max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+// .boardBox-boardTitle:hover {
+//   overflow: visible;
+//   white-space: normal;
+//   z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+//   position: absolute; /* 위치 설정 */
+//   background-color: white; /* 배경색 지정 */
+//   // box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
+// }
 
 .boardBox-likeButton {
   position: absolute;
