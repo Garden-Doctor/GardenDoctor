@@ -58,6 +58,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
     margin-bottom: 25px;
     font-size: 20px;
   }
+  span:hover {
+    cursor: pointer;
+  }
   color: #b8b6ad;
   padding: 0.8em;
 }
