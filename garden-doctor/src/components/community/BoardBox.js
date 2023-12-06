@@ -5,6 +5,8 @@ import redLike from "../../images/redLike.png";
 import likeIcon from "../../images/likeIcon.png";
 import commentIcon from "../../images/commentIcon.png";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const BoardBox = ({
   imgSrc,
   title,
@@ -18,6 +20,8 @@ const BoardBox = ({
   day,
   navigate,
 }) => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const formatDate = (dateString) => {
     const currentDate = new Date();
     const postDate = new Date(dateString);
@@ -41,8 +45,10 @@ const BoardBox = ({
   const isLikedByUser =
     likeData && likeData.some((like) => like.userId == reduxUserId);
 
-  const clickedBoard = (e) => {
-    navigate(`/boardDetail/${userId}/${boardId}`);
+  const clickedBoard = async (e) => {
+    console.log("navigate");
+    setSelectedButton("board");
+    await navigate(`/boardDetail/${userId}/${boardId}`);
   };
 
   return (

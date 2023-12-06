@@ -10,7 +10,11 @@ import rightArrow from "../../images/rightArrow.png";
 import leftArrow from "../../images/leftArrow.png";
 import Heart from "react-animated-heart";
 
+import { useSelectedButton } from "../SelectedButtonContext";
+
 const BoardDetail = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const { userId, boardId } = useParams();
   const [nickname, setNickname] = useState();
   const [userData, setUserData] = useState(null);
@@ -32,6 +36,7 @@ const BoardDetail = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setSelectedButton("board");
       try {
         console.log("Fetching data...");
         const [boardResponse, likeResponse, commentResponse, userResponse] =
