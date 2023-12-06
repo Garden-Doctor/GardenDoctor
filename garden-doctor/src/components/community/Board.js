@@ -195,9 +195,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import BoardBox from "./BoardBox";
 import BoardWrite from "../../images/boardWrite.png";
+import { useSelectedButton } from "../SelectedButtonContext";
 import boardImg from "../../images/boardImg.png";
 
 const Board = () => {
+  const { selectedButton, setSelectedButton } = useSelectedButton();
+
   const [loading, setLoading] = useState(true);
   const [boards, setBoards] = useState([]);
   const [commentInputs, setCommentInputs] = useState([]);
@@ -292,12 +295,13 @@ const Board = () => {
 
   const navigate = useNavigate();
 
-  const writeButton = () => {
+  const writeButton = async () => {
     if (!username) {
       alert("로그인 해주세요.");
-      navigate("/login");
+      await navigate("/login");
     } else {
-      navigate("/writeBoard");
+      setSelectedButton("board");
+      await navigate("/writeBoard");
     }
   };
 

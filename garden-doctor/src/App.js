@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { useEffect } from "react";
+import { SelectedButtonProvider } from "./components/SelectedButtonContext";
 
 import NotFound from "./components/NotFound";
 
@@ -26,7 +26,7 @@ import NaviBar from "./components/NaviBar";
 
 import "../src/styles/app.scss";
 import SideBar from "./components/SideBar";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import { MyPlants } from "./components/myPage/MyPlants";
 
@@ -38,11 +38,6 @@ import KakaoLogin from "./components/logIn/KakaoLogin";
 import axios from "axios";
 import MyPageEdit from "./components/myPage/MyPageEdit";
 import FindMyyIdPw from "./components/signUp/FindMyyIdPw";
-
-import {
-  SelectedButtonProvider,
-  useSelectedButton,
-} from "./components/SelectedButtonContext";
 
 function App() {
   return (
