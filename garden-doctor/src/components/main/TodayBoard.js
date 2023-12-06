@@ -22,7 +22,7 @@ const TodayBoard = () => {
     const fetchMostLikedBoards = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/board/getMostLikedBoards"
+          `${process.env.REACT_APP_SERVER_URL}/board/getMostLikedBoards`
         );
         console.log(response.data);
         setMostLikedBoards(response.data);
@@ -32,15 +32,15 @@ const TodayBoard = () => {
         const [boardResponse, likeResponse, commentResponse, userResponse] =
           await Promise.all([
             axios.get(
-              `http://localhost:8000/board/getBoard/${mostLikedBoardId}`
+              `${process.env.REACT_APP_SERVER_URL}/board/getBoard/${mostLikedBoardId}`
             ),
             axios.get(
-              `http://localhost:8000/board/getLike/${mostLikedBoardId}`
+              `${process.env.REACT_APP_SERVER_URL}/board/getLike/${mostLikedBoardId}`
             ),
             axios.get(
-              `http://localhost:8000/board/getComment/${mostLikedBoardId}`
+              `${process.env.REACT_APP_SERVER_URL}/board/getComment/${mostLikedBoardId}`
             ),
-            axios.post("http://localhost:8000/sign/myInfo", {
+            axios.post(`${process.env.REACT_APP_SERVER_URL}/sign/myInfo`, {
               userId: response.data.userId,
             }),
           ]);

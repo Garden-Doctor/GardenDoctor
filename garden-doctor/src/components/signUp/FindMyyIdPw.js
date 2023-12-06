@@ -36,11 +36,14 @@ const FindMyId = () => {
   const handleFindId = async () => {
     try {
       // 서버에 요청을 보내서 아이디 찾기
-      const response = await axios.post("http://localhost:8000/sign/findId", {
-        name,
-        nickname,
-        birth: birthdate,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/sign/findId`,
+        {
+          name,
+          nickname,
+          birth: birthdate,
+        }
+      );
 
       // 찾은 아이디를 상태에 업데이트
       setFoundId(response.data.foundId);
@@ -55,7 +58,7 @@ const FindMyId = () => {
   const sendEmail = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/sign/sendEmail",
+        `${process.env.REACT_APP_SERVER_URL}/sign/sendEmail`,
         {
           pwEmail,
         }
@@ -111,13 +114,16 @@ const FindMyId = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:8000/sign/findPw", {
-        pwName,
-        pwId,
-        pwNickname,
-        pwBirthdate,
-        newPw,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/sign/findPw`,
+        {
+          pwName,
+          pwId,
+          pwNickname,
+          pwBirthdate,
+          newPw,
+        }
+      );
       console.log("response", response);
       setUpdateSuccess(true);
     } catch (error) {

@@ -38,7 +38,7 @@ const WriteBoard = () => {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8000/upload",
+        url: `${process.env.REACT_APP_SERVER_URL}/upload`,
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -47,7 +47,7 @@ const WriteBoard = () => {
         console.log(result.data);
         const res2 = axios({
           method: "POST",
-          url: "http://localhost:8000/board/uploadBoard",
+          url: `${process.env.REACT_APP_SERVER_URL}/board/uploadBoard`,
           data: {
             userId: username,
             title: boardTitle,

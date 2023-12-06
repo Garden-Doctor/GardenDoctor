@@ -49,6 +49,16 @@
   //   align-items: center; /* 세로 중앙 정렬 */
 }
 
+.boardImg {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  img {
+    margin-right: 10px;
+  }
+}
+
 .boardBox-userImg {
   position: absolute;
   margin-left: 0px;

@@ -43,13 +43,13 @@ const TopBar = () => {
 
         if (jwtToken) {
           const response = await axios.post(
-            "http://localhost:8000/sign/verify",
+            `${process.env.REACT_APP_SERVER_URL}/sign/verify`,
             { token: jwtToken }
           );
           const user = response.data.user.id;
 
           const userResponse = await axios.post(
-            "http://localhost:8000/sign/myInfo",
+            `${process.env.REACT_APP_SERVER_URL}/sign/myInfo`,
             { userId: user }
           );
           const nickName = userResponse.data.nickName;
@@ -86,7 +86,7 @@ const TopBar = () => {
   const logoutButton = async () => {
     setSelectedButton("home");
     const findLoginType = await axios.post(
-      "http://localhost:8000/sign/findLoginType",
+      `${process.env.REACT_APP_SERVER_URL}/sign/findLoginType`,
       {
         userId,
       }
