@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../../store/isLogin";
 
 const KakaoLogin = () => {
+  console.log(document);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [kakaoID, setKakaoId] = useState(" ");
@@ -12,9 +13,8 @@ const KakaoLogin = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const code = new URL(document.location.toString()).searchParams.get(
-          "code"
-        );
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
         console.log("code", code);
 
         if (code) {
@@ -83,7 +83,7 @@ const KakaoLogin = () => {
     fetchData();
   }, [navigate, dispatch, kakaoID]);
 
-  return <div>카카오 로그인 중...</div>;
+  return <div>카카오 로그인 중2...</div>;
 };
 
 export default KakaoLogin;

@@ -1,7 +1,7 @@
 "use strict";
 
 import Sequelize from "sequelize";
-const env = process.env.NODE_ENV || "test2";
+const env = process.env.NODE_ENV || "development";
 import configenv from "../config/config.json" assert { type: "json" };
 import Chats from "./Chats.js";
 import User from "./User.js";

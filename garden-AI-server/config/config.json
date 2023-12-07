@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "1234",
-    "database": "kdt8",
+    "database": "gardendoctor",
     "host": "svc.sel5.cloudtype.app",
     "dialect": "mariadb",
     "port": "30134"
@@ -24,7 +24,7 @@
   "production": {
     "username": "root",
     "password": "1234",
-    "database": "kdt8",
+    "database": "gardendoctor",
     "host": "svc.sel5.cloudtype.app",
     "dialect": "mariadb",
     "port": "30134"
