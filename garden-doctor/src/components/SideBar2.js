@@ -62,28 +62,28 @@ const SideBar2 = () => {
     setSelectedButton("home");
   };
   const chatButton = async () => {
-    await navigate("/chat");
+    await refreshAndNavigate("/chat");
     setSelectedButton("chat");
   };
   const mypageButton = async () => {
     if (!userId) {
       alert("로그인 해주세요");
-      await navigate("/login");
+      await refreshAndNavigate("/login");
       setSelectedButton("my");
       return;
     }
     refreshAndNavigate("/mypage");
   };
   const boardButton = async () => {
-    await navigate("/board");
+    await refreshAndNavigate("/board");
     setSelectedButton("board");
   };
   const myplantButton = async () => {
-    await navigate("/myPlants");
+    await refreshAndNavigate("/myPlants");
     setSelectedButton("my");
   };
   const myboardButton = async () => {
-    await navigate("/myBoards");
+    await refreshAndNavigate("/myBoards");
     setSelectedButton("my");
   };
 
