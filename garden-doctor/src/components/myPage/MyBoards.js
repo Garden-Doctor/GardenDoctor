@@ -19,9 +19,16 @@ const MyBoards = () => {
   const [selectedTab, setSelectedTab] = useState(
     sessionStorage.getItem("selectedTab")
   );
-
+  console.log("showMyBoards", showMyboards);
+  console.log("showLikeBoards", showlikeBoards);
+  console.log("boards", boards);
+  console.log("like", likeData);
   //내 게시글 불러오기
   useEffect(() => {
+    if (showlikeBoards) {
+      likeboards();
+      return;
+    }
     const myboards = async () => {
       try {
         const [boardRes, commentRes, likeRes] = await Promise.all([
@@ -93,86 +100,81 @@ const MyBoards = () => {
   };
 
   //좋아요 게시글 찾기
-  useEffect(() => {
-    const likeboards = async () => {
-      try {
-        const [likeRes] = await Promise.all([
-          axios.post(
-            `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLike`,
-            {
-              userId: userId,
-            }
-          ),
-        ]);
 
-        const boardIds = likeRes.data.map((board) => board.boardId);
-        const updatedBoards = []; // 기존 게시글 상태 복사
-        const updatedCommentData = { ...commentData }; // 기존 댓글 데이터 복사
-        const updatedLikeData = { ...likeData }; // 기존 좋아요 데이터 복사
-        console.log("boardIds", boardIds);
-        console.log("updatedBoards", updatedBoards);
-
-        for (const boardId of boardIds) {
-          try {
-            const [boardRes, commentRes] = await Promise.all([
-              axios.post(
-                `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLikeBoards`,
-                { boardId: boardId }
-              ),
-              axios.post(
-                `${process.env.REACT_APP_SERVER_URL}/board/myBoards/comment`
-              ),
-            ]);
-            console.log("boardRes", boardRes.data);
-            // 중복 체크를 통해 중복된 데이터 제외하고 추가
-            // const filteredBoards = boardRes.data.filter(
-            //   (newBoard) =>
-            //     !updatedBoards.some(
-            //       (board) => board.boardId === newBoard.boardId
-            //     )
-            // );
-            const { findMyLikeBoard, findNickName } = boardRes.data;
-            console.log("findNickName", findNickName);
-            const combinedData = {
-              ...findMyLikeBoard,
-              ...findNickName,
-            };
-            // updatedBoards.push(combinedData);
-            const updatedBoardData = findMyLikeBoard.map((board, index) => {
-              const nickname = findNickName[index]?.nickName || null;
-              const userImg = findNickName[index]?.userImg || null;
-              return {
-                ...board,
-                nickname,
-                userImg,
-              };
-            });
-            console.log("updatedBoards", updatedBoardData);
-            updatedBoards.push(...updatedBoardData);
-            const groupedCommentData = groupCommentsByBoardId(commentRes.data);
-            Object.assign(updatedCommentData, groupedCommentData);
-
-            const groupedLikeData = groupLikesByBoardId(likeRes.data);
-            Object.assign(updatedLikeData, groupedLikeData);
-            setBoards(updatedBoards);
-          } catch (error) {
-            console.log("error", error);
+  const likeboards = async () => {
+    try {
+      const [likeRes] = await Promise.all([
+        axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLike`,
+          {
+            userId: userId,
           }
+        ),
+      ]);
+
+      const boardIds = likeRes.data.map((board) => board.boardId);
+      const updatedBoards = []; // 기존 게시글 상태 복사
+      const updatedCommentData = { ...commentData }; // 기존 댓글 데이터 복사
+      const updatedLikeData = { ...likeData }; // 기존 좋아요 데이터 복사
+      console.log("boardIds", boardIds);
+      console.log("updatedBoards", updatedBoards);
+
+      for (const boardId of boardIds) {
+        try {
+          const [boardRes, commentRes] = await Promise.all([
+            axios.post(
+              `${process.env.REACT_APP_SERVER_URL}/board/myBoards/findMyLikeBoards`,
+              { boardId: boardId }
+            ),
+            axios.post(
+              `${process.env.REACT_APP_SERVER_URL}/board/myBoards/comment`
+            ),
+          ]);
+          console.log("boardRes", boardRes.data);
+          // 중복 체크를 통해 중복된 데이터 제외하고 추가
+          // const filteredBoards = boardRes.data.filter(
+          //   (newBoard) =>
+          //     !updatedBoards.some(
+          //       (board) => board.boardId === newBoard.boardId
+          //     )
+          // );
+          const { findMyLikeBoard, findNickName } = boardRes.data;
+          console.log("findNickName", findNickName);
+          const combinedData = {
+            ...findMyLikeBoard,
+            ...findNickName,
+          };
+          // updatedBoards.push(combinedData);
+          const updatedBoardData = findMyLikeBoard.map((board, index) => {
+            const nickname = findNickName[index]?.nickName || null;
+            const userImg = findNickName[index]?.userImg || null;
+            return {
+              ...board,
+              nickname,
+              userImg,
+            };
+          });
+          console.log("updatedBoards", updatedBoardData);
+          updatedBoards.push(...updatedBoardData);
+          const groupedCommentData = groupCommentsByBoardId(commentRes.data);
+          Object.assign(updatedCommentData, groupedCommentData);
+
+          const groupedLikeData = groupLikesByBoardId(likeRes.data);
+          Object.assign(updatedLikeData, groupedLikeData);
+          setBoards(updatedBoards);
+        } catch (error) {
+          console.log("error", error);
         }
-
-        // 상태 업데이트
-        setBoards(updatedBoards);
-        setCommentData(updatedCommentData);
-        setLikeData(updatedLikeData);
-      } catch (error) {
-        console.log("error", error);
       }
-    };
 
-    if (showlikeBoards) {
-      likeboards();
+      // 상태 업데이트
+      setBoards(updatedBoards);
+      setCommentData(updatedCommentData);
+      setLikeData(updatedLikeData);
+    } catch (error) {
+      console.log("error", error);
     }
-  }, [userId, showlikeBoards]);
+  };
 
   useEffect(() => {
     if (selectedTab === "my-boards") {
@@ -181,6 +183,7 @@ const MyBoards = () => {
     } else if (selectedTab === "like-boards") {
       setShowLikeBoards(true);
       setShowMyBoards(false);
+      likeboards();
     }
   }, [selectedTab]);
 
