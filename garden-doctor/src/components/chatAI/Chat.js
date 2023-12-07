@@ -20,7 +20,7 @@ const Chat = () => {
     const a = async () => {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:8001/chat/loadPrevChats",
+        url: `${process.env.REACT_APP_AI_SERVER_URL}/chat/loadPrevChats`,
         data: {
           currentUser: userId,
         },
@@ -72,7 +72,7 @@ const Chat = () => {
     console.log("sendQuestion: ", lastChat);
     const res = await axios({
       method: "POST",
-      url: "http://localhost:8001/chat/askQuestion",
+      url: `${process.env.REACT_APP_AI_SERVER_URL}/chat/askQuestion`,
       data: {
         question: lastChat.m,
         isAI: false,

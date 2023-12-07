@@ -68,10 +68,13 @@ const Weather2 = () => {
 
   const fetchLocationData = async () => {
     try {
-      const res = await axios.post("http://localhost:8000/weather/location", {
-        lat: currentLocation.latitude,
-        lng: currentLocation.longitude,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/weather/location`,
+        {
+          lat: currentLocation.latitude,
+          lng: currentLocation.longitude,
+        }
+      );
       const locationData = res.data;
       setLocation(locationData);
     } catch (error) {

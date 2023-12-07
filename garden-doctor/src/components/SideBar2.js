@@ -26,9 +26,12 @@ const SideBar2 = () => {
   useEffect(() => {
     const myInfo = async () => {
       try {
-        const myInfos = await axios.post("http://localhost:8000/sign/myInfo", {
-          userId: userId,
-        });
+        const myInfos = await axios.post(
+          `${process.env.REACT_APP_SERVER_URL}/sign/myInfo`,
+          {
+            userId: userId,
+          }
+        );
         console.log("myInfos", myInfos.data);
         const url = myInfos.data.userImg;
         let cleanedUrl = url.replace(/^"(.*)"$/, "$1");
