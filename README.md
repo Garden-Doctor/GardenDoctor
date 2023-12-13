@@ -66,12 +66,21 @@ Communication
 
 #### 작물 관련 채팅 AI
 <img src="https://github.com/Garden-Doctor/GardenDoctor/assets/133857119/52131efa-a246-4e7c-9133-1b35bf1c336f"  width="500"/> 
+작물과 관련된 질문을 하면 학습된 정보를 토대로 답변합니다.
 
 #### 사진 인식 병충해 판단 AI
 <img src="https://github.com/Garden-Doctor/GardenDoctor/assets/133857119/07bbe150-8c64-431d-b26e-11de5ebf12f5"  width="400"/>
+<br />병에 걸렸는지 궁금한 작물의 사진을 올리면 AI가 판단하면 정상인지 병에 걸렸는지 파악해줍니다.
 
 #### 커뮤니티
 <img src="https://github.com/kimtaehyuk1/HereLaw/assets/133857119/5a32e532-ebbb-4231-b50c-686d3aac5b03"  width="300" />
+<br />게시판 형태의 커뮤니티입니다. '좋아요'와 '댓글' 등을 달 수 있습니다.
+
+### 내 작물 추가
+<img src="https://github.com/Garden-Doctor/GardenDoctor/assets/133857119/0378a1c2-3104-4264-b420-7075ef692996" width="300" />
+<br />마이페이지에서 내 작물을 추가하여 작물에 관한 타임라인을 쓸 수 있습니다.
+<br />추가한 글은 커뮤니티에 올라갑니다.
+
 
 ## 주요 기능 및 활용
 - 생성형 AI를 활용한 채팅
