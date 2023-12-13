@@ -66,7 +66,7 @@ Communication
 
 #### 작물 관련 채팅 AI
 <img src="https://github.com/Garden-Doctor/GardenDoctor/assets/133857119/52131efa-a246-4e7c-9133-1b35bf1c336f"  width="500"/> 
-작물과 관련된 질문을 하면 학습된 정보를 토대로 답변합니다.
+<br />작물과 관련된 질문을 하면 학습된 정보를 토대로 답변합니다.
 
 #### 사진 인식 병충해 판단 AI
 <img src="https://github.com/Garden-Doctor/GardenDoctor/assets/133857119/07bbe150-8c64-431d-b26e-11de5ebf12f5"  width="400"/>
